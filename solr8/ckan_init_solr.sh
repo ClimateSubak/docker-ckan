@@ -8,11 +8,12 @@
 
 set -e
 
-CKAN_SOLR_SCHEMA_URL=https://raw.githubusercontent.com/ckan/ckan/$CKAN_VERSION/ckan/config/solr/schema.solr8.xml 
+# CKAN_SOLR_SCHEMA_URL=https://raw.githubusercontent.com/ckan/ckan/$CKAN_VERSION/ckan/config/solr/schema.solr8.xml 
+CKAN_SOLR_SCHEMA_URL=/tmp/schema.xml
 
 echo "Check whether managed schema exists for CKAN $CKAN_VERSION"
-if ! curl --output /dev/null --silent --head --fail "$CKAN_SOLR_SCHEMA_URL"; then
-  echo "Can't find CKAN SOLR schema at URL: $CKAN_SOLR_SCHEMA_URL. Exiting..."
+if ! cp $CKAN_SOLR_SCHEMA_URL /dev/null; then
+  echo "Can't find or move CKAN SOLR schema locally: $CKAN_SOLR_SCHEMA_URL. Exiting..."
   exit 1
 fi
 
@@ -32,7 +33,7 @@ else
     
     # Replace the managed schema with CKANs schema
     echo "Adding CKAN managed schema"
-    curl $CKAN_SOLR_SCHEMA_URL -o /var/solr/data/$CKAN_CORE_NAME/conf/managed-schema -s
+    cp $CKAN_SOLR_SCHEMA_URL /var/solr/data/$CKAN_CORE_NAME/conf/managed-schema
     
     echo "SOLR initialized"
 fi
