@@ -72,6 +72,8 @@ qa.run:
 search.reindex:
 	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan search-index rebuild"
 
+dev:
+	cd src/ckanext-subakdc && npm run dev
 
 # WIP currently having issues running this locally
 test.plugins:
