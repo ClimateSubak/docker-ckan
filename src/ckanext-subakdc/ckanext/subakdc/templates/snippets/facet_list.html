@@ -82,10 +82,10 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 								'bg-subak-sky-blue' if title=='Groups' else 
 								'bg-subak-meadow-teal' if title=='Tags' else 
 								'bg-subak-purple-rain' if title=='Formats' else 
-								'bg-subak-marine-blue' if title=='Licenses' }}">
+								'bg-subak-marine-blue' }}">
 						{% endif %}
 						<a href="{{ href }}" title="{{ label if label != label_truncated else '' }}" class="hover:no-underline">
-							<span class="p-1 text-white item-label">{{ label_truncated }}</span>
+							<span class="p-1 text-white item-label">{{ label_truncated if title != 'Country' else h.truncate(h.scheming_code_to_name(label)) }}</span>
 							<span class="hidden separator"> - </span>
 							<span class="item-count badge">{{ count }}</span>
 						</a>
@@ -99,7 +99,7 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 		{% if h.get_param_int('_%s_limit' % name) %}
 		{% if h.has_more_facets(name, search_facets or c.search_facets) %}
 		<a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}"
-			class="read-more">{{ _('Show More {facet_type}').format(facet_type=title) }}</a>
+			class="read-more">{{ _('Show More {facet_type}').format(facet_type=title) if title != 'Country' else 'Show More Countries'}}</a>
 		{% endif %}
 		{% else %}
 		<a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}"
