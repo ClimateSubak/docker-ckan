@@ -1033,6 +1033,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .float-none {
   float: none !important;
 }
+.m-4 {
+  margin: 1rem !important;
+}
 .m-0 {
   margin: 0px !important;
 }
@@ -1050,6 +1053,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .my-6 {
   margin-top: 1.5rem !important;
   margin-bottom: 1.5rem !important;
+}
+.mx-6 {
+  margin-left: 1.5rem !important;
+  margin-right: 1.5rem !important;
 }
 .mx-2 {
   margin-left: 0.5rem !important;
@@ -1076,6 +1083,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .mb-4 {
   margin-bottom: 1rem !important;
+}
+.mt-4 {
+  margin-top: 1rem !important;
 }
 .mt-2 {
   margin-top: 0.5rem !important;
@@ -1208,6 +1218,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .rounded-sm {
   border-radius: 0.125rem !important;
+}
+.border {
+  border-width: 1px !important;
 }
 .border-2 {
   border-width: 2px !important;
@@ -1491,6 +1504,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .decoration-dashed {
   -webkit-text-decoration-style: dashed !important;
           text-decoration-style: dashed !important;
+}
+.shadow {
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
 .outline {
   outline-style: solid !important;

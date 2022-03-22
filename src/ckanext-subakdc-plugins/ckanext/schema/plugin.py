@@ -6,7 +6,7 @@ import ckan.plugins as p
 log = logging.getLogger(__name__)
 
 
-def get_countries_dict():
+def get_countries_dict(field):
     with open(path.join(path.dirname(__file__), "countries-iso-3166.json")) as f:
         countries = json.load(f)
 
@@ -26,6 +26,7 @@ class SchemaPlugin(p.SingletonPlugin):
     p.implements(p.ITemplateHelpers)
     p.implements(p.IFacets, inherit=True)
     p.implements(p.IPackageController, inherit=True)
+
 
     # ------- ITemplateHelpers method implementations ------- #
 
@@ -56,3 +57,27 @@ class SchemaPlugin(p.SingletonPlugin):
             data_dict.get("subak_countries", "[]")
         )
         return data_dict
+
+    def before_search(self, search_params):
+        extras = search_params.get('extras')
+        if not extras:
+            return search_params
+        subak_temporal_start = extras.get("ext_subak_temporal_start")
+        subak_temporal_end = extras.get("ext_subak_temporal_end")
+        
+
+        if subak_temporal_start and subak_temporal_end:
+            fq = search_params["fq"]
+            fq = f"{fq} + subak_temporal_start:[{subak_temporal_start} \
+                    TO {subak_temporal_end}] + \
+                    subak_temporal_end:[{subak_temporal_start} TO {subak_temporal_end}]"
+            search_params["fq"] = fq
+            return search_params
+
+        if subak_temporal_start:
+            fq = search_params["fq"]
+            fq = f"{fq} + subak_temporal_start:[{subak_temporal_start} \
+                    TO *]"
+            search_params["fq"] = fq
+        
+        return search_params

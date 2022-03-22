@@ -43,77 +43,120 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 {% ckan_extends %}
 
 {% block facet_list %}
-{% set hide_empty = hide_empty or false %}
-{% with items = items or h.get_facet_items_dict(name, search_facets or c.search_facets) %}
-{% if items or not hide_empty %}
-{% if within_tertiary %}
-{% set nav_class = 'nav nav-pills nav-stacked' %}
-{% set nav_item_class = ' ' %}
-{% set wrapper_class = 'nav-facet nav-facet-tertiary' %}
-{% endif %}
-{% block facet_list_item %}
-<section class="{{ wrapper_class or 'module module-narrow module-shallow' }}">
-	{% block facet_list_heading %}
-	<h2 class="module-heading">
-		<i class="fa fa-filter"></i>
-		{% set title = title or h.get_facet_title(name) %}
-		<span class="{{ 'text-subak-deep-ocean' if title=='Organizations' else 'text-subak-meadow-teal'
-			if title=='Tags' else 'text-subak-purple-rain' if title=='Formats' else 'text-subak-marine-blue' if title=='Licenses'}}">
-			{{title }}
-	</h2>
-	{% endblock %}
-	{% block facet_list_items %}
+	{% set hide_empty = hide_empty or false %}
 	{% with items = items or h.get_facet_items_dict(name, search_facets or c.search_facets) %}
-	{% if items %}
-	<nav aria-label="{{ title }}">
-		<ul class="{{ nav_class or 'list-unstyled nav nav-simple nav-facet flex flex-wrap' }}">
-			{% for item in items %}
-			{% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active
-			else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
-			{% set label = label_function(item) if label_function else item.display_name %}
-			{% set label_truncated = h.truncate(label, 22) if not label_function else label %}
-			{% set count = count_label(item['count']) if count_label else ('%d' % item['count']) %}
-			<li style="padding: 7px 3px !important; border-bottom: none !important;">
-				{% if item.active %}
-				<button class="p-1 font-bold text-white align-middle rounded-full bg-subak-burnt-copper active">
-					{% else %}
-					<button class="hover:bg-subak-burnt-copper text-white font-bold rounded-full p-1 align-middle
-							 {{ 'bg-subak-deep-ocean' if title=='Organizations' else 
-								'bg-subak-sky-blue' if title=='Groups' else 
-								'bg-subak-meadow-teal' if title=='Tags' else 
-								'bg-subak-purple-rain' if title=='Formats' else 
-								'bg-subak-marine-blue' }}">
-						{% endif %}
-						<a href="{{ href }}" title="{{ label if label != label_truncated else '' }}" class="hover:no-underline">
-							<span class="p-1 text-white item-label">{{ label_truncated if title != 'Country' else h.truncate(h.scheming_code_to_name(label)) }}</span>
-							<span class="hidden separator"> - </span>
-							<span class="item-count badge">{{ count }}</span>
-						</a>
-					</button>
-			</li>
-			{% endfor %}
-		</ul>
-	</nav>
+		{% if items or not hide_empty %}
+			{% if within_tertiary %}
+				{% set nav_class = 'nav nav-pills nav-stacked' %}
+				{% set nav_item_class = ' ' %}
+				{% set wrapper_class = 'nav-facet nav-facet-tertiary' %}
+			{% endif %}
 
-	<p class="module-footer" style="border-top: none;">
-		{% if h.get_param_int('_%s_limit' % name) %}
-		{% if h.has_more_facets(name, search_facets or c.search_facets) %}
-		<a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}"
-			class="read-more">{{ _('Show More {facet_type}').format(facet_type=title) if title != 'Country' else 'Show More Countries'}}</a>
+			{% block facet_list_item %}
+				<section class="{{ wrapper_class or 'module module-narrow module-shallow' }}">
+					{% block facet_list_heading %}
+						{% if title != "Earliest Date" %}
+							{% if title == "Latest Date" %}
+								{% set title = "Date Range"%}
+							{% endif %}
+							<h2 class="module-heading">
+								<i class="fa fa-filter"></i>
+								{% set title = title or h.get_facet_title(name) %}
+								<span
+									class="{{ 'text-subak-deep-ocean' if title=='Organizations' else 'text-subak-meadow-teal'
+											if title=='Tags' else 'text-subak-purple-rain' if title=='Formats' else 'text-subak-marine-blue' if title=='Licenses'}}">
+									{{title }}
+							</h2>
+						{% endif %}		
+					{% endblock %}
+
+				{# handle date range separately #}
+				{% if title == "Earliest Date" %}
+				{% elif title == "Latest Date" %}		
+					<div data-module="range_slider" class="m-4 mx-6">
+						<range-selector min-label="Earliest Year" max-label="Latest Year" min-range="1990" max-range="2022" inputs-for-labels number-of-legend-items-to-show="5" />
+					</div>
+
+				
+
+
+
+
+					{% set href=h.add_url_param(new_params={'ext_subak_temporal_start': '2013-08-01T00:00:00Z', 'ext_subak_temporal_end': '2022-01-01T00:00:00Z'}, extras=extras, alternative_url=alternative_url) %}
+					{# <p>{{ href }}</p> #}
+					{# ?subak_temporal_start=2013-08-01T00%3A00%3A00Z&subak_temporal_end=2021-08-31T00%3A00%3A00Z #}
+					{# ?q=subak_temporal_start%3A%5B2013-08-01T00%3A00%3A00Z+TO+2021-08-31T00%3A00%3A00Z%5D #}
+
+					<p class="mt-4"><a href="{{ href }}" class="btn btn-default btn-xs">Search Date Range</a></p>
+					<p><a href="{{ h.remove_url_param(['subak_temporal_start', 'subak_temporal_end']) }}" class="btn btn-default btn-xs action">{{ _('Clear') }}</a></p>
+
+				{# Everything else #}
+				{% elif title != "Earliest Date" and title != "Latest Date" %}
+						
+						{% block facet_list_items %}
+							{% with items = items or h.get_facet_items_dict(name, search_facets or c.search_facets) %}
+								{% if items %}
+
+									<nav aria-label="{{ title }}">
+										<ul class="{{ nav_class or 'list-unstyled nav nav-simple nav-facet flex flex-wrap' }}">
+											{% for item in items %}										
+												{% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active
+														else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
+												{% set label = label_function(item) if label_function else item.display_name %}
+												{% set label_truncated = h.truncate(label, 22) if not label_function else label %}
+												{% set count = count_label(item['count']) if count_label else ('%d' % item['count']) %}
+												<li style="padding: 7px 3px !important; border-bottom: none !important;">
+													{% if item.active %}
+														<button class="p-1 font-bold text-white align-middle rounded-full bg-subak-burnt-copper active">
+													{% else %}
+														<button class="hover:bg-subak-burnt-copper text-white font-bold rounded-full p-1 align-middle
+																		{{ 'bg-subak-deep-ocean' if title=='Organizations' else 
+																			'bg-subak-sky-blue' if title=='Groups' else 
+																			'bg-subak-meadow-teal' if title=='Tags' else 
+																			'bg-subak-purple-rain' if title=='Formats' else 
+																			'bg-subak-marine-blue' }}">
+													{% endif %}
+															<a href="{{ href }}" title="{{ label if label != label_truncated else '' }}" class="hover:no-underline">
+																<span
+																	class="p-1 text-white item-label">{{ label_truncated if title != 'Country' else h.truncate(h.scheming_code_to_name(label)) }}</span>
+																<span class="hidden separator"> - </span>
+																<span class="item-count badge">{{ count }}</span>
+															</a>
+														</button>
+												</li>
+											{% endfor %}
+										</ul>
+									</nav>
+
+									<p class="module-footer" style="border-top: none;">
+										{% if h.get_param_int('_%s_limit' % name) %}
+											{% if h.has_more_facets(name, search_facets or c.search_facets) %}
+												<a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}"
+													class="read-more">{{ _('Show More {facet_type}').format(facet_type=title) if title != 'Country' else 'Show More Countries'}}</a>
+											{% endif %}
+										{% else %}
+											<a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}"
+												class="read-more">{{ _('Show Only Popular {facet_type}').format(facet_type=title) }}</a>
+										{% endif %}
+									</p>
+
+								{% else %}
+									<p class="module-content empty">{{ _('There are no {facet_type} that match this search').format(facet_type=title) }}
+									</p>
+								{% endif %}
+							{% endwith %}					
+						
+						{# endblock facet_list_items #}
+						{% endblock %} 
+
+					</section>
+
+				{# end handling for date range #}
+				{% endif %}
+
+			{# endblock facet_list_item #}	
+			{% endblock %}
+
 		{% endif %}
-		{% else %}
-		<a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}"
-			class="read-more">{{ _('Show Only Popular {facet_type}').format(facet_type=title) }}</a>
-		{% endif %}
-	</p>
-	{% else %}
-	<p class="module-content empty">{{ _('There are no {facet_type} that match this search').format(facet_type=title) }}
-	</p>
-	{% endif %}
 	{% endwith %}
-	{% endblock %}
-</section>
-{% endblock %}
-{% endif %}
-{% endwith %}
 {% endblock %}
