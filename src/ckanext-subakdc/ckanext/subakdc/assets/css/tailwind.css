@@ -1027,28 +1027,35 @@ Ensure the default browser behavior of the `hidden` attribute.
 .z-50 {
   z-index: 50 !important;
 }
+.float-right {
+  float: right !important;
+}
 .float-left {
   float: left !important;
 }
 .float-none {
   float: none !important;
 }
-.m-4 {
-  margin: 1rem !important;
-}
 .m-0 {
   margin: 0px !important;
+}
+.m-4 {
+  margin: 1rem !important;
 }
 .m-1 {
   margin: 0.25rem !important;
 }
-.mx-auto {
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
 .my-2 {
   margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
+}
+.mx-2 {
+  margin-left: 0.5rem !important;
+  margin-right: 0.5rem !important;
+}
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 .my-6 {
   margin-top: 1.5rem !important;
@@ -1058,13 +1065,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: 1.5rem !important;
   margin-right: 1.5rem !important;
 }
-.mx-2 {
-  margin-left: 0.5rem !important;
-  margin-right: 0.5rem !important;
-}
 .my-4 {
   margin-top: 1rem !important;
   margin-bottom: 1rem !important;
+}
+.mb-2 {
+  margin-bottom: 0.5rem !important;
 }
 .ml-3 {
   margin-left: 0.75rem !important;
@@ -1084,6 +1090,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mb-4 {
   margin-bottom: 1rem !important;
 }
+.mt-8 {
+  margin-top: 2rem !important;
+}
 .mt-4 {
   margin-top: 1rem !important;
 }
@@ -1101,9 +1110,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .mb-3 {
   margin-bottom: 0.75rem !important;
-}
-.mb-2 {
-  margin-bottom: 0.5rem !important;
 }
 .mb-10 {
   margin-bottom: 2.5rem !important;
@@ -1126,6 +1132,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hidden {
   display: none !important;
 }
+.h-6 {
+  height: 1.5rem !important;
+}
 .h-full {
   height: 100% !important;
 }
@@ -1138,14 +1147,29 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-24 {
   height: 6rem !important;
 }
+.h-8 {
+  height: 2rem !important;
+}
 .h-5 {
   height: 1.25rem !important;
 }
 .h-7 {
   height: 1.75rem !important;
 }
+.w-6 {
+  width: 1.5rem !important;
+}
 .w-full {
   width: 100% !important;
+}
+.w-2 {
+  width: 0.5rem !important;
+}
+.w-10 {
+  width: 2.5rem !important;
+}
+.w-8 {
+  width: 2rem !important;
 }
 .w-5 {
   width: 1.25rem !important;
@@ -1198,12 +1222,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 .gap-4 {
   gap: 1rem !important;
 }
+.gap-3 {
+  gap: 0.75rem !important;
+}
 .overflow-hidden {
   overflow: hidden !important;
 }
 .truncate {
   overflow: hidden !important;
   text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.whitespace-nowrap {
   white-space: nowrap !important;
 }
 .break-normal {
@@ -1234,9 +1264,21 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-solid {
   border-style: solid !important;
 }
+.border-amber-200 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(253 230 138 / var(--tw-border-opacity)) !important;
+}
 .border-gray-200 {
   --tw-border-opacity: 1 !important;
   border-color: rgb(229 231 235 / var(--tw-border-opacity)) !important;
+}
+.border-sky-200 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(186 230 253 / var(--tw-border-opacity)) !important;
+}
+.border-subak-deep-ocean {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(15 43 67 / var(--tw-border-opacity)) !important;
 }
 .border-subak-stone-grey {
   --tw-border-opacity: 1 !important;
@@ -1245,6 +1287,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-white {
   --tw-border-opacity: 1 !important;
   border-color: rgb(255 255 255 / var(--tw-border-opacity)) !important;
+}
+.bg-amber-100 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(254 243 199 / var(--tw-bg-opacity)) !important;
+}
+.bg-subak-burnt-copper {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(201 94 59 / var(--tw-bg-opacity)) !important;
 }
 .bg-gray-50 {
   --tw-bg-opacity: 1 !important;
@@ -1258,9 +1308,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1 !important;
   background-color: rgb(27 101 143 / var(--tw-bg-opacity)) !important;
 }
-.bg-subak-burnt-copper {
+.bg-sky-100 {
   --tw-bg-opacity: 1 !important;
-  background-color: rgb(201 94 59 / var(--tw-bg-opacity)) !important;
+  background-color: rgb(224 242 254 / var(--tw-bg-opacity)) !important;
+}
+.bg-sky-600 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(2 132 199 / var(--tw-bg-opacity)) !important;
 }
 .bg-subak-sky-blue {
   --tw-bg-opacity: 1 !important;
@@ -1306,11 +1360,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .to-cyan-400 {
   --tw-gradient-to: #22d3ee !important;
 }
+.p-3 {
+  padding: 0.75rem !important;
+}
 .p-2 {
   padding: 0.5rem !important;
 }
 .p-0 {
   padding: 0px !important;
+}
+.p-4 {
+  padding: 1rem !important;
 }
 .p-1 {
   padding: 0.25rem !important;
@@ -1318,11 +1378,13 @@ Ensure the default browser behavior of the `hidden` attribute.
 .p-16 {
   padding: 4rem !important;
 }
-.p-3 {
-  padding: 0.75rem !important;
+.px-3 {
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
 }
-.p-4 {
-  padding: 1rem !important;
+.py-2 {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
 }
 .px-16 {
   padding-left: 4rem !important;
@@ -1352,11 +1414,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 1px !important;
   padding-bottom: 1px !important;
 }
-.pl-0 {
-  padding-left: 0px !important;
-}
-.pr-0 {
-  padding-right: 0px !important;
+.pr-1 {
+  padding-right: 0.25rem !important;
 }
 .pt-8 {
   padding-top: 2rem !important;
@@ -1372,6 +1431,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .pt-px {
   padding-top: 1px !important;
+}
+.pt-3 {
+  padding-top: 0.75rem !important;
 }
 .pr-32 {
   padding-right: 8rem !important;
@@ -1396,6 +1458,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .font-heading {
   font-family: TeX Gyre Heros, Helvetica, Arial, sans-serif !important;
+}
+.text-lg {
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
 }
 .text-xl {
   font-size: 1.25rem !important;
@@ -1445,9 +1511,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .leading-6 {
   line-height: 1.5rem !important;
 }
+.text-amber-600 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(217 119 6 / var(--tw-text-opacity)) !important;
+}
 .text-white {
   --tw-text-opacity: 1 !important;
   color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+}
+.text-sky-600 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(2 132 199 / var(--tw-text-opacity)) !important;
 }
 .text-subak-deep-ocean {
   --tw-text-opacity: 1 !important;
@@ -1552,6 +1626,11 @@ the theme() function
   opacity: 0.5 !important;
 }
 
+.after\:content-\[\'\'\]::after {
+  --tw-content: '' !important;
+  content: var(--tw-content) !important;
+}
+
 .hover\:bg-subak-burnt-copper:hover {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(201 94 59 / var(--tw-bg-opacity)) !important;
@@ -1562,9 +1641,27 @@ the theme() function
   background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
 }
 
+.hover\:bg-gradient-to-br:hover {
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)) !important;
+}
+
+.hover\:from-subak-deep-ocean:hover {
+  --tw-gradient-from: #0f2b43 !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(15 43 67 / 0)) !important;
+}
+
+.hover\:to-subak-meadow-teal:hover {
+  --tw-gradient-to: #1d838b !important;
+}
+
 .hover\:text-slate-400:hover {
   --tw-text-opacity: 1 !important;
   color: rgb(148 163 184 / var(--tw-text-opacity)) !important;
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1 !important;
+  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
 }
 
 .hover\:text-subak-deep-ocean:hover {
@@ -1595,6 +1692,10 @@ the theme() function
 .focus\:text-subak-deep-ocean:focus {
   --tw-text-opacity: 1 !important;
   color: rgb(15 43 67 / var(--tw-text-opacity)) !important;
+}
+
+.disabled\:bg-opacity-50:disabled {
+  --tw-bg-opacity: 0.5 !important;
 }
 
 .group:hover .group-hover\:text-subak-meadow-teal {
