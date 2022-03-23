@@ -76,6 +76,9 @@ db.backup:
 	./backup_db.sh $(ENVIRONMENT) db ckan && \
 	./backup_db.sh $(ENVIRONMENT) db datastore
 
+dev:
+	cd src/ckanext-subakdc && npm run dev
+
 
 # WIP currently having issues running this locally
 test.plugins:

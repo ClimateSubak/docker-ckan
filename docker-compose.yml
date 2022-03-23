@@ -62,6 +62,7 @@ services:
     volumes:
       - solr_data:/var/solr
       - ${PWD}/solr8/ckan_init_solr.sh:/docker-entrypoint-initdb.d/ckan_init_solr.sh
+      - ${PWD}/solr8/schema.xml:/tmp/schema.xml
 
   redis:
     container_name: redis
