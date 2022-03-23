@@ -22,14 +22,14 @@ this.ckan.module('date_facet', function ($) {
             params.set('subak_temporal_start', startDateInput.val());
             params.set('subak_temporal_end', endDateInput.val());
             location.href = location.pathname + '?' + params.toString();
-        })
+        });
 
         // Update query string when clicking the reset button
         facet.find('button#date-facet-reset').on("click", function() {
             params.delete('subak_temporal_start');
             params.delete('subak_temporal_end');
             location.href = location.pathname + '?' + params.toString();
-        })
+        });
     }
-  }
+  };
 })
