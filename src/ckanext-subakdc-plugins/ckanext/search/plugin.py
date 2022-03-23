@@ -30,7 +30,7 @@ class SearchPlugin(p.SingletonPlugin):
         return data_dict
 
     def before_search(self, search_params):
-        fq = search_params["fq"]
+        fq = search_params.get("fq", '')
         
         if 'subak_temporal_start' in fq:
             start = re.search(r'subak_temporal_start:"(.*?)"', fq)[1]
