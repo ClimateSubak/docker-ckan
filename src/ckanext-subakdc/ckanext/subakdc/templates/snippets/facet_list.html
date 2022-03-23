@@ -55,9 +55,11 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 			{% block facet_list_item %}
 				<section class="{{ wrapper_class or 'module module-narrow module-shallow' }}">
 					{% block facet_list_heading %}
-						{% if title != "Earliest Date" %}
-							{% if title == "Latest Date" %}
-								{% set title = "Date Range"%}
+						{% if title == "Dataset coverage from" %}
+							{# Skip this header as we only need one for the two date facets #}
+						{% else %}
+							{% if title == "Dataset coverage to" %}
+								{% set title = "Date coverage" %}
 							{% endif %}
 							<h2 class="module-heading">
 								<i class="fa fa-filter"></i>
@@ -65,38 +67,48 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 								<span
 									class="{{ 'text-subak-deep-ocean' if title=='Organizations' else 'text-subak-meadow-teal'
 											if title=='Tags' else 'text-subak-purple-rain' if title=='Formats' else 'text-subak-marine-blue' if title=='Licenses'}}">
-									{{title }}
+									{{ title }}
+									{% if title == "Date coverage" %}
+										<span role="button"
+											  tabindex="0"
+											  title="Dataset date coverage" 
+											  data-target="popover" 
+											  data-content="This filter allows you to show only datasets where data exists between the selected start and end dates. Datasets that do not indicate their start and end ranges will be omitted from the results." 
+											  data-placement="right"
+											  data-html="true"
+											  data-trigger="hover">
+											<svg xmlns="http://www.w3.org/2000/svg" class="relative inline w-5 h-5 -top-px" viewBox="0 0 20 20" fill="currentColor">
+												<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+											</svg>
+										</span>
+									{% endif %}
 							</h2>
 						{% endif %}		
 					{% endblock %}
 
-				{# handle date range separately #}
-				{% if title == "Earliest Date" %}
-				{% elif title == "Latest Date" %}		
-					{# <div data-module="range_slider" class="m-4 mx-6">
-						<range-selector min-label="Earliest Year" max-label="Latest Year" min-range="1990" max-range="2022" inputs-for-labels number-of-legend-items-to-show="5" />
-					</div> #}
-
-					<input type="number" name="latest-date" value="1990" /> - 
-					<input type="number" name="latest-date" value="2022" />
-
-				
-
-
-					{# TODO read start/end years from form inputs above #}
-
-					{% set href=h.add_url_param(new_params={'subak_temporal_start': '2013', 'subak_temporal_end': '2022'}, extras=extras, alternative_url=alternative_url) %}
-					{# <p>{{ href }}</p> #}
-					{# ?subak_temporal_start=2013-08-01T00%3A00%3A00Z&subak_temporal_end=2021-08-31T00%3A00%3A00Z #}
-					{# ?q=subak_temporal_start%3A%5B2013-08-01T00%3A00%3A00Z+TO+2021-08-31T00%3A00%3A00Z%5D #}
-
-					{# checkbox to show datasets where date not set #}
-
-					<p class="mt-4"><a href="{{ href }}" class="btn btn-default btn-xs">Search Date Range</a></p>
-					<p><a href="{{ h.remove_url_param(['subak_temporal_start', 'subak_temporal_end']) }}" class="btn btn-default btn-xs action">{{ _('Clear') }}</a></p>
-
+				{# Handle date ranges separately #}
+				{% if title == "Dataset coverage from" %}
+					{# Skip this facet as we only need one section for the two date facets #}
+				{% elif title == "Dataset coverage to" %}
+					<div class="p-1" data-module="date_facet">		
+						<div class="flex items-center mb-1">
+							<input class="flex-1 p-1 border rounded" type="number" name="subak_temporal_start" value="1900" size="4" />
+							<span class="relative px-3 -top-px">-</span>
+							<input class="flex-1 p-1 border rounded" type="number" name="subak_temporal_end" value="2022" size="4" />
+						</div>
+						
+						<button id="date-facet-update"
+								class="px-2 py-1 text-xs text-white rounded bg-subak-marine-blue">
+							{{ _('Update results') }}
+						</button>
+						<button id="date-facet-reset"
+						   class="px-2 py-1 text-xs text-white no-underline bg-gray-500 rounded">
+						   {{ _('Reset') }}
+						</a>
+					</div>
+					
 				{# Everything else #}
-				{% elif title != "Earliest Date" and title != "Latest Date" %}
+				{% else %}
 						
 						{% block facet_list_items %}
 							{% with items = items or h.get_facet_items_dict(name, search_facets or c.search_facets) %}

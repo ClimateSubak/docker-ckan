@@ -1,0 +1,29 @@
+"use strict";
+
+this.ckan.module('date_facet', function ($) {
+    return {
+        initialize: function () {
+
+        var facet = this.el
+        var params = new URLSearchParams(location.search)
+
+        var startDateInput = facet.find("input[name='subak_temporal_start']")
+        var endDateInput = facet.find("input[name='subak_temporal_end']")
+
+        startDateInput.val(params.get('subak_temporal_start') || 1900)
+        endDateInput.val(params.get('subak_temporal_end') || 2022)
+
+        facet.find('button#date-facet-update').on("click", function() {    
+            params.set('subak_temporal_start', startDateInput.val())
+            params.set('subak_temporal_end', endDateInput.val())
+            location.href = location.pathname + '?' + params.toString()
+        })
+
+        facet.find('button#date-facet-reset').on("click", function() {
+            params.delete('subak_temporal_start')
+            params.delete('subak_temporal_end')
+            location.href = location.pathname + '?' + params.toString()
+        })
+    }
+  }
+})

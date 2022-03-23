@@ -29,7 +29,6 @@ class SchemaPlugin(p.SingletonPlugin):
     p.implements(p.IFacets, inherit=True)
     p.implements(p.IPackageController, inherit=True)
 
-
     # ------- ITemplateHelpers method implementations ------- #
 
     def get_helpers(self):
@@ -49,8 +48,8 @@ class SchemaPlugin(p.SingletonPlugin):
         """
         facets_dict["subak_countries"] = "Country"
         facets_dict["subak_geo_region"] = "Region"
-        facets_dict["subak_temporal_start"] = "Earliest Date"
-        facets_dict["subak_temporal_end"] = "Latest Date"
+        facets_dict["subak_temporal_start"] = "Dataset coverage from"
+        facets_dict["subak_temporal_end"] = "Dataset coverage to"
         return facets_dict
 
     # ------- IPackageController method implementations ------- #
@@ -61,27 +60,28 @@ class SchemaPlugin(p.SingletonPlugin):
         return data_dict
 
     def before_search(self, search_params):
-        
-        log.debug(search_params)
-                    
         fq = search_params["fq"]
-        # TODO separate if statement for start and end
-        # TODO if only start or end is set, set the other to *
-        if 'subak_temporal_start' in fq and 'subak_temporal_end' in fq:
+        
+        if 'subak_temporal_start' in fq:
             start = re.search(r'subak_temporal_start:"(.*?)"', fq)[1]
+            start = f'{start}-01-01T00:00:00Z'
+        else:
+            start = '*'
+            
+        if 'subak_temporal_end' in fq:
             end = re.search(r'subak_temporal_end:"(.*?)"', fq)[1]
-            
-            # Remove the subak_temporal_* fields from fq
-            fq = re.sub(r'subak_temporal_start:"(.*?)"', '', fq)
-            fq = re.sub(r'subak_temporal_end:"(.*?)"', '', fq)
-            
+            end = f'{end}-12-31T23:59:59Z'
+        else:
+            end = '*'
+                
+        # Remove the subak_temporal_* fields from fq
+        _fq = re.sub(r'subak_temporal_start:"(.*?)"', '', fq)
+        _fq = re.sub(r'subak_temporal_end:"(.*?)"', '', _fq)
+        
+        if 'subak_temporal_start' in fq or 'subak_temporal_end' in fq:
             # Show datasets if subak_temporal_start or subak_temporal_end fall within 
             # the specified date range
-            fq = f'{fq} + (subak_temporal_start:[{start}-01-01T00:00:00Z TO {end}-12-31T23:59:59Z] OR subak_temporal_end:[{start}-01-01T00:00:00Z TO {end}-12-31T23:59:59Z])'
-            # fq = f'metadata_created:[{start}-01-01T00:00:00Z TO {end}-12-31T23:59:59Z]'
-         
-        # TODO handle edge case where subak_temporal_end isn't set
-        
-        log.debug(fq)
+            fq = f'{_fq} + (subak_temporal_start:[{start} TO {end}] OR subak_temporal_end:[{start} TO {end}])'
+                
         search_params['fq'] = fq
         return search_params

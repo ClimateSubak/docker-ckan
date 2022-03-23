@@ -984,9 +984,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .visible {
   visibility: visible !important;
 }
-.static {
-  position: static !important;
-}
 .fixed {
   position: fixed !important;
 }
@@ -995,10 +992,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .relative {
   position: relative !important;
-}
-.sticky {
-  position: -webkit-sticky !important;
-  position: sticky !important;
 }
 .bottom-0 {
   bottom: 0px !important;
@@ -1039,9 +1032,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .m-0 {
   margin: 0px !important;
 }
-.m-4 {
-  margin: 1rem !important;
-}
 .m-1 {
   margin: 0.25rem !important;
 }
@@ -1060,10 +1050,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .my-6 {
   margin-top: 1.5rem !important;
   margin-bottom: 1.5rem !important;
-}
-.mx-6 {
-  margin-left: 1.5rem !important;
-  margin-right: 1.5rem !important;
 }
 .my-4 {
   margin-top: 1rem !important;
@@ -1093,8 +1079,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-8 {
   margin-top: 2rem !important;
 }
-.mt-4 {
-  margin-top: 1rem !important;
+.mb-1 {
+  margin-bottom: 0.25rem !important;
 }
 .mt-2 {
   margin-top: 0.5rem !important;
@@ -1134,9 +1120,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-6 {
   height: 1.5rem !important;
-}
-.h-full {
-  height: 100% !important;
 }
 .h-auto {
   height: auto !important;
@@ -1180,11 +1163,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .max-w-none {
   max-width: none !important;
 }
-.flex-auto {
-  flex: 1 1 auto !important;
-}
 .flex-1 {
   flex: 1 1 0% !important;
+}
+.flex-auto {
+  flex: 1 1 auto !important;
 }
 .table-auto {
   table-layout: auto !important;
@@ -1192,32 +1175,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
-.resize {
-  resize: both !important;
-}
-.flex-row {
-  flex-direction: row !important;
-}
-.flex-col {
-  flex-direction: column !important;
-}
 .flex-wrap {
   flex-wrap: wrap !important;
 }
 .items-center {
   align-items: center !important;
 }
-.justify-center {
-  justify-content: center !important;
-}
 .justify-between {
   justify-content: space-between !important;
-}
-.justify-around {
-  justify-content: space-around !important;
-}
-.justify-evenly {
-  justify-content: space-evenly !important;
 }
 .gap-4 {
   gap: 1rem !important;
@@ -1316,6 +1281,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1 !important;
   background-color: rgb(2 132 199 / var(--tw-bg-opacity)) !important;
 }
+.bg-gray-500 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity)) !important;
+}
 .bg-subak-sky-blue {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(59 200 236 / var(--tw-bg-opacity)) !important;
@@ -1406,6 +1375,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-left: 2rem !important;
   padding-right: 2rem !important;
 }
+.px-2 {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+.py-1 {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
 .px-1 {
   padding-left: 0.25rem !important;
   padding-right: 0.25rem !important;
@@ -1462,6 +1439,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-lg {
   font-size: 1.125rem !important;
   line-height: 1.75rem !important;
+}
+.text-xs {
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
 }
 .text-xl {
   font-size: 1.25rem !important;
@@ -1578,18 +1559,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .decoration-dashed {
   -webkit-text-decoration-style: dashed !important;
           text-decoration-style: dashed !important;
-}
-.shadow {
-  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
-  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color) !important;
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
-}
-.outline {
-  outline-style: solid !important;
-}
-.blur {
-  --tw-blur: blur(8px) !important;
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow) !important;
 }
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow) !important;
