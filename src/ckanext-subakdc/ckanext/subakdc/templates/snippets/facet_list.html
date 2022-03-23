@@ -73,19 +73,24 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 				{# handle date range separately #}
 				{% if title == "Earliest Date" %}
 				{% elif title == "Latest Date" %}		
-					<div data-module="range_slider" class="m-4 mx-6">
+					{# <div data-module="range_slider" class="m-4 mx-6">
 						<range-selector min-label="Earliest Year" max-label="Latest Year" min-range="1990" max-range="2022" inputs-for-labels number-of-legend-items-to-show="5" />
-					</div>
+					</div> #}
+
+					<input type="number" name="latest-date" value="1990" /> - 
+					<input type="number" name="latest-date" value="2022" />
 
 				
 
 
+					{# TODO read start/end years from form inputs above #}
 
-
-					{% set href=h.add_url_param(new_params={'ext_subak_temporal_start': '2013-08-01T00:00:00Z', 'ext_subak_temporal_end': '2022-01-01T00:00:00Z'}, extras=extras, alternative_url=alternative_url) %}
+					{% set href=h.add_url_param(new_params={'subak_temporal_start': '2013', 'subak_temporal_end': '2022'}, extras=extras, alternative_url=alternative_url) %}
 					{# <p>{{ href }}</p> #}
 					{# ?subak_temporal_start=2013-08-01T00%3A00%3A00Z&subak_temporal_end=2021-08-31T00%3A00%3A00Z #}
 					{# ?q=subak_temporal_start%3A%5B2013-08-01T00%3A00%3A00Z+TO+2021-08-31T00%3A00%3A00Z%5D #}
+
+					{# checkbox to show datasets where date not set #}
 
 					<p class="mt-4"><a href="{{ href }}" class="btn btn-default btn-xs">Search Date Range</a></p>
 					<p><a href="{{ h.remove_url_param(['subak_temporal_start', 'subak_temporal_end']) }}" class="btn btn-default btn-xs action">{{ _('Clear') }}</a></p>

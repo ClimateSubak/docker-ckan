@@ -1,6 +1,8 @@
 import logging
 import json
 from os import path
+import re
+
 import ckan.plugins as p
 
 log = logging.getLogger(__name__)
@@ -59,25 +61,27 @@ class SchemaPlugin(p.SingletonPlugin):
         return data_dict
 
     def before_search(self, search_params):
-        extras = search_params.get('extras')
-        if not extras:
-            return search_params
-        subak_temporal_start = extras.get("ext_subak_temporal_start")
-        subak_temporal_end = extras.get("ext_subak_temporal_end")
         
-
-        if subak_temporal_start and subak_temporal_end:
-            fq = search_params["fq"]
-            fq = f"{fq} + subak_temporal_start:[{subak_temporal_start} \
-                    TO {subak_temporal_end}] + \
-                    subak_temporal_end:[{subak_temporal_start} TO {subak_temporal_end}]"
-            search_params["fq"] = fq
-            return search_params
-
-        if subak_temporal_start:
-            fq = search_params["fq"]
-            fq = f"{fq} + subak_temporal_start:[{subak_temporal_start} \
-                    TO *]"
-            search_params["fq"] = fq
+        log.debug(search_params)
+                    
+        fq = search_params["fq"]
+        # TODO separate if statement for start and end
+        # TODO if only start or end is set, set the other to *
+        if 'subak_temporal_start' in fq and 'subak_temporal_end' in fq:
+            start = re.search(r'subak_temporal_start:"(.*?)"', fq)[1]
+            end = re.search(r'subak_temporal_end:"(.*?)"', fq)[1]
+            
+            # Remove the subak_temporal_* fields from fq
+            fq = re.sub(r'subak_temporal_start:"(.*?)"', '', fq)
+            fq = re.sub(r'subak_temporal_end:"(.*?)"', '', fq)
+            
+            # Show datasets if subak_temporal_start or subak_temporal_end fall within 
+            # the specified date range
+            fq = f'{fq} + (subak_temporal_start:[{start}-01-01T00:00:00Z TO {end}-12-31T23:59:59Z] OR subak_temporal_end:[{start}-01-01T00:00:00Z TO {end}-12-31T23:59:59Z])'
+            # fq = f'metadata_created:[{start}-01-01T00:00:00Z TO {end}-12-31T23:59:59Z]'
+         
+        # TODO handle edge case where subak_temporal_end isn't set
         
+        log.debug(fq)
+        search_params['fq'] = fq
         return search_params
