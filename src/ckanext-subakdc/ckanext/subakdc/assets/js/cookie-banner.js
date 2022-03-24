@@ -1,5 +1,3 @@
-"use strict";
-
 this.ckan.module('cookie_banner', function ($) {
   return {
     initialize: function () {

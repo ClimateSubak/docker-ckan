@@ -1,5 +1,3 @@
-"use strict";
-
 this.ckan.module('date_facet', function ($) {
     return {
         initialize: function () {
@@ -31,5 +29,5 @@ this.ckan.module('date_facet', function ($) {
             location.href = location.pathname + '?' + params.toString();
         });
     }
-  };
+  }
 })
