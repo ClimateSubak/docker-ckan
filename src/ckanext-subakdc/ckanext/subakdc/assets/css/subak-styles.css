@@ -76,6 +76,10 @@ body {
   color: #FFF;
 }
 
+.popover .popover-content {
+  word-break: normal !important;
+}
+
 .full-width {
   margin-left: 0 !important;
   margin-right: 0 !important;

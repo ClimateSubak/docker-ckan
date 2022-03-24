@@ -1,7 +1,8 @@
 subakdc_js:
   contents:
-    - js/alpine-3.8.1.min.js
+    - js/alpine-3.9.1.min.js
     - js/cookie-banner.js
+    - js/date-facet.js
   filters: rjsmin
   output: ckanext-subakdc/%(version)s_subakdc.js
   extra:
