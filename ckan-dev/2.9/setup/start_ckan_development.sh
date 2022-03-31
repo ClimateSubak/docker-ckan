@@ -78,4 +78,5 @@ fi
 supervisord --configuration /etc/supervisord.conf &
 
 # Start the development server with automatic reload
-sudo -u ckan -EH ckan -c $CKAN_INI run -H 0.0.0.0
+# sudo -u ckan -EH ckan -c $CKAN_INI run -H 0.0.0.0
+sudo -u ckan -EH python3 -m pdb ckan -c $CKAN_INI run -H 0.0.0.0
