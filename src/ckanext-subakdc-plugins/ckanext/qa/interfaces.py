@@ -123,6 +123,7 @@ class IQaAction(ABC):
     """
     name = ""
     form_button_text = ""
+    snippet = None
     
     @classmethod
     def get_action(cls):
@@ -130,13 +131,19 @@ class IQaAction(ABC):
         Returns a dict of the name and form_button_text to be used in the report 
         template
         """
-        return { "name": f"action.{cls.name}", 
-                 "form_button_text": cls.form_button_text }
+        action = { "name": f"action.{cls.name}", 
+                   "form_button_text": cls.form_button_text }
+        
+        if cls.snippet is not None:
+            action['snippet'] = cls.snippet
+            
+        return action
     
     @classmethod
     def run_job(cls, pkg_ids):
         func = cls.run
-        tk.enqueue_job(func, [ pkg_ids ], rq_kwargs={ 'timeout': 3600 })
+        # tk.enqueue_job(func, [ pkg_ids ], rq_kwargs={ 'timeout': 3600 })
+        func(pkg_ids)
     
     @classmethod
     @abstractmethod

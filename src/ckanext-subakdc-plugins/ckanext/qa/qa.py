@@ -17,7 +17,8 @@ class QaTaskRunner():
         Runs QA tasks over all entities (triggers a job as this will be a long running process)
         """
         func = self.run_tasks_as_job
-        tk.enqueue_job(func, rq_kwargs={ 'timeout': 3600 })
+        # tk.enqueue_job(func, rq_kwargs={ 'timeout': 3600 })
+        func()
         
     def run_tasks_as_job(self):
         """
@@ -52,7 +53,7 @@ class QaTaskRunner():
         try:
             for task in self.tasks:
                 new_qa[task.qa_property_name] = task.evaluate(pkg)
-        except:
+        except Exception as e:
             log.error(f"Could not evaluate package against all tasks in run_on_single_package: {pkg['name']}, {e}")
         
         # Only patch the package if the qa properties have changed

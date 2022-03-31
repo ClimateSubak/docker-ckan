@@ -29,12 +29,16 @@
       {% if c.userobj.sysadmin %}
         <div id="qa-buttons">
           {% for action in data.qa_actions %}
-          <button :disabled="selectedItems.length == 0" 
-                  disabled
-                  class="float-right px-3 py-2 text-white rounded bg-subak-burnt-copper disabled:bg-opacity-50" 
-                  type="submit"
-                  name="{{ action.name }}"
-                  value="1">{{ action.form_button_text }}</button>
+            {% if action.snippet %}
+              {% snippet action.snippet, options=options, action=action %}
+            {% else %}
+              <button :disabled="selectedItems.length == 0" 
+                      disabled
+                      class="float-right px-3 py-2 text-white rounded bg-subak-burnt-copper disabled:bg-opacity-50" 
+                      type="submit"
+                      name="{{ action.name }}"
+                      value="1">{{ action.form_button_text }}</button>
+            {% endif %}
           {% endfor %}
         {% endif %}
       </div>
