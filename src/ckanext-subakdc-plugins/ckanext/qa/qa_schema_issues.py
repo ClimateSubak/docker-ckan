@@ -13,6 +13,7 @@ QA_PROPERTY_NAME = 'qa_schema_issues'
 QA_ACTIONS = [ QaUpdateDatasetsAction ]
 FIELDS = {
     'subak_overview': 'Overview',
+    'subak_primary_taxonomy_category': 'Primary taxonomy category',
     'tag_string': 'Keywords',
     'subak_temporal_start': 'Start date',
     'subak_temporal_end': 'End date',
@@ -37,6 +38,9 @@ class QaSchemaIssuesTask(IQaTask):
         
         if pkg.get('subak_overview', '') == '':
             issues['subak_overview'] = 'empty'
+            
+        if pkg.get('subak_primary_taxonomy_category', '') == '':
+            issues['subak_primary_taxonomy_category'] = 'empty'
         
         if len(pkg.get('tags', [])) == 0:
             issues['tag_string'] = 'empty'
