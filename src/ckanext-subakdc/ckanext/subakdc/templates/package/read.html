@@ -2,8 +2,21 @@
 
 
 {% block package_notes %}
+{% if pkg.subak_primary_taxonomy_category %}
+  <div class="flex mb-2 text-sm border border-stone-300">
+    <span class="px-2 py-1 font-mono bg-stone-300">Primary taxonomy</span>
+    <span class="px-2 py-1 font-body">{{ pkg.subak_primary_taxonomy_category }}</span>
+  </div>
+{% endif %}
+{% if pkg.subak_secondary_taxonomy_category %}
+  <div class="flex items-center text-xs border border-stone-200">
+    <span class="px-2 py-1 font-mono bg-stone-200">Secondary taxonomy</span>
+    <span class="px-2 py-1 font-body">{{ pkg.subak_secondary_taxonomy_category }}</span>
+  </div>
+{% endif %}
+
 {% if pkg.notes %}
-  <div class="prose prose-sm prose-headings:font-heading font-body max-w-none">
+  <div class="prose-sm prose prose-headings:font-heading font-body max-w-none">
   {% set description = h.render_markdown(h.get_translated(pkg, 'notes')) %}
   {% if description | length < 500 %}
   <div class="notes embedded-content">
@@ -11,9 +24,9 @@
   </div>
   {% else %}
   <div x-data="{ more: false }" class="notes embedded-content">
-    <div :class="more ? 'h-auto' : 'overflow-hidden h-52'" class="mb-4 pt-px relative">
+    <div :class="more ? 'h-auto' : 'overflow-hidden h-52'" class="relative pt-px mb-4">
       {{ description }}
-      <div x-show="!more" class="absolute bottom-0 left-0 z-1 h-24 w-full bg-gradient-to-t from-white"></div>
+      <div x-show="!more" class="absolute bottom-0 left-0 w-full h-24 z-1 bg-gradient-to-t from-white"></div>
     </div>
     <p><a href="#"
       @click="more = !more"

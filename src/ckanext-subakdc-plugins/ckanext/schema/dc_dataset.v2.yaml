@@ -44,6 +44,20 @@ dataset_fields:
     display_property: dct:description
     help_text: A Detailed description of the dataset, including data quality and processing techniques.
 
+  - field_name: subak_primary_taxonomy_category
+    label: Primary taxonomy category
+    required: false
+    preset: select
+    display_property: dcat:theme
+    choices_helper: scheming_taxonomy_choices
+
+  - field_name: subak_secondary_taxonomy_category
+    label: Secondary taxonomy category
+    required: false
+    preset: select
+    display_property: dcat:theme
+    choices_helper: scheming_taxonomy_choices
+    
   # Tags will come from preset list
   # TODO determine relevant climate-themed tag list
   # TODO create custom preset that serves predefined tag list
@@ -147,8 +161,6 @@ dataset_fields:
     help_text: Select the broad region that most closely represents your dataset's geographic coverage.
 
   # Will be used to build a filter
-  # TODO Compile list of countries using ISO3166 standard
-  # TODO create scheming_countries_choices helper (see: https://github.com/ckan/ckanext-scheming#choices_helper)
   - field_name: subak_countries
     label: Countries
     required: false
@@ -210,8 +222,6 @@ dataset_fields:
     form_placeholder: http://example.com/project-url.html
     help_text: A link to a project website related to the dataset.
 
-  # harvest_source not included here as it is added via ckanext-harvest plugin
-
   - field_name: author
     label: Contact
     required: false
@@ -261,7 +271,6 @@ dataset_fields:
     display_property: prov:qualifiedPrimarySource
     help_text: List or table of sources used to created this dataset.
 
-  # TODO hide/disable this field in the update/create dataset form
   - field_name: subak_qa
     label: QA
     required: false
