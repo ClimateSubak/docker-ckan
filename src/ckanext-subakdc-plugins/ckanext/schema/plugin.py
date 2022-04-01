@@ -6,13 +6,17 @@ import ckan.plugins as p
 
 log = logging.getLogger(__name__)
 
+def get_taxonomy_dict(field):
+    with open(path.join(path.dirname(__file__), "taxonomy.json")) as f:
+        taxonomy_cats = json.load(f)
+
+    return list(map(lambda tc: {"value": tc, "label": tc}, taxonomy_cats))
 
 def get_countries_dict(field):
     with open(path.join(path.dirname(__file__), "countries-iso-3166.json")) as f:
         countries = json.load(f)
 
     return list(map(lambda c: {"value": c["alpha-2"], "label": c["name"]}, countries))
-
 
 def get_country_name_from_code(code):
     with open(path.join(path.dirname(__file__), "countries-iso-3166.json")) as f:
@@ -33,7 +37,8 @@ class SchemaPlugin(p.SingletonPlugin):
         Helper function to extract the freshness score from the package dict
         """
         helpers = {
+            "scheming_taxonomy_choices": get_taxonomy_dict,
             "scheming_countries_choices": get_countries_dict,
-            "scheming_code_to_name": get_country_name_from_code,
+            "scheming_code_to_name": get_country_name_from_code
         }
         return helpers
