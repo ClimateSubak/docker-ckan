@@ -92,7 +92,7 @@ class IQaReport(ABC):
         action_name = actions[0].split('.', 1)[1]
         for action in cls.qa_actions:
             if action.name == action_name:
-                action.run_job(pkg_ids)
+                action.run_job(pkg_ids, form_vars=tk.request.form.to_dict(flat=False))
                 return True
         
     @classmethod
@@ -140,14 +140,13 @@ class IQaAction(ABC):
         return action
     
     @classmethod
-    def run_job(cls, pkg_ids):
+    def run_job(cls, pkg_ids, form_vars):
         func = cls.run
-        # tk.enqueue_job(func, [ pkg_ids ], rq_kwargs={ 'timeout': 3600 })
-        func(pkg_ids)
+        tk.enqueue_job(func, [ pkg_ids, form_vars ], rq_kwargs={ 'timeout': 3600 })
     
     @classmethod
     @abstractmethod
-    def run(cls, pkg_ids):
+    def run(cls, pkg_ids, form_vars):
         """
         Runs an action over the pkg_ids (e.g. deleting all packages in the list)
         """

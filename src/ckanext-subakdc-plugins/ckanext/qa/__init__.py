@@ -17,6 +17,7 @@ reports = [ qa_no_resources_report_info,
             qa_schema_issues_report_info ]
 
 helpers = { 'schema_qa_field_options': schema_qa_field_options_helper,
+            'schema_qa_default_field_option': lambda: list(schema_qa_field_options_helper().keys())[0],
             'qa_license_options': lambda: [(license[1], license[0]) for license in license_options()] }
 
 def is_sysadmin(user, _):

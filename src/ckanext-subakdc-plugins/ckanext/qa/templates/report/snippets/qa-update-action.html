@@ -40,7 +40,11 @@
                     {%- set schema = h.scheming_get_dataset_schema('dataset') -%}
                     {%- for field in schema.dataset_fields -%}
                         {%- if options.field -%}
-                        {%- if field.field_name == options.field -%}
+                            {%- set field_name = options.field -%}
+                        {%- else -%}
+                            {%- set field_name = h.schema_qa_default_field_option() -%}
+                        {%- endif -%}
+                        {%- if field.field_name == field_name -%}
                             {%- snippet 'scheming/snippets/form_field.html',
                             field=field,
                             data={},
@@ -49,27 +53,16 @@
                             entity_type='dataset',
                             object_type='dataset'
                             -%}
-                        {%- endif -%}
-                        {% else %}
-                        {%- if field.field_name in h.schema_qa_field_options().keys() -%}
-                            {%- snippet 'scheming/snippets/form_field.html',
-                            field=field,
-                            data={},
-                            errors=[],
-                            licenses=h.qa_license_options(),
-                            entity_type='dataset',
-                            object_type='dataset'
-                            -%}
-                        {%- endif -%}
                         {%- endif -%}
                     {%- endfor -%}
 
                     <button class="float-right px-3 py-2 text-white rounded bg-subak-burnt-copper disabled:bg-opacity-50" 
+                            x-text="submitting ? 'Submitting...' : 'Update ' + selectedItems.length + ' datasets'"
                             :disabled="selectedItems.length == 0" 
                             disabled
                             type="submit"
                             name="{{ action.name }}"
-                            value="1">Update <span x-text="selectedItems.length"></span> datasets</button>
+                            value="1"></button>
                 </div>
             </div>
         </div>

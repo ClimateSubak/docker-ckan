@@ -1,6 +1,4 @@
-from datetime import datetime
 import logging
-import math
 
 from collections import OrderedDict
 
@@ -93,7 +91,8 @@ class QaSchemaIssuesReport(IQaReport):
     
     @classmethod
     def generate(cls, field):
-        field = None if field == '' else field
+        # Use first field in FIELDS if not provided as argument
+        field = list(FIELDS.keys())[0] if not field else field
         action_is_running = cls.run_action()
         
         table_fields = ['id', 'title']
@@ -134,7 +133,7 @@ qa_schema_issues_report_info = {
     'name': 'schema-issues-datasets',
     'title': 'Datasets with schema issues',
     'description': f"This report highlights datasets where schema attributes are invalid or missing",
-    'option_defaults': OrderedDict({'field': None }),
+    'option_defaults': OrderedDict({'field': list(FIELDS.keys())[0] }),
     'option_combinations': lambda: { 'field': FIELDS[field] for field in FIELDS},
     'generate': QaSchemaIssuesReport.generate,
     'template': 'report/qa_schema_issues.html'

@@ -17,8 +17,7 @@ class QaTaskRunner():
         Runs QA tasks over all entities (triggers a job as this will be a long running process)
         """
         func = self.run_tasks_as_job
-        # tk.enqueue_job(func, rq_kwargs={ 'timeout': 3600 })
-        func()
+        tk.enqueue_job(func, rq_kwargs={ 'timeout': 3600 })
         
     def run_tasks_as_job(self):
         """

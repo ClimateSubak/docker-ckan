@@ -15,7 +15,8 @@
 </div>
 {% endif %}
 
-<form x-data="SelectAll()" action="" method="post">
+<div x-data="actionForm()">
+  <form @submit="submitting = true" action="" method="post">
     {% block qa_report_table %}{% endblock %}
     <div id="qa-actions" class="flex items-center justify-between my-2">
       <div>
@@ -32,46 +33,49 @@
             {% if action.snippet %}
               {% snippet action.snippet, options=options, action=action %}
             {% else %}
-              <button :disabled="selectedItems.length == 0" 
+              <button x-text="submitting ? 'Submitting...' : '{{ action.form_button_text }}'"
+                      :disabled="selectedItems.length == 0" 
                       disabled
                       class="float-right px-3 py-2 text-white rounded bg-subak-burnt-copper disabled:bg-opacity-50" 
                       type="submit"
                       name="{{ action.name }}"
-                      value="1">{{ action.form_button_text }}</button>
+                      value="1"></button>
             {% endif %}
           {% endfor %}
         {% endif %}
       </div>
     </div>
   </form>
+</div>
   
-  <script>
-    document.addEventListener('alpine:init', function() {
-      Alpine.data('SelectAll', function() {
-        checkboxes = document.querySelectorAll('[name^=id]')
-        
-        return {
-          selectedItems: [],
-          setAllSelected: function(isChecked=false) {
-            ctx = this
-            checkboxes.forEach(function(el) {
-              el.checked = isChecked
-              ctx.setSelected(el.value, isChecked)
-            })
-          },
-          setSelected: function(id, selected=false) {
-            var idx = this.selectedItems.indexOf(id)
-            if (selected && idx == -1) {
-              this.selectedItems.push(id)
-            } else if (!selected) {
-              this.selectedItems.splice(idx, 1)
-            }
-          },
-          toggleSelected: function(id) {
-            var idx = this.selectedItems.indexOf(id)
-            this.setSelected(id, idx == -1)
+<script>
+  document.addEventListener('alpine:init', function() {
+    Alpine.data('actionForm', function() {
+      checkboxes = document.querySelectorAll('[name^=id]')
+      
+      return {
+        selectedItems: [],
+        submitting: false,
+        setAllSelected: function(isChecked=false) {
+          ctx = this
+          checkboxes.forEach(function(el) {
+            el.checked = isChecked
+            ctx.setSelected(el.value, isChecked)
+          })
+        },
+        setSelected: function(id, selected=false) {
+          var idx = this.selectedItems.indexOf(id)
+          if (selected && idx == -1) {
+            this.selectedItems.push(id)
+          } else if (!selected) {
+            this.selectedItems.splice(idx, 1)
           }
+        },
+        toggleSelected: function(id) {
+          var idx = this.selectedItems.indexOf(id)
+          this.setSelected(id, idx == -1)
         }
-      })
+      }
     })
-  </script>
+  })
+</script>
