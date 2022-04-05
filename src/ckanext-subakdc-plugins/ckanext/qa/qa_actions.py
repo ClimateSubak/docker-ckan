@@ -12,14 +12,14 @@ class QaHideDatasetsAction(IQaAction):
     form_button_text = 'Hide selected datasets'
     
     @classmethod
-    def run(cls, pkg_ids):
+    def run(cls, pkg_ids, form_vars):
         # Get the required API action
-        delete_package = tk.get_action('package_delete')    
+        delete_package = tk.get_action('package_delete')
         
         # Loop over all the provided package ids and call delete API action 
         # N.B. The CKAN delete package API doesn't actually delete the package,
         # but just sets the state property to 'deleted' in the DB so it no longer
-        # shows up via API calls or in the webb frontend
+        # shows up via API calls or in the web frontend
         for pkg_id in pkg_ids:
             try:
                 delete_package({ 'ignore_auth': True, 'user': None }, 
@@ -27,3 +27,25 @@ class QaHideDatasetsAction(IQaAction):
             except Exception as e:
                 log.error(f"Could not patch package in QaHideDatasetsAction.run: {pkg_id}, {e}")
 
+
+class QaUpdateDatasetsAction(IQaAction):
+    name = 'update_datasets'
+    form_button_text = 'Update selected datasets'
+    snippet = 'report/snippets/qa-update-action.html'
+    
+    @classmethod
+    def run(cls, pkg_ids, form_vars):
+        # Get the required API action
+        patch_package = tk.get_action('package_patch')
+        
+        # Filter out id and action fields from POST vars
+        patch_fields = { field[0]:field[1] for field in filter(lambda field: field[0] != 'id' and not(field[0].startswith('action.')), 
+                                                               form_vars.items()) }
+    
+        # Loop over all the provided package ids and call patch API action
+        for pkg_id in pkg_ids:
+            try:
+                patch_fields.update({ 'id': pkg_id })
+                patch_package({ 'ignore_auth': True, 'user': None }, patch_fields)
+            except Exception as e:
+                log.error(f"Could not patch package in QaUpdateDatasetsAction.run: {pkg_id}, {e}")
