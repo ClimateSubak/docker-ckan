@@ -16,7 +16,7 @@ def run(task):
     Run using `ckan qa run {task_name}` in the CKAN container
     """
     if not task:
-        runner = QaTaskRunner(tasks.values())
+        runner = QaTaskRunner(list(tasks.values()))
     else:
         runner = QaTaskRunner([tasks[task]])
         
