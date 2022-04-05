@@ -1,4 +1,3 @@
-from ast import Raise
 import click
 
 from ckanext.qa import tasks
