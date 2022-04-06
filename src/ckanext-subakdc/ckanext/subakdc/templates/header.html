@@ -1,9 +1,6 @@
 {% ckan_extends %} 
 
 {% block header_wrapper %} 
-  {% block header_account %}
-  {{ super() }}
-  {% endblock %}
   <nav class="navbar navbar-expand-lg fixed-top masthead">
     <div class="container-fluid">
 
@@ -41,26 +38,17 @@
               <li>
                 <a href="/pages/add-data"><img class="inline relative -top-px mr-1" src="{{ '/images/add.svg' }}" class="inline">Add Data</a>
               </li>
-              {% block header_site_navigation_tabs %}
-              {{ h.build_nav_main(
-              ('dataset.search', _('Datasets')),
-              ('organization.index', _('Organizations')),
-              ('home.about', _('About')) ) }}
-              {% endblock %}
+              <li>
+                <a href="/dataset/">Datasets</a>
+              </li>
+              <li>
+                <a href="/organization/">Organizations</a>
+              </li>
+              <li>
+                {% include 'header_account.html' %}
+              </li>
             </ul>
           </nav>
-          {% endblock %} 
-          {% block header_site_search %}
-          <form class="section site-search simple-input" action="{% url_for 'dataset.search' %}" method="get">
-            <div class="field">
-              <label for="field-sitewide-search">{% block header_site_search_label %}{{ _('Search Datasets') }}{% endblock
-                %}</label>
-              <input id="field-sitewide-search" type="text" class="form-control" name="q" placeholder="{{ _('Search') }}"
-                aria-label="{{ _('Search datasets') }}" />
-              <button class="btn-search" type="submit" aria-label="{{ _('Submit') }}"><i
-                  class="fa fa-search"></i></button>
-            </div>
-          </form>
           {% endblock %}
         </div>
       </div>
