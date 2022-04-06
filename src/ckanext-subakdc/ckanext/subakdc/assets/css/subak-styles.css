@@ -90,5 +90,10 @@ body {
 /* Hide the QA field in the dataset create/update form */
 #field-subak_qa,
 label[for="field-subak_qa"] {
-  display: none;
+  display: none !important;
+}
+
+/* Hides alpine elements with x-cloak attribute before alpine initialises */
+[x-cloak] { 
+  display: none !important;
 }

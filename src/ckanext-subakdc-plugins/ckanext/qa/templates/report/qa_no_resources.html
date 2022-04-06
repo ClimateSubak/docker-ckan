@@ -22,9 +22,7 @@ Datasets with no resources: {{ table | length }} / {{ data.total_num_packages }}
         <td class="p-2">
           {{ row.title }}
         </td>
-        <td class="p-2">
-          <a href="{{ h.url_for('dataset.read', id=row.id) }}">View</a>
-        </td>
+        {% snippet 'report/snippets/view-edit-dataset-links.html', id=row.id %}
       </tr>
     {% endfor %}
   </tbody>
