@@ -22,6 +22,9 @@ rebuild.ckan:
 restart.ckan:
 	docker compose $(COMPOSE_FILE_PATH) up -d --no-deps --force-recreate ckan
 
+debug.ckan:
+	docker stop ${CKAN_CONTAINER} && docker compose $(COMPOSE_FILE_PATH) run --rm --no-deps --name ckan ckan
+
 replace.ckan:
 	./update_ckan_container.sh
 
