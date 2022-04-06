@@ -92,7 +92,7 @@ class IQaReport(ABC):
         action_name = actions[0].split('.', 1)[1]
         for action in cls.qa_actions:
             if action.name == action_name:
-                action.run_job(pkg_ids)
+                action.run_job(pkg_ids, form_vars=tk.request.form.to_dict(flat=False))
                 return True
         
     @classmethod
@@ -123,6 +123,7 @@ class IQaAction(ABC):
     """
     name = ""
     form_button_text = ""
+    snippet = None
     
     @classmethod
     def get_action(cls):
@@ -130,17 +131,22 @@ class IQaAction(ABC):
         Returns a dict of the name and form_button_text to be used in the report 
         template
         """
-        return { "name": f"action.{cls.name}", 
-                 "form_button_text": cls.form_button_text }
+        action = { "name": f"action.{cls.name}", 
+                   "form_button_text": cls.form_button_text }
+        
+        if cls.snippet is not None:
+            action['snippet'] = cls.snippet
+            
+        return action
     
     @classmethod
-    def run_job(cls, pkg_ids):
+    def run_job(cls, pkg_ids, form_vars):
         func = cls.run
-        tk.enqueue_job(func, [ pkg_ids ], rq_kwargs={ 'timeout': 3600 })
+        tk.enqueue_job(func, [ pkg_ids, form_vars ], rq_kwargs={ 'timeout': 3600 })
     
     @classmethod
     @abstractmethod
-    def run(cls, pkg_ids):
+    def run(cls, pkg_ids, form_vars):
         """
         Runs an action over the pkg_ids (e.g. deleting all packages in the list)
         """

@@ -5,12 +5,13 @@ Stale datasets: {{ table | length }} / {{ data.total_num_packages }} ({{ ((table
 {% endblock %}
 
 {% block qa_report_table %}
+{% set issues = h.schema_qa_field_options() %}
 <table class="w-full table-auto" id="report-table"">
   <thead>
     <tr class="border-b border-gray-200">
       <th class="w-2 p-2 pr-1"></th>
       <th class="p-2">Dataset</th>
-      <th class="p-2">Age</th>
+      <th class="p-2">Issues</th>
       <th class="w-10 p-2"></th>
     </tr>
   </thead>
@@ -20,11 +21,13 @@ Stale datasets: {{ table | length }} / {{ data.total_num_packages }} ({{ ((table
         <td class="p-2 pr-1">
           {% snippet "report/snippets/qa_checkbox.html", id=row.id %}
         </td>
-        <td class="p-2 whitespace-nowrap">
+        <td class="p-2">
           {{ row.title }}
         </td>
         <td class="p-2">
-          &gt; {{ (row.age / 365) | round(0, 'floor') | int }} years
+          {% for key, value in row.issues.items() %}
+            {{ issues[key] }}: {{ value }}<br />
+          {% endfor %}
         </td>
         {% snippet 'report/snippets/view-edit-dataset-links.html', id=row.id %}
       </tr>

@@ -8,13 +8,18 @@ def qa():
     pass
 
 @click.command()
-def run():
+@click.argument('task', required=False)
+def run(task):
     """
-    Runs all tasks over all packages
+    Runs all given tasks (or all tasks if none given) over all packages
     
-    Run using `ckan qa run` in the CKAN container
+    Run using `ckan qa run {task_name}` in the CKAN container
     """
-    runner = QaTaskRunner(tasks)
+    if not task:
+        runner = QaTaskRunner(list(tasks.values()))
+    else:
+        runner = QaTaskRunner([tasks[task]])
+        
     runner.run()
 
 qa.add_command(run)

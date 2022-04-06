@@ -52,7 +52,7 @@ class QaTaskRunner():
         try:
             for task in self.tasks:
                 new_qa[task.qa_property_name] = task.evaluate(pkg)
-        except:
+        except Exception as e:
             log.error(f"Could not evaluate package against all tasks in run_on_single_package: {pkg['name']}, {e}")
         
         # Only patch the package if the qa properties have changed
