@@ -36,6 +36,11 @@ class QaTaskRunner():
         Runs whenever a package is created/updated. Runs all QA tasks against the package
         and sets the qa property in the subak_qa dict on the model
         """
+        
+        # Skip any packages that aren't datasets
+        if pkg.get('type', None) != 'dataset':
+            return
+        
         # Get the required API actions
         show_package = tk.get_action('package_show')
         patch_package = tk.get_action('package_patch')
