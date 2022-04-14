@@ -23,7 +23,7 @@ s3_location="s3://subakdc-db-backups/${environment}/"
 docker_bin=$(which docker)
 aws_bin=$(which aws)
 
-container_id=$($docker_bin ps | grep $service_name | awk '{print $1}')
+container_id=$($docker_bin ps --filter "name=$service_name" -q)
 
 # create the backup
 $docker_bin exec $container_id pg_dump -U ckan -f /tmp/$backup_filename $database_name
