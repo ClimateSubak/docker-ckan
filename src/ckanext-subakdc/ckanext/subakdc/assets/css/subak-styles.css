@@ -8,6 +8,8 @@ body {
   background-size: cover !important;
 }
 
+.dashboard-link:focus,
+.dashboard-link:hover,
 .masthead .nav > li > a:focus,
 .masthead .nav > li > a:hover,
 .masthead .nav > .active > a:hover,
