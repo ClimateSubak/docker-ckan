@@ -88,6 +88,7 @@ setup(
         schema=ckanext.schema.plugin:SchemaPlugin
         qa=ckanext.qa.plugin:QAPlugin
         search=ckanext.search.plugin:SearchPlugin
+        opendatasoft_harvester=ckanext.harvesters:OpendatasoftHarvester
 
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan
