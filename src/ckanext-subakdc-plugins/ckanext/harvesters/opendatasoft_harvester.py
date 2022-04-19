@@ -1,5 +1,7 @@
 import logging
 import json
+from os import path
+import re
 import requests
 from markdownify import markdownify as md
 
@@ -11,7 +13,13 @@ from ckanext.harvest.harvesters import HarvesterBase
 
 log = logging.getLogger(__name__)
 
-
+def get_countries():
+    with open(path.join(path.dirname(__file__), "..", "countries-iso-3166.json")) as f:
+        countries = json.load(f)
+    
+    return list(map(lambda c: {"value": c["alpha-2"], "label": c["name"]}, countries))
+        
+        
 class OpendatasoftHarvester(HarvesterBase):
     '''
     A Harvester for OpenDataSoft instances
@@ -74,7 +82,7 @@ class OpendatasoftHarvester(HarvesterBase):
                 return None
             
         except Exception as e:
-            self._save_gather_error(e.message,harvest_job)
+            self._save_gather_error(e.message, harvest_job)
 
     def fetch_stage(self, harvest_object):
         log.debug('OpendatasoftHarvester fetch_stage')
@@ -92,22 +100,33 @@ class OpendatasoftHarvester(HarvesterBase):
 
         except Exception as e:
             log.exception(f"Could not load URL: {fetch_url}")
-            self._save_object_error(e.message,harvest_object)
+            self._save_object_error(e.message, harvest_object)
        
         content = {}
         
         base_url = harvest_object.source.url
 
         # Transform opendatasoft schema to CKAN schema
+        title = ''
         if 'title' in dataset.keys():
-            content.update({ "title": dataset['title'] })
+            title = dataset['title']
+            content.update({ "title": title })
         
         if 'publisher' in dataset.keys():
             content.update({ "owner_org": dataset['publisher'] })
             content.update({ "author": dataset['publisher'] })
         
         if 'description' in dataset.keys():
-            content.update({ "notes": md(dataset['description']) })
+            description = md(dataset['description'])
+            
+            # If empty description just use title otherwise CKAN will not 
+            # import as notes field mustn't be empty
+            if len(description.strip()) == 0:
+                description = title
+                
+            content.update({ "notes": description })
+        else:
+            content.update({ "notes": title })
         
         if 'license' in dataset.keys():
             content.update({ "license_id": dataset['license'] })
@@ -117,10 +136,27 @@ class OpendatasoftHarvester(HarvesterBase):
             content.update({ "tags": tags })
             
         if 'metadata_processed' in dataset.keys():
-            # Ignore milliseconds
-            content.update({ "metadata_modified": dataset['metadata_processed'].split('.')[0] })
+            # Ignore milliseconds and timezone adjustments
+            content.update({ "metadata_modified": re.split(r'\.|\+', dataset['metadata_processed'])[0] })
+          
+        if 'country' in dataset.keys():
+            countries = get_countries()
+            country_names = [c['label'] for c in countries]
+            ds_countries = []
+            for c in dataset['country']:
+                try:
+                    idx = country_names.index(c)
+                    ds_countries.append(countries[idx]['value'])
+                except ValueError:
+                    pass
+            
+            content.update({ "subak_countries": ds_countries })
 
-        content.update({ "url": f"{base_url.rstrip('/')}/explore/dataset/{harvest_object.guid}" })
+        if 'references' in dataset.keys():
+            content.update({ "url": dataset['references'] })
+        else:
+            content.update({ "url": f"{base_url.rstrip('/')}/explore/dataset/{harvest_object.guid}" })
+            
         content.update({ "id": harvest_object.guid })
         
         if has_records == True:
@@ -132,8 +168,8 @@ class OpendatasoftHarvester(HarvesterBase):
                 resource.update({ "name": dataset['title'] })
             
             if 'data_processed' in dataset.keys():
-                # Ignore milliseconds
-                resource.update({ 'last_modified': dataset['data_processed'].split('.')[0] })
+                # Ignore milliseconds and timezone adjustments
+                resource.update({ 'last_modified': re.split(r'\.|\+', dataset['data_processed'])[0] })
                 
             if 'fields' in dataset and len(dataset['fields']) > 0:
                 fields = []
@@ -203,20 +239,24 @@ class OpendatasoftHarvester(HarvesterBase):
                 remote_org = package_dict['owner_org']
 
                 if remote_org:
+                    org_name = re.sub(r'[^\s\w]', '', remote_org.lower()).replace(' ', '-')
                     try:
                         org = tk.get_action('organization_show')({ 'ignore_auth': True, 'user': None }, 
-                                                                 { 'id': remote_org })
+                                                                 { 'id': org_name })
                         validated_org = org['id']
                     except NotFound:
                         log.info(f"Organization {remote_org} is not available")
                         if remote_orgs == 'create':
                             try:
-                                tk.get_action('organization_create')({ 'ignore_auth': True, 'user': None }, 
-                                                                     { 'name': remote_org })
+                                org = tk.get_action('organization_create')({ 'ignore_auth': True, 'user': self._get_user_name() }, 
+                                                                           { 'name': org_name, 
+                                                                             'title': remote_org })
+                                
                                 log.info(f"Organization {remote_org} has been newly created")
                                 validated_org = org['id']
-                            except ValidationError:
-                                log.error(f"Could not get remote org {remote_org}")
+                                
+                            except ValidationError as e:
+                                log.error(f"Could not get remote org {remote_org}, {e}")
 
                 package_dict['owner_org'] = validated_org or local_org
             
