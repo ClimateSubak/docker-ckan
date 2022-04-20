@@ -51,7 +51,7 @@ class QaUpdateDatasetsAction(IQaAction):
                 log.error(f"Could not patch package in QaUpdateDatasetsAction.run: {pkg_id}, {e}")
 
 
-class QaSanitiseDatasetsAction(IQaAction):
+class QaCleanDatasetsAction(IQaAction):
     name = 'sanitise_datasets'
     form_button_text = 'Fix formatting issues for selected datasets'
 
