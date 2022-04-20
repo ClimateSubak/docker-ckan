@@ -16,3 +16,6 @@ For the report template:
 Finally:
 - Import and add your new task to the `tasks` list in `__init__.py`
 - Import and add you task report to `reports` list in `__init__.py`
+
+# Cold start
+The first time you run reporting you will need to run `ckan report initdb` to create the database tables.
