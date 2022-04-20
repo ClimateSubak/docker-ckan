@@ -16,8 +16,6 @@ body {
 .masthead .nav > .active > a:focus,
 .masthead .navigation .nav-pills li.active a {
   background-color: transparent !important;
-  text-decoration: underline 2px solid white !important;
-  text-underline-offset: 3px !important;
 }
 
 .control-order-by {

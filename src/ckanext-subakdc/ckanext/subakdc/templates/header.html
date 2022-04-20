@@ -36,13 +36,20 @@
           <nav class="section navigation">
             <ul class="nav nav-pills">
               <li>
-                <a href="/pages/add-data"><img class="inline relative -top-px mr-1" src="{{ '/images/add.svg' }}" class="inline">Add Data</a>
+                <a class="no-underline px-3 hover:text-gray-300" href="/pages/add-data"><img class="inline relative -top-px mr-2" src="{{ '/images/add.svg' }}" class="inline">Add Data</a>
               </li>
               <li>
-                <a href="/dataset/">Datasets</a>
+                <a class="no-underline px-3 hover:text-gray-300" href="/dataset/">Datasets</a>
               </li>
               <li>
-                <a href="/organization/">Organizations</a>
+                <a class="no-underline px-3 hover:text-gray-300" href="/organization/">Organizations</a>
+              </li>
+              <li class="pr-4">
+                <a class="no-underline px-3 hover:text-gray-300" href="/dataset/">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="inline relative -top-px h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </a>
               </li>
               <li>
                 {% include 'header_account.html' %}
