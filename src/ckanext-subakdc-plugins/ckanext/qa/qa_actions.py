@@ -49,3 +49,25 @@ class QaUpdateDatasetsAction(IQaAction):
                 patch_package({ 'ignore_auth': True, 'user': None }, patch_fields)
             except Exception as e:
                 log.error(f"Could not patch package in QaUpdateDatasetsAction.run: {pkg_id}, {e}")
+
+
+class QaCleanDatasetsAction(IQaAction):
+    name = 'sanitise_datasets'
+    form_button_text = 'Fix formatting issues for selected datasets'
+
+    @classmethod
+    def run(cls, pkg_ids, form_vars):
+        package_show = tk.get_action('package_show')
+        resource_patch = tk.get_action('resource_patch')
+
+        # Loop over all the provided package ids and call patch API action
+        for pkg_id in pkg_ids:
+            try:
+                package = package_show({ 'ignore_auth': True, 'user': None }, { 'id': pkg_id })
+                for resource in package['resources']:
+                    # patch the format if it is not a valid format
+                    new_format = resource['format'].replace('.', '').upper()
+                    resource_patch({ 'ignore_auth': True, 'user': None }, { 'id': resource['id'], 'format': new_format })
+
+            except Exception as e:
+                log.error(f"Could not patch package in QaCleanDatasetsAction.run: {pkg_id}, {e}")
