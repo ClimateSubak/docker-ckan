@@ -17,5 +17,9 @@ Finally:
 - Import and add your new task to the `tasks` list in `__init__.py`
 - Import and add you task report to `reports` list in `__init__.py`
 
+Note:
+Redis will cache job commands so if you change code you need to run:  
+`make restart.redis`  
+
 # Cold start
 The first time you run reporting you will need to run `ckan report initdb` to create the database tables.

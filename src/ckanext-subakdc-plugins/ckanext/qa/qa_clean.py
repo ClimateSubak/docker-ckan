@@ -14,22 +14,37 @@ class QaCleanTask(IQaTask):
 
     @classmethod
     def evaluate(cls, pkg):
-        return False
+        """
+        True if duplicate formats in files, licenses when case is standardised
+        """
 
-        # True if duplicate formats in files, licenses when case is standardised
-        # get all tags
         # get all file formats
         # get all licenses
 
-        # try:
-        #     for tag in pkg['package_tags']:
-        #         if any(char.isupper() for char in tag) or '_' in tag or '-' in tag:
-        #             return True
-        #     return False
-        #
-        # except Exception as e:
-        #     log.error(f"Could not evaluate pkg in QaSanitiseTask: {e}")
-        #     return False
+        try:
+            # sample tag
+            # tag: {'display_name': 'subscribable', 'id': '74a4934d-c5a9-4d41-809e-fca05c156cdc', 'name': 'subscribable', 'state': 'active', 'vocabulary_id': None}
+
+            formats = []
+
+            # file format
+            for resource in pkg["resources"]:
+                formats_to_clean = ["web-optimised PDF"]
+                if resource["format"] in formats_to_clean:
+                    formats.append(resource["format"])
+                if "." in resource["format"]:
+                    formats.append(resource["format"])
+
+            # License
+            # TODO standardise license
+
+            if len(formats) > 0:
+                return True
+            return False
+
+        except Exception as e:
+            log.error(f"Could not evaluate pkg in QaCleanTask: {e}")
+            return False
 
 
 class QaCleanReport(IQaReport):
@@ -46,14 +61,14 @@ class QaCleanReport(IQaReport):
     @classmethod
     def should_show_in_report(cls, value):
         # Only show in report if value is set to true
-        if value is None:
+        if value is False:
             return False
         else:
-            return value
+            return True
 
 
 qa_clean_report_info = {
-    'name': 'datasets-need-sanitising',
+    'name': 'datasets-need-cleaning',
     'description': 'Datasets with common formatting errors in tags, licenses, or file formats',
     'option_defaults': None,
     'option_combinations': None,
