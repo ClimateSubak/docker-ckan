@@ -1,0 +1,24 @@
+{% ckan_extends %}
+
+{% block content_primary_nav %}
+  {{ super() }}
+  <ul class="nav nav-tabs">
+    {% if c.userobj.sysadmin %}
+      <li>
+        <a href="{{ h.url_for('admin.index') }}" title="{{ _('Sysadmin settings') }}">
+          <i class="fa fa-gavel" aria-hidden="true"></i>
+          <span class="text">{{ _('Admin') }}</span>
+        </a>
+      </li>
+    {% endif %}
+    <li>
+      <a href="{{ h.url_for('user.logout') }}" title="{{ _('Log out') }}">
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+        <span class="text">{{ _('Log out') }}</span>
+      </a>
+    </li>
+  </ul>
+{% endblock %}
+
+
+

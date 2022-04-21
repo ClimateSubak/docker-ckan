@@ -46,7 +46,7 @@ down:
 	docker compose $(COMPOSE_FILE_PATH) down
 
 logs:
-	docker compose $(COMPOSE_FILE_PATH) logs -f
+	docker compose $(COMPOSE_FILE_PATH) logs -f --tail 100
 
 ps: 
 	docker compose $(COMPOSE_FILE_PATH) ps
