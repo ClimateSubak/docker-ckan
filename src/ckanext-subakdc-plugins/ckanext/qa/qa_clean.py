@@ -56,7 +56,10 @@ class QaCleanReport(IQaReport):
         action_is_running = cls.run_action()
 
         fields = ['id', 'title', 'num_resources']
-        return cls.build(fields, action_is_running=action_is_running)
+        report =  cls.build(fields, action_is_running=action_is_running)
+        
+        report['table'].sort(key=lambda row: row['title'])
+        return report
 
     @classmethod
     def should_show_in_report(cls, value):

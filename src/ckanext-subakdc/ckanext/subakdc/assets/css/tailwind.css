@@ -1173,18 +1173,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-10 {
   width: 2.5rem !important;
 }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
 .w-6 {
   width: 1.5rem !important;
 }
-.w-8 {
-  width: 2rem !important;
-}
->>>>>>> Stashed changes
 .w-5 {
   width: 1.25rem !important;
 }
@@ -1237,6 +1228,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .justify-between {
   justify-content: space-between !important;
+}
+.gap-2 {
+  gap: 0.5rem !important;
 }
 .gap-4 {
   gap: 1rem !important;

@@ -39,12 +39,7 @@
                     
                     {%- set schema = h.scheming_get_dataset_schema('dataset') -%}
                     {%- for field in schema.dataset_fields -%}
-                        {%- if options.field -%}
-                            {%- set field_name = options.field -%}
-                        {%- else -%}
-                            {%- set field_name = h.schema_qa_default_field_option() -%}
-                        {%- endif -%}
-                        {%- if field.field_name == field_name -%}
+                        {%- if (not options.field and field.field_name in h.schema_qa_field_options().keys()) or options.field == field.field_name -%}
                             {%- snippet 'scheming/snippets/form_field.html',
                             field=field,
                             data={},

@@ -17,7 +17,6 @@
 
 <div x-data="actionForm()">
   <form @submit="submitting = true" action="" method="post">
-    {% block qa_report_table %}{% endblock %}
     <div id="qa-actions" class="flex items-center justify-between my-2">
       <div>
         <input @click="setAllSelected($el.checked)" 
@@ -28,23 +27,25 @@
         <label for="selectAll" class="after:content-['']">Select all</label>
       </div>
       {% if c.userobj.sysadmin %}
-        <div id="qa-buttons">
-          {% for action in data.qa_actions %}
-            {% if action.snippet %}
-              {% snippet action.snippet, options=options, action=action %}
-            {% else %}
-              <button x-text="submitting ? 'Submitting...' : '{{ action.form_button_text }}'"
-                      :disabled="selectedItems.length == 0" 
-                      disabled
-                      class="float-right px-3 py-2 text-white rounded bg-subak-burnt-copper disabled:bg-opacity-50" 
-                      type="submit"
-                      name="{{ action.name }}"
-                      value="1"></button>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
+      <div id="qa-buttons" class="flex gap-2">
+        {% for action in data.qa_actions %}
+          {% if action.snippet %}
+            {% snippet action.snippet, options=options, action=action %}
+          {% else %}
+            <button x-text="submitting ? 'Submitting...' : '{{ action.form_button_text }}'"
+                    :disabled="selectedItems.length == 0" 
+                    disabled
+                    class="float-right px-3 py-2 text-white rounded bg-subak-burnt-copper disabled:bg-opacity-50" 
+                    type="submit"
+                    name="{{ action.name }}"
+                    value="1"></button>
+          {% endif %}
+        {% endfor %}
       </div>
+      {% endif %}
     </div>
+    
+    {% block qa_report_table %}{% endblock %}
   </form>
 </div>
   
