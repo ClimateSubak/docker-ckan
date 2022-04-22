@@ -9,8 +9,8 @@ from ckanext.qa.qa_actions import QaHideDatasetsAction, QaUpdateDatasetsAction
 log = logging.getLogger(__name__)
 
 QA_ACTIONS = [ QaHideDatasetsAction, QaUpdateDatasetsAction ]
-            
-            
+
+
 class QaAllActiveReport(IQaReport):
     qa_property_name = None
     qa_actions = QA_ACTIONS

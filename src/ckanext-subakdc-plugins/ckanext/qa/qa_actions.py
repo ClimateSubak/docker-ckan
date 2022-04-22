@@ -40,7 +40,6 @@ class QaUpdateDatasetsAction(IQaAction):
         
         # Get just the fields that need patching
         patch_fields = cls.filter_form_fields(form_vars)
-        log.debug(patch_fields)
     
         # Loop over all the provided package ids and call patch API action
         for pkg_id in pkg_ids:
@@ -54,19 +53,17 @@ class QaUpdateDatasetsAction(IQaAction):
     def filter_form_fields(cls, form_vars):
         # Filter out id and action fields from POST vars
         fields = { field[0]:field[1] for field in filter(lambda field: field[0] != 'id' and not(field[0].startswith('action.')), 
-                                                               form_vars.items()) }
+                                                         form_vars.items()) }
         
         # Filter empty fields
         patch_fields = {}
         for key, value in fields.items():
-            log.debug(f"{key}: {value}")
             if value[0] == '' or (key == 'license_id' and value[0] == 'notspecified'):
                 continue
                 
             patch_fields[key] = value
         
-        return patch_fields
-        
+        return patch_fields   
 
 
 class QaCleanDatasetsAction(IQaAction):
