@@ -2,6 +2,7 @@ import logging
 
 from ckan.lib.helpers import license_options
 
+from ckanext.qa.qa_all_active import qa_all_active_report_info
 from ckanext.qa.qa_no_resources import QaNoResourcesTask, qa_no_resources_report_info
 from ckanext.qa.qa_stale import QaStaleTask, qa_stale_report_info
 from ckanext.qa.qa_schema_issues import QaSchemaIssuesTask, qa_schema_issues_report_info, schema_qa_field_options_helper
@@ -14,7 +15,8 @@ tasks = { 'no-resources': QaNoResourcesTask,
           'schema-issues': QaSchemaIssuesTask,
           'clean': QaCleanTask }
 
-reports = [ qa_no_resources_report_info,
+reports = [ qa_all_active_report_info,
+            qa_no_resources_report_info,
             qa_stale_report_info,
             qa_schema_issues_report_info,
             qa_clean_report_info ]

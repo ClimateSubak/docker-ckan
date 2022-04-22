@@ -1164,9 +1164,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .min-h-screen {
   min-height: 100vh !important;
 }
-.w-6 {
-  width: 1.5rem !important;
-}
 .w-full {
   width: 100% !important;
 }
@@ -1175,6 +1172,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-10 {
   width: 2.5rem !important;
+}
+.w-6 {
+  width: 1.5rem !important;
 }
 .w-5 {
   width: 1.25rem !important;
@@ -1228,6 +1228,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .justify-between {
   justify-content: space-between !important;
+}
+.gap-2 {
+  gap: 0.5rem !important;
 }
 .gap-4 {
   gap: 1rem !important;
@@ -1295,13 +1298,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-border-opacity: 1 !important;
   border-color: rgb(209 213 219 / var(--tw-border-opacity)) !important;
 }
-.border-amber-200 {
-  --tw-border-opacity: 1 !important;
-  border-color: rgb(253 230 138 / var(--tw-border-opacity)) !important;
-}
 .border-gray-200 {
   --tw-border-opacity: 1 !important;
   border-color: rgb(229 231 235 / var(--tw-border-opacity)) !important;
+}
+.border-amber-200 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(253 230 138 / var(--tw-border-opacity)) !important;
 }
 .border-stone-300 {
   --tw-border-opacity: 1 !important;
@@ -1331,6 +1334,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1 !important;
   background-color: rgb(27 101 143 / var(--tw-bg-opacity)) !important;
 }
+.bg-gray-50 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity)) !important;
+}
 .bg-amber-100 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(254 243 199 / var(--tw-bg-opacity)) !important;
@@ -1338,10 +1345,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-subak-burnt-copper {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(201 94 59 / var(--tw-bg-opacity)) !important;
-}
-.bg-gray-50 {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity)) !important;
 }
 .bg-gray-500 {
   --tw-bg-opacity: 1 !important;
@@ -1418,11 +1421,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .to-cyan-400 {
   --tw-gradient-to: #22d3ee !important;
 }
-.p-3 {
-  padding: 0.75rem !important;
-}
 .p-2 {
   padding: 0.5rem !important;
+}
+.p-3 {
+  padding: 0.75rem !important;
 }
 .p-8 {
   padding: 2rem !important;

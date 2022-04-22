@@ -1,6 +1,7 @@
 import logging
-
 from collections import OrderedDict
+
+from ckanext.report import lib
 
 from ckanext.qa.interfaces import IQaTask, IQaReport
 from ckanext.qa.qa_actions import QaUpdateDatasetsAction
@@ -90,18 +91,23 @@ class QaSchemaIssuesReport(IQaReport):
     qa_actions = QA_ACTIONS
     
     @classmethod
-    def generate(cls, field):
+    def generate(cls, field, org):
         # Use first field in FIELDS if not provided as argument
         field = list(FIELDS.keys())[0] if not field else field
         action_is_running = cls.run_action()
         
-        table_fields = ['id', 'title']
+        table_fields = ['id', 'title', 'organization']
         computed_fields = { 'issues': lambda pkg: cls.get_issues(pkg, field) }
        
         report = cls.build(table_fields, computed_fields, action_is_running=action_is_running)
         
+        if org is not None and org != '':
+            report['table'] = list(filter(lambda row: cls.filter_by_org(row, org), report['table']))
+            
         if field is not None:
             report['table'] = list(filter(lambda row: cls.filter_by_field(row, field), report['table']))
+            
+        report['table'].sort(key=lambda row: row['title'])
         
         return report
     
@@ -117,6 +123,10 @@ class QaSchemaIssuesReport(IQaReport):
             return None
         
     @classmethod
+    def filter_by_org(cls, row, org):
+        return row['organization']['name'] == org
+    
+    @classmethod
     def filter_by_field(cls, row, field):
         return field in row['issues']
     
@@ -129,12 +139,19 @@ class QaSchemaIssuesReport(IQaReport):
 def schema_qa_field_options_helper():
     return FIELDS
 
+def schema_issues_report_option_combinations():
+    for org in lib.all_organizations(include_none=True):
+        for field in FIELDS:
+            yield { 'org': org,
+                    'field': FIELDS[field] }
+    
+
 qa_schema_issues_report_info = {
     'name': 'schema-issues-datasets',
     'title': 'Datasets with schema issues',
     'description': f"This report highlights datasets where schema attributes are invalid or missing",
-    'option_defaults': OrderedDict({'field': list(FIELDS.keys())[0] }),
-    'option_combinations': lambda: { 'field': FIELDS[field] for field in FIELDS},
+    'option_defaults': OrderedDict({'field': list(FIELDS.keys())[0], 'org': None }),
+    'option_combinations': schema_issues_report_option_combinations,
     'generate': QaSchemaIssuesReport.generate,
     'template': 'report/qa_schema_issues.html'
 }
