@@ -61,6 +61,9 @@ class ASDIHarvester(HarvesterBase):
 
         object_ids = []
 
+        # TODO TEST
+        files = ["https://raw.githubusercontent.com/awslabs/open-data-registry/main/datasets/wb-light-every-night.yaml"]
+
         for counter, file_url in enumerate(files):
             if counter % 10 == 0:
                 log.info(f"Processing {counter} of {len(files)}")
@@ -146,24 +149,28 @@ class ASDIHarvester(HarvesterBase):
                     content.update({"resources": [resources]})
 
                 if has_uses:
-                    data_applications = {}
+                    log.info("Has uses")
+                    data_applications = []
 
                     if 'Tutorials' in dataset['DataAtWork'] and dataset['DataAtWork']['Tutorials']:
+                        log.info("Has tutorials")
                         for t in dataset['DataAtWork']['Tutorials']:
-                            data_applications.update(
+                            data_applications.append(
                                 {"category": "tutorials", "title": t['Title'], "url": t['URL'], "author": t['AuthorName']})
 
                     if 'Tools & Applications' in dataset['DataAtWork'] and dataset['DataAtWork']['Tools & Applications']:
                         for t in dataset['DataAtWork']['Tools & Applications']:
-                            data_applications.update({"category": "tools and applications", "title": t['Title'], "url": t['URL'],
+                            data_applications.append({"category": "tools and applications", "title": t['Title'], "url": t['URL'],
                                                       "author": t['AuthorName']})
 
                     if 'Publications' in dataset['DataAtWork'] and dataset['DataAtWork']['Publications']:
                         for t in dataset['DataAtWork']['Publications']:
-                            data_applications.update(
+                            data_applications.append(
                                 {"category": "publications", "title": t['Title'], "url": t['URL'], "author": t['AuthorName']})
 
-                    content.update({"data_applications": [data_applications]})
+                    content.update({"data_applications": data_applications})
+
+                log.info(f"Content: {json.dumps(content)}")
 
                 # Save the fetched contents in the HarvestObject
                 obj = HarvestObject(guid=name_slug,
@@ -171,6 +178,8 @@ class ASDIHarvester(HarvesterBase):
                                     content=json.dumps(content))
                 obj.save()
                 object_ids.append(obj.id)
+
+                log.info(f"HarvestObject content: {obj.content}")
 
             except Exception as e:
                 log.exception(f"Could not load ASDI file: {file_url}")
