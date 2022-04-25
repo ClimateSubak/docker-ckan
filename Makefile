@@ -46,7 +46,7 @@ down:
 	docker compose $(COMPOSE_FILE_PATH) down
 
 logs:
-	docker compose $(COMPOSE_FILE_PATH) logs -f
+	docker compose $(COMPOSE_FILE_PATH) logs -f --tail 100
 
 ps: 
 	docker compose $(COMPOSE_FILE_PATH) ps
@@ -71,6 +71,9 @@ xloader.submit:
 
 qa.run:
 	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan qa run"
+
+qa.init:
+	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan report initdb"
 
 search.reindex:
 	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan search-index rebuild"

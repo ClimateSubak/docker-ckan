@@ -5,13 +5,12 @@ value - Value of this option
 default - Default value for this option
 #}
 
-<span class="form-select control-group control-issue">
+<div>
     <label for="option-field">Issue</label>
     <select id="option-field" name="field" class="inline border border-gray-300 rounded">
         {% for key, label in h.schema_qa_field_options().items() %}
             <option value="{{ key }}" {% if value == key %}selected="selected" {% endif %}>{{ label }}</option>
         {% endfor %}
     </select>
-</span>
-
-<button type="submit" class="px-2 py-1 text-sm text-white rounded bg-subak-marine-blue">Filter</button>
+    <button type="submit" class="px-2 py-1 text-sm text-white rounded bg-subak-marine-blue">Filter</button>
+</div>

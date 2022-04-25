@@ -1,0 +1,17 @@
+{#
+Option snippet - organization
+
+value - Value of this option
+default - Default value for this option
+#}
+
+<div>
+    <label for="option-org">{{ _('Organization') }}</label>
+    <select id="option-org" name="org" class="inline js-auto-submit">
+        <option value="" {% if value == None %}selected="selected"{% endif %}>-- {{ _('All organizations') }} --</option>
+        {% for org_name, org_title in h.report__organization_list() %}
+            <option value="{{org_name}}" {% if value == org_name %}selected="selected" {% endif %}> {{org_title}} </option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="px-2 py-1 text-sm text-white rounded bg-subak-marine-blue">Filter</button>
+</div>

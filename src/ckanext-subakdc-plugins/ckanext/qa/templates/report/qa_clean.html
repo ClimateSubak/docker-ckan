@@ -1,17 +1,15 @@
 {% extends "report/qa_base.html" %}
 
 {% block qa_stats %}
-Stale datasets: {{ table | length }} / {{ data.total_num_packages }} ({{ ((table | length) / data.total_num_packages * 100) | round(2) }}%)
+Datasets with case or formatting issues: {{ table | length }} / {{ data.total_num_packages }} ({{ ((table | length) / data.total_num_packages * 100) | round(2) }}%)
 {% endblock %}
 
 {% block qa_report_table %}
-{% set issues = h.schema_qa_field_options() %}
-<table class="w-full table-auto" id="report-table"">
+<table class="w-full table-auto" id="report-table">
   <thead>
     <tr class="border-b border-gray-200">
       <th class="w-2 p-2 pr-1"></th>
       <th class="p-2 max-w-xl">Dataset</th>
-      <th class="p-2">Issues</th>
       <th class="w-10 p-2"></th>
     </tr>
   </thead>
@@ -23,11 +21,6 @@ Stale datasets: {{ table | length }} / {{ data.total_num_packages }} ({{ ((table
         </td>
         <td class="p-2 max-w-xl">
           {{ row.title }}
-        </td>
-        <td class="p-2">
-          {% for key, value in row.issues.items() %}
-            {{ issues[key] }}: {{ value }}<br />
-          {% endfor %}
         </td>
         {% snippet 'report/snippets/view-edit-dataset-links.html', id=row.id %}
       </tr>

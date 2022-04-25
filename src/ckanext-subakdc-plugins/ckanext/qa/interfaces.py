@@ -58,14 +58,13 @@ class IQaReport(ABC):
             fields = ['id', 'title']
             
         for pkg in pkgs:
-            if 'subak_qa' in pkg:
-                if cls.qa_property_name in pkg['subak_qa'] and cls.should_show_in_report(pkg['subak_qa'][cls.qa_property_name]):
-                    report_fields = { k: pkg[k] for k in fields}
-                    if computed_fields is not None:
-                        for title, field in computed_fields.items():
-                            report_fields[title] = field(pkg)
-                        
-                    report_table.append(report_fields)
+            if cls.qa_property_name is None or ('subak_qa' in pkg and cls.qa_property_name in pkg['subak_qa'] and cls.should_show_in_report(pkg['subak_qa'][cls.qa_property_name])):
+                report_fields = { k: pkg[k] for k in fields}
+                if computed_fields is not None:
+                    for title, field in computed_fields.items():
+                        report_fields[title] = field(pkg)
+                    
+                report_table.append(report_fields)
                 
         return {
             'table': list(report_table),
