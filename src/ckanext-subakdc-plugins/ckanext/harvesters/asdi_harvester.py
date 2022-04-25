@@ -281,15 +281,20 @@ class ASDIHarvester(HarvesterBase):
                 remote_org = package_dict["owner_org"]
 
                 if remote_org:
-                    org_name = re.sub(r"[^\s\w]", "", remote_org.lower()).replace(
+                    # orgs represented as markdown links e.g. [NOAA](http://www.noaa.gov/)
+                    match = re.match("\[[\D\d.]+\]", remote_org.lower())
+                    if match:
+                        name = match.group().lstrip("[").rstrip("]")
+                    else:
+                        log.info(f"Organization {remote_org.lower()} does not have name as a formatted markdown link")
+                        name = remote_org.lower()
+
+                    org_name = re.sub(r"[^\s\w]", "", name).replace(
                         " ", "-"
                     )
-                    # orgs represented as markdown links e.g. [NOAA](http://www.noaa.gov/)
-                    match = re.match("\[[\D\d.]+\]", org_name)
-                    if match:
-                        org_name = match.group().lstrip("[").rstrip("]")
-                    else:
-                        log.info(f"Organization {org_name} does not have name as a formatted markdown link")
+                    if len(org_name) > 100:
+                        org_name = org_name[:100]
+
                     try:
                         org = tk.get_action("organization_show")(
                             {"ignore_auth": True, "user": None}, {"id": org_name}
