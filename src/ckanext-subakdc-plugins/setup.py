@@ -68,13 +68,15 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points="""
         [ckan.plugins]
+        asdi_harvester=ckanext.harvesters:ASDIHarvester
         freshness=ckanext.freshness.plugin:FreshnessPlugin
         opendatasoft_harvester=ckanext.harvesters:OpendatasoftHarvester
         qa=ckanext.qa.plugin:QAPlugin
         schema=ckanext.schema.plugin:SchemaPlugin
         search=ckanext.search.plugin:SearchPlugin
+        security=ckanext.security.plugin:SecurityPlugin
         showcase=ckanext.showcase.plugin:ShowcasePlugin
-
+        
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan
     """,
