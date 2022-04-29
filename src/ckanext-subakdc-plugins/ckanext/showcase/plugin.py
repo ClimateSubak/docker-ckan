@@ -4,6 +4,7 @@ import os
 
 from flask import Blueprint
 
+from ckan.logic import NotFound
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 
@@ -36,11 +37,33 @@ def get_showcase(slug):
     return showcase
 
 
+def hydrate_showcase(showcase_dict):
+    """
+    Takes dictized output from JSON file and adds extra information (for pkg_dicts for top datasets)
+    """
+    showcase_dict["top_datasets"] = list(
+        map(get_package, showcase_dict["top_datasets"])
+    )
+    return showcase_dict
+
+
+def get_package(name):
+    show_package = tk.get_action("package_show")
+    try:
+        pkg = show_package({"ignore_auth": True, "user": None}, {"id": name})
+    except NotFound:
+        log.error(f"Package not found for name={name}")
+        return None
+
+    return pkg
+
+
 def showcase_view(slug):
     """
     View function for showcase show page
     """
     showcase = get_showcase(slug)
+    showcase = hydrate_showcase(showcase)
     return tk.render("showcase/showcase_base.html", extra_vars={"showcase": showcase})
 
 

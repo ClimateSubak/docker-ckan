@@ -49,11 +49,21 @@
                 <div id="top-datasets" class="bg-stone-50 p-8 flex flex-col gap-4">
                     <h2 class="m-0">Top {{ showcase.name }} Datasets</h2>
                     <h3 class="text-subak-burnt-copper m-0">Subak Curated Picks<h3>
-                    <ul class="font-normal font-body">
+                    <div class="font-normal font-body flex flex-col gap-3">
                         {% for dataset in showcase.top_datasets %}
-                        <li>{{ dataset }}</li>
+                            {% if dataset %}
+                            <a href="{{ h.url_for('dataset.read', id=dataset.id) }}">
+                                {{ dataset.title }}
+                                <span class="flex items-center gap-1">
+                                    {% if dataset.organization.image_url %}
+                                    <img class="max-h-8" src="{{ dataset.organization.image_url }}" />
+                                    {% endif %}
+                                    <span class="text-sm text-gray-600 block">{{ dataset.organization.title }}</span>
+                                </span>
+                            </a>
+                            {% endif %}
                         {% endfor %}
-                    </ul>
+                        </div>
                 </div>
 
                 <div id="highlighted-vis" class="bg-stone-50 p-8 flex flex-col gap-4 grow">
