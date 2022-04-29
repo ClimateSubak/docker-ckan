@@ -7,19 +7,22 @@ from ckanext.qa.qa_no_resources import QaNoResourcesTask, qa_no_resources_report
 from ckanext.qa.qa_stale import QaStaleTask, qa_stale_report_info
 from ckanext.qa.qa_schema_issues import QaSchemaIssuesTask, qa_schema_issues_report_info, schema_qa_field_options_helper
 from ckanext.qa.qa_clean import QaCleanTask, qa_clean_report_info
+from ckanext.qa.qa_orphan_orgs import QaOrphanOrgsTask, qa_orphan_orgs_report_info
 
 log = logging.getLogger(__name__)
 
 tasks = { 'no-resources': QaNoResourcesTask,
           'stale': QaStaleTask,
           'schema-issues': QaSchemaIssuesTask,
-          'clean': QaCleanTask }
+          'clean': QaCleanTask,
+          'orphan-orgs': QaOrphanOrgsTask }
 
 reports = [ qa_all_active_report_info,
             qa_no_resources_report_info,
             qa_stale_report_info,
             qa_schema_issues_report_info,
-            qa_clean_report_info ]
+            qa_clean_report_info,
+            qa_orphan_orgs_report_info ]
 
 helpers = { 'schema_qa_field_options': schema_qa_field_options_helper,
             'schema_qa_default_field_option': lambda: list(schema_qa_field_options_helper().keys())[0],
