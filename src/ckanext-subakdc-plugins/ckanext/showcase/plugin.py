@@ -17,7 +17,6 @@ def list_showcases():
     """
     showcases = []
     dirpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "topics")
-    log.debug(dirpath)
     for filename in os.listdir(dirpath):
         if filename.endswith(".json"):
             showcases.append(filename.replace(".json", ""))
@@ -29,8 +28,7 @@ def get_showcase(slug):
     """
     Read showcase information from JSON file and return as a dict
     """
-    dirpath = os.path.join(os.path.dirname(__file__), "topics")
-    log.debug(dirpath)
+    dirpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "topics")
     filename = f"{slug}.json"
     filepath = os.path.join(dirpath, filename)
     with open(filepath) as f:
