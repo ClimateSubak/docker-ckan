@@ -25,6 +25,25 @@ def get_all_pkgs():
         
     return all_pkgs
 
+def get_all_orgs():
+    """
+    Calls the CKAN API and returns all the organizations in the database
+    """
+    get_orgs = tk.get_action('organization_list')
+
+    # Query the API using cursor to find all packages
+    page = 0
+    all_orgs = []
+    while True:
+        orgs = get_orgs({'ignore_auth': True, 'user': None},
+                            {'limit': 100, 'offset': page * 100})
+        if len(orgs) > 0:
+            all_orgs = all_orgs + orgs
+            page += 1
+        else:
+            break
+    return all_orgs
+
 def get_qa_properties(pkg):
     """
     Read, decode and return the JSON qa dict on the package model
