@@ -1,22 +1,25 @@
 {
     "slug": "power-plants",
     "name": "Power Plants",
-    "intro_text": "<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>",
+    "intro_text": "<p>A huge amount of the energy the world uses is generated in power plants, supplying electricity and heat to cities, factories and power grids worldwide. Power plants can consume coal, gas, nuclear fuel or biomass; they can use the movement of water, or wind, or harness the power of the sun. Each technology produces a different amount of carbon emissions as well as its own particular characteristics. Coal plants can produce 1000 grams of CO2 per kilowatt hour of electricity generated, whereas clean technologies produce almost none over their lifetime. Energy scenarios agree that rapid decarbonisation of the power sector is crucial to meet climate targets. Not only cleaning up power grids, but allowing other sectors to decarbonise through electrification. Coal power should be phased out completely by 2030 in OECD countries and worldwide by 2040. To understand the landscape of power plants we present some key datasets on this page.</p>",
     "key_stats": [
         {
-            "figure": 2026,
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            "figure": "38%",
+            "text": "The share of global electricity from clean power according to Ember’s Global Electricity Review 2022."
         },
         {
-            "figure": 3500,
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            "figure": "34,936",
+            "text": "The number of power plants detailed in the World Resources Institute’s <a href='https://data.climatesubak.org/dataset/global-power-plant-database'>Global Power Plant Database</a>"
         },
         {
-            "figure": "4th",
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            "figure": "$1.6trn",
+            "text": "Money saved by replacing China’s coal fleet with zero-carbon alternatives, according to Transition Zero’s report, <a href='https://data.climatesubak.org/dataset/coal-power-plants-in-china-generation-emissions-and-costs'>Turning the Supertanker</a>."
         }
     ],
     "top_datasets": [
+        "global_electricity",
+        "Coal-power-plants-in-china-generation-emissions-and-costs",
+        "uk-solar-pv-dataset",
         "ids",
         "global-power-plant-database",
         "statistics-of-coal-power-plants",
