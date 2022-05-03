@@ -5,7 +5,7 @@
     "key_stats": [
         {
             "figure": "38%",
-            "text": "The share of global electricity from clean power according to Ember’s Global Electricity Review 2022."
+            "text": "The share of global electricity from clean power according to Ember’s <a href='https://data.climatesubak.org/dataset/global_electricity'>Global Electricity Review 2022</a>."
         },
         {
             "figure": "34,936",
@@ -29,9 +29,9 @@
     "highlighted_vis": "[DATA VIS]",
     "data_applications": [
         {
-            "image": "[IMAGE]",
-            "name": "Application name 1",
-            "author": "Application author"
+            "image": "<img src='https://subak-images.s3.eu-west-2.amazonaws.com/resource_watch.jpg' alt='Resource Watch Global Power Plant Database Map' />",
+            "name": "Resource Watch - Global Power Plant Database Map",
+            "author": "World Resources Institute"
         },
         {
             "image": "[IMAGE]",
