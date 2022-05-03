@@ -76,10 +76,7 @@
                 <h2 class="m-0">Data Applications Showcase</h2>
                 <h3 class="text-subak-burnt-copper m-0">Subak Curated Picks<h3>
                 {% for app in showcase.data_applications %}
-                <a href="#" class="block">
-                    <div class="max-w-xs">{{ app.image | safe }}</div>
-                    <p><span>{{ app.name }}</span> by <span>{{ app.author }}</span></p>
-                </a>
+                    {% snippet "showcase/showcase_card.html", app=app %}
                 {% endfor %}
             </div>  
         </div>

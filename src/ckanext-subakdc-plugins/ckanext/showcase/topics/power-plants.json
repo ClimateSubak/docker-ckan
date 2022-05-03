@@ -29,14 +29,20 @@
     "highlighted_vis": "[DATA VIS]",
     "data_applications": [
         {
-            "image": "<img src='https://subak-images.s3.eu-west-2.amazonaws.com/resource_watch.jpg' alt='Resource Watch Global Power Plant Database Map' />",
+            "image": "https://subak-images.s3.eu-west-2.amazonaws.com/resource_watch.jpg",
+            "image-alt": "Resource Watch - Global Power Plant Database Map",
             "name": "Resource Watch - Global Power Plant Database Map",
-            "author": "World Resources Institute"
+            "author": "World Resources Institute",
+            "dataset": "global-power-plant-database",
+            "external_link": "https://resourcewatch.org/data/explore?zoom=3&lat=0&lng=0&basemap=dark&labels=light&layers=%255B%257B%2522dataset%2522%253A%2522a86d906d-9862-4783-9e30-cdb68cd808b8%2522%252C%2522opacity%2522%253A1%252C%2522visible%2522%253Atrue%252C%2522layer%2522%253A%25222a694289-fec9-4bfe-a6d2-56c3864ec349%2522%257D%255D&page=1&sort=most-viewed&sortDirection=-1&search=power%20"
         },
         {
-            "image": "[IMAGE]",
-            "name": "Application name 2",
-            "author": "Application author"
+            "image": "https://subak-images.s3.eu-west-2.amazonaws.com/climatehack.jpg",
+            "image-alt": "ClimateHack.ai",
+            "name": "ML Hackathon for Solar Nowcasting",
+            "author": "ClimateHack.ai",
+            "dataset": "eumetsat-hrv-satellite-imagery",
+            "external_link": "https://climatehack.ai/"
         }
     ]
 }
