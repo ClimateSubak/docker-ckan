@@ -1,7 +1,9 @@
-data.climatesubak.org
+data.subak.org
 
-reverse_proxy ckan:5000
+reverse_proxy ckan: 5000
+
+redir https://data.subak.org{uri} permanent
 
 tls {
-	dns cloudflare {env.CF_API_TOKEN}
+	dns cloudflare { env.CF_API_TOKEN }
 }
