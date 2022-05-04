@@ -1954,11 +1954,6 @@ the theme() function
   color: rgb(209 213 219 / var(--tw-text-opacity)) !important;
 }
 
-.group:hover .group-hover\:text-subak-meadow-teal {
-  --tw-text-opacity: 1 !important;
-  color: rgb(29 131 139 / var(--tw-text-opacity)) !important;
-}
-
 .peer:focus ~ .peer-focus\:right-4 {
   right: 1rem !important;
 }

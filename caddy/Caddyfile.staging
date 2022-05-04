@@ -1,8 +1,10 @@
-staging.data.climatesubak.org
+staging.data.subak.org
 
 reverse_proxy ckan:5000 {
 	header_up -authorization
 }
+
+redir https://staging.data.subak.org{uri} permanent
 
 basicauth /* {
 	subak {env.CADDY_BASIC_AUTH_HASHED_PASSWORD}

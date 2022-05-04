@@ -4,7 +4,7 @@ Subak is an accelerator for not-for-profit organisations fighting climate change
 
 > Our mission is to save the planet with shared data. We believe that creating a supportive ecosystem around climate not-for-profits will lead to faster and better climate action.  
 
-Read more [on our main site](https://climatesubak.org/). 
+Read more [on our main site](https://subak.org/). 
 
 ## Data Cooperative
 
