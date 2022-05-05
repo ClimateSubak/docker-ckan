@@ -1,0 +1,48 @@
+{
+    "slug": "power-plants",
+    "name": "Power Plants",
+    "intro_text": "<p>A huge amount of the energy the world uses is generated in power plants, supplying electricity and heat to cities, factories and power grids worldwide. Power plants can consume coal, gas, nuclear fuel or biomass; they can use the movement of water, or wind, or harness the power of the sun. Each technology produces a different amount of carbon emissions as well as its own particular characteristics. Coal plants can produce 1000 grams of CO2 per kilowatt hour of electricity generated, whereas clean technologies produce almost none over their lifetime. Energy scenarios agree that rapid decarbonisation of the power sector is crucial to meet climate targets. Not only cleaning up power grids, but allowing other sectors to decarbonise through electrification. Coal power should be phased out completely by 2030 in OECD countries and worldwide by 2040. To understand the landscape of power plants we present some key datasets on this page.</p>",
+    "key_stats": [
+        {
+            "figure": "38%",
+            "text": "The share of global electricity from clean power according to Ember’s <a href='https://data.climatesubak.org/dataset/global_electricity'>Global Electricity Review 2022</a>."
+        },
+        {
+            "figure": "34,936",
+            "text": "The number of power plants detailed in the World Resources Institute’s <a href='https://data.climatesubak.org/dataset/global-power-plant-database'>Global Power Plant Database</a>"
+        },
+        {
+            "figure": "$1.6trn",
+            "text": "Money saved by replacing China’s coal fleet with zero-carbon alternatives, according to Transition Zero’s report, <a href='https://data.climatesubak.org/dataset/coal-power-plants-in-china-generation-emissions-and-costs'>Turning the Supertanker</a>."
+        }
+    ],
+    "top_datasets": [
+        "global_electricity",
+        "Coal-power-plants-in-china-generation-emissions-and-costs",
+        "uk-solar-pv-dataset",
+        "ids",
+        "global-power-plant-database",
+        "statistics-of-coal-power-plants",
+        "coal-power-plants-co2-emission",
+        "no-exists"
+    ],
+    "highlighted_vis": "[DATA VIS]",
+    "data_applications": [
+        {
+            "image": "https://subak-images.s3.eu-west-2.amazonaws.com/resource_watch.jpg",
+            "image-alt": "Resource Watch - Global Power Plant Database Map",
+            "name": "Resource Watch - Global Power Plant Database Map",
+            "author": "World Resources Institute",
+            "dataset": "global-power-plant-database",
+            "external_link": "https://resourcewatch.org/data/explore?zoom=3&lat=0&lng=0&basemap=dark&labels=light&layers=%255B%257B%2522dataset%2522%253A%2522a86d906d-9862-4783-9e30-cdb68cd808b8%2522%252C%2522opacity%2522%253A1%252C%2522visible%2522%253Atrue%252C%2522layer%2522%253A%25222a694289-fec9-4bfe-a6d2-56c3864ec349%2522%257D%255D&page=1&sort=most-viewed&sortDirection=-1&search=power%20"
+        },
+        {
+            "image": "https://subak-images.s3.eu-west-2.amazonaws.com/climatehack.jpg",
+            "image-alt": "ClimateHack.ai",
+            "name": "ML Hackathon for Solar Nowcasting",
+            "author": "ClimateHack.ai",
+            "dataset": "eumetsat-hrv-satellite-imagery",
+            "external_link": "https://climatehack.ai/"
+        }
+    ]
+}
