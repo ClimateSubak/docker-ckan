@@ -1096,11 +1096,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .ml-3 {
   margin-left: 0.75rem !important;
 }
-.ml-7 {
-  margin-left: 1.75rem !important;
-}
 .mr-auto {
   margin-right: auto !important;
+}
+.ml-7 {
+  margin-left: 1.75rem !important;
 }
 .mt-1 {
   margin-top: 0.25rem !important;
@@ -1586,9 +1586,17 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-left: 1.25rem !important;
   padding-right: 1.25rem !important;
 }
+.px-0 {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
 .px-8 {
   padding-left: 2rem !important;
   padding-right: 2rem !important;
+}
+.py-4 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }
 .px-1 {
   padding-left: 0.25rem !important;
