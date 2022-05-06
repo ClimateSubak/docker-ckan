@@ -1,18 +1,18 @@
-{% set tags = h.get_facet_items_dict('tags', c.search_facets, limit=7) %}
+{% set tags = h.homepage_quick_explore_tags() %}
 {% set stats = h.get_site_statistics() %}
 
 <div class="float-none col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-    <form class="relative group border-b-2 border-subak-stone-grey" method="get" action="{% url_for 'dataset.search' %}">
+    <form class="relative border-b-2 group border-subak-stone-grey" method="get" action="{% url_for 'dataset.search' %}">
         <input aria-label="{% block header_site_search_label %}{{ _('Search datasets') }}{% endblock %}"
                id="field-main-search" 
                type="text" 
-               class="w-full pr-32 font-black text-6xl text-white focus:text-subak-deep-ocean bg-transparent font-heading placeholder:opacity-50 focus:bg-white focus:pl-4 peer" 
+               class="w-full pr-32 text-6xl font-black text-white bg-transparent focus:text-subak-deep-ocean font-heading placeholder:opacity-50 focus:bg-white focus:pl-4 peer" 
                name="q" 
                value="" 
                autocomplete="off"
                size="1"
                placeholder="Search data" />
-        <button class="bg-transparent absolute right-0 top-4 text-white peer-focus:text-subak-deep-ocean peer-focus:right-4" type="submit" aria-labelledby="search-label">
+        <button class="absolute right-0 text-white bg-transparent top-4 peer-focus:text-subak-deep-ocean peer-focus:right-4" type="submit" aria-labelledby="search-label">
             <i class="fa fa-search text-[50px]"></i>
             <span class="sr-only" id="search-label">{{ _('Search') }}</span>
         </button>

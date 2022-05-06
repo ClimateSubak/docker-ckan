@@ -9,10 +9,9 @@
 
 {% block main_content %}
     {% block flash %}{{ super() }}{% endblock %}
-    {% block toolbar %}{{ super() }}{% endblock %}
     
     <section class="module">
-        <div class="module-content">
+        <div class="py-4">
             <h1>{{ report.title }}</h1>
             <p>{{ report.description }}</p>
             <p>

@@ -4,16 +4,16 @@ html {
 }
 
 body {
-  background: linear-gradient(90deg, rgba(2,0,36,0.6) 0%, rgba(1,59,92,0.6) 0%, rgba(0,53,82,0.6) 100%), url(/images/subak_tributaries_bg_min.jpg) no-repeat !important;
+  background: linear-gradient(90deg, rgba(2, 0, 36, 0.6) 0%, rgba(1, 59, 92, 0.6) 0%, rgba(0, 53, 82, 0.6) 100%), url(/images/subak_tributaries_bg_min.jpg) no-repeat !important;
   background-size: cover !important;
 }
 
 .dashboard-link:focus,
 .dashboard-link:hover,
-.masthead .nav > li > a:focus,
-.masthead .nav > li > a:hover,
-.masthead .nav > .active > a:hover,
-.masthead .nav > .active > a:focus,
+.masthead .nav>li>a:focus,
+.masthead .nav>li>a:hover,
+.masthead .nav>.active>a:hover,
+.masthead .nav>.active>a:focus,
 .masthead .navigation .nav-pills li.active a {
   background-color: transparent !important;
 }
@@ -45,6 +45,10 @@ body {
     padding-top: 200px !important;
     padding-bottom: 200px !important;
   }
+
+  .wrapper::before {
+    border: none !important;
+  }
 }
 
 .masthead {
@@ -54,26 +58,37 @@ body {
 .user-image {
   display: inline;
 }
+
 .hero-search-bar {
   font-size: 58px;
   line-height: 67px;
   color: #fff;
   font-family: Helvetica;
-  border:none;
+  border: none;
   background-color: transparent;
 }
 
-.hero-search-bar::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+.hero-search-bar::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #FFF;
-  opacity: 1; /* Firefox */
+  opacity: 1;
+  /* Firefox */
 }
-  
-.hero-search-bar::-ms-input-placeholder { /* Internet Explorer 10-11 */
+
+.hero-search-bar::-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
   color: #FFF;
 }
-  
-.hero-search-bar::-ms-input-placeholder { /* Microsoft Edge */
+
+.hero-search-bar::-ms-input-placeholder {
+  /* Microsoft Edge */
   color: #FFF;
+}
+
+.breadcrumb {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: transparent !important;
 }
 
 .popover .popover-content {
@@ -94,6 +109,6 @@ label[for="field-subak_qa"] {
 }
 
 /* Hides alpine elements with x-cloak attribute before alpine initialises */
-[x-cloak] { 
+[x-cloak] {
   display: none !important;
 }

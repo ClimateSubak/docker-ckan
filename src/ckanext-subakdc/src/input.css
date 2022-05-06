@@ -11,12 +11,17 @@ the theme() function
 
 **/
 @layer components {
+
     .read-more,
-    .dataset-content > div,
+    .dataset-content>div,
     .notes,
     .description,
     p,
     .tag {
         font-family: theme('fontFamily.body');
+    }
+
+    .breadcrumb a {
+        @apply text-subak-burnt-copper
     }
 }

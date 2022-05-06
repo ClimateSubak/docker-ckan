@@ -13,6 +13,7 @@ subakdc_css:
   contents:
     - css/subak-fonts.css
     - css/subak-styles.css
+    - css/flag-icons.css
     - css/tailwind.css
   filter: cssrewrite
   output: ckanext-subakdc/%(version)s_subakdc.css
