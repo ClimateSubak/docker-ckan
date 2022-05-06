@@ -20,4 +20,8 @@ the theme() function
     .tag {
         font-family: theme('fontFamily.body');
     }
+
+    .breadcrumb a {
+        @apply text-subak-burnt-copper
+    }
 }
