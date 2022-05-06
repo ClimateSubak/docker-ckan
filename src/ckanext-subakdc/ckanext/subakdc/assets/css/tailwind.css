@@ -1186,8 +1186,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-16 {
   height: 4rem !important;
 }
-.max-h-8 {
-  max-height: 2rem !important;
+.max-h-5 {
+  max-height: 1.25rem !important;
 }
 .max-h-32 {
   max-height: 8rem !important;
@@ -1770,6 +1770,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-zinc-700 {
   --tw-text-opacity: 1 !important;
   color: rgb(63 63 70 / var(--tw-text-opacity)) !important;
+}
+.text-zinc-500 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(113 113 122 / var(--tw-text-opacity)) !important;
 }
 .text-red-600 {
   --tw-text-opacity: 1 !important;
