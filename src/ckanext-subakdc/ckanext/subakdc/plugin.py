@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 
@@ -17,6 +19,14 @@ def homepage_tags():
     filtered_tags = list(filter(lambda tag: tag["name"] in HOMEPAGE_TAGS, tags))
 
     return filtered_tags
+
+
+def is_url(text):
+    try:
+        res = urlparse(text)
+        return all([res.scheme, res.netloc])
+    except:
+        return False
 
 
 class SubakdcPlugin(p.SingletonPlugin):

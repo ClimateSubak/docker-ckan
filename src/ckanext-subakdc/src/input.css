@@ -11,8 +11,9 @@ the theme() function
 
 **/
 @layer components {
+
     .read-more,
-    .dataset-content > div,
+    .dataset-content>div,
     .notes,
     .description,
     p,

@@ -135,7 +135,9 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 													{% endif %}
 															<a href="{{ href }}" title="{{ label if label != label_truncated else '' }}" class="hover:no-underline">
 																<span
-																	class="p-1 text-white item-label">{{ label_truncated if title != 'Country' else h.truncate(h.scheming_code_to_name(label)) }}</span>
+																	class="p-1 text-white item-label">
+																	{% if title == 'Country' %}<span class="fi fi-{{ label | lower }}"></span>{% endif %}
+																	{{ label_truncated if title != 'Country' else h.truncate(h.scheming_code_to_name(label)) }}</span>
 																<span class="hidden separator"> - </span>
 																<span class="item-count badge">{{ count }}</span>
 															</a>
