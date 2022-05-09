@@ -41,9 +41,20 @@ def hydrate_showcase(showcase_dict):
     """
     Takes dictized output from JSON file and adds extra information (for pkg_dicts for top datasets)
     """
+    package_search = tk.get_action("package_search")
+    pkgs = package_search({}, {"q": showcase_dict["data"]["search_query"], "rows": 0})
+    showcase_dict["data"]["count"] = pkgs["count"]
+
     showcase_dict["top_datasets"] = list(
         map(get_package, showcase_dict["top_datasets"])
     )
+    for k, app in enumerate(showcase_dict["data_applications"]):
+        showcase_dict["data_applications"][k]["dataset"] = get_package(app["dataset"])
+
+    showcase_dict["highlighted_vis"]["dataset"] = get_package(
+        showcase_dict["highlighted_vis"]["dataset"]
+    )
+
     return showcase_dict
 
 
