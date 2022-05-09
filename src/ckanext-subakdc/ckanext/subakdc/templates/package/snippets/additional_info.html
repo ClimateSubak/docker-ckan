@@ -2,9 +2,9 @@
     {% set pkg_keys = pkg_dict.keys() %}
 
     {############   TEMPORAL INFO   ############}
-    <div class="flex-1 bg-zinc-100 p-4">
+    <div class="flex-1 p-4 bg-zinc-100">
         <h3 class="mt-0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline relative -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative inline -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg> Temporal information
         </h3>
@@ -28,9 +28,9 @@
 
 
     {############   SPATIAL INFO   ############}
-    <div class="flex-1 bg-zinc-100 p-4">
+    <div class="flex-1 p-4 bg-zinc-100">
         <h3 class="mt-0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline relative -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative inline -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg> Spatial information
         </h3>
@@ -43,8 +43,29 @@
         {% endif %}
 
         {% if pkg_dict.subak_countries %}
-        {% set countries = ', '.join(pkg_dict.subak_countries) %}
-        <div>Countries: <span class="font-body">{{ countries }}</span></div>
+        <div x-data="{ more: false }">
+            <div :class="more ? 'h-auto' : 'overflow-hidden max-h-32'" class="relative pt-px">
+                <div class="flex gap-1">
+                    <div>Countries:</div>
+                    <div class="font-body">
+                    {% for country_code in pkg_dict.subak_countries %}
+                        <div>
+                            <span class="fi fi-{{ country_code | lower }}"></span>
+                            {{ h.scheming_code_to_name(country_code) }} 
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+              {% if pkg_dict.subak_countries | length > 6 %}
+              <div x-show="!more" class="absolute bottom-0 left-0 w-full h-16 z-1 bg-gradient-to-t from-zinc-100"></div>
+              {% endif %}
+            </div>
+            {% if pkg_dict.subak_countries | length > 6 %}
+            <p><a href="#"
+              @click.prevent="more = !more"
+              x-text="more ? 'Show less' : 'Show more...'"></a></p>
+            {% endif %}
+          </div>
         {% endif %}
 
         {% if pkg_dict.subak_spatial_resolution %}
@@ -55,9 +76,9 @@
 
 
     {############   META DATA   ############}
-    <div class="w-full bg-zinc-100 p-4">
+    <div class="w-full p-4 bg-zinc-100">
         <h3 class="mt-0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline relative -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative inline -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg> Metadata
         </h3>
@@ -85,9 +106,9 @@
     
     {############   DATA APPLICATIONS   ############}
     {% if pkg_dict.subak_data_applications %}
-    <div class="w-full bg-zinc-100 p-4">
+    <div class="w-full p-4 bg-zinc-100">
         <h3 class="mt-0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline relative -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative inline -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg> Data applications
         </h3>
@@ -104,9 +125,9 @@
 
     {############   DATA SOURCES    ############}
     {% if pkg_dict.subak_data_sources %}
-    <div class="w-full bg-zinc-100 p-4">
+    <div class="w-full p-4 bg-zinc-100">
         <h3 class="mt-0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline relative -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative inline -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg> Data sources
         </h3>
@@ -117,11 +138,11 @@
     {% endif %}
     
 
-    {############   OTHER/EXTRAS    ############}
-    {% if pkg_dict.extras %}
-    <div class="w-full bg-zinc-100 p-4">
+    {############   OTHER/EXTRAS (only show for sys admins)    ############}
+    {% if pkg_dict.extras and c.userobj.sysadmin %}
+    <div class="w-full p-4 bg-zinc-100">
         <h3 class="mt-0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline relative -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative inline -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
             </svg> Extras
         </h3>
@@ -135,9 +156,9 @@
 
     {############   QA (only show for sys admins)    ############}
     {% if pkg_dict.subak_qa and c.userobj.sysadmin %}
-    <div class="w-full bg-zinc-100 p-4">
+    <div class="w-full p-4 bg-zinc-100">
         <h3 class="mt-0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline relative -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative inline -top-px h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg> QA
         </h3>
@@ -150,7 +171,7 @@
         
     {# This section is hidden with CSS but lists all the key/values on the package model. #}
     {# This includes many custom fields from the old schema that we might want to manually copy to the new schema fields. #}
-    <table class="w-full hidden">
+    <table class="hidden w-full">
         <tr><td class="pt-6" colspan="2">All metadata</td></tr>
         {% for prop in pkg_dict.items() %}
         {% set key, value = prop %}

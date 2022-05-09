@@ -5,7 +5,7 @@
     {% block primary_content %}
     <div class="container px-16 py-6">
         <div class="flex gap-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="text-white h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
             <div class="text-white">
@@ -14,9 +14,9 @@
             </div>
         </div>
     </div>
-    <div class="bg-red-50 text-subak-burnt-copper font-mono font-normal uppercase">
+    <div class="font-mono font-normal uppercase bg-red-50 text-subak-burnt-copper">
         <div id="breadcrumbs" class="container px-16 py-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline relative -top-px h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative inline w-4 h-4 -top-px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
             Showcase
@@ -26,18 +26,18 @@
     </div>
 
     <div class="bg-white">
-        <div class="container px-16 py-8 flex flex-col gap-8">
-            <div id="introduction" class="bg-stone-50 p-8 flex flex-col gap-4">
+        <div class="container flex flex-col gap-8 px-16 py-8">
+            <div id="introduction" class="flex flex-col gap-4 p-8 bg-stone-50">
                 <h2 class="m-0">Introduction</h2>
                 {{ showcase.intro_text | safe }}
-                <a class="self-end float-right rounded bg-subak-meadow-teal px-4 py-2 text-white" href="/dataset?q=power+plant">Browse all {{ showcase.name | lower }} data</a>
+                <a class="self-end float-right px-4 py-2 text-white rounded bg-subak-meadow-teal" href="/dataset?q=power+plant">Browse all {{ showcase.name | lower }} data</a>
             </div>
 
-            <div id="key-stats" class="bg-stone-50 p-8 flex flex-col gap-4">
+            <div id="key-stats" class="flex flex-col gap-4 p-8 bg-stone-50">
                 <h2 class="m-0">Key Statistics</h2>
                 <div class="flex gap-4">
                     {% for stat in showcase.key_stats %}
-                    <div class="flex flex-col gap-3 items-center">
+                    <div class="flex flex-col items-center gap-3">
                         <span class="text-4xl text-subak-meadow-teal">{{ stat.figure }}</span>
                         <p class="text-center">{{ stat.text | safe }}</p>
                     </div>
@@ -46,19 +46,19 @@
             </div>
 
             <div class="flex gap-8">
-                <div id="top-datasets" class="bg-stone-50 p-8 flex flex-col gap-4">
+                <div id="top-datasets" class="flex flex-col gap-4 p-8 bg-stone-50">
                     <h2 class="m-0">Top {{ showcase.name }} Datasets</h2>
-                    <h3 class="text-subak-burnt-copper m-0">Subak Curated Picks<h3>
-                    <div class="font-normal font-body flex flex-col gap-3">
+                    <h3 class="m-0 text-subak-burnt-copper">Subak Curated Picks<h3>
+                    <div class="flex flex-col gap-3 font-normal font-body">
                         {% for dataset in showcase.top_datasets %}
                             {% if dataset %}
                             <a href="{{ h.url_for('dataset.read', id=dataset.id) }}">
                                 {{ dataset.title }}
                                 <span class="flex items-center gap-1">
                                     {% if dataset.organization.image_url %}
-                                    <img class="max-h-8" src="{{ dataset.organization.image_url }}" />
+                                    <img class="relative max-h-5 -top-px" src="{% if h.is_url(dataset.organization.image_url) %}{{ dataset.organization.image_url }}{% else %}/uploads/group/{{ dataset.organization.image_url }}{% endif %}" />
                                     {% endif %}
-                                    <span class="text-sm text-gray-600 block">{{ dataset.organization.title }}</span>
+                                    <span class="block text-sm text-gray-600">{{ dataset.organization.title }}</span>
                                 </span>
                             </a>
                             {% endif %}
@@ -66,15 +66,15 @@
                         </div>
                 </div>
 
-                <div id="highlighted-vis" class="bg-stone-50 p-8 flex flex-col gap-4 grow">
+                <div id="highlighted-vis" class="flex flex-col gap-4 p-8 bg-stone-50 grow">
                     <h2 class="m-0">Highlighted data visualisation</h2>
                     <div>{{ showcase.highlighted_vis }}</div>
                 </div>
             </div>
 
-            <div id="data-applications" class="bg-stone-50 p-8 flex flex-col gap-4">
+            <div id="data-applications" class="flex flex-col gap-4 p-8 bg-stone-50">
                 <h2 class="m-0">Data Applications Showcase</h2>
-                <h3 class="text-subak-burnt-copper m-0">Subak Curated Picks<h3>
+                <h3 class="m-0 text-subak-burnt-copper">Subak Curated Picks<h3>
                 {% for app in showcase.data_applications %}
                     {% snippet "showcase/showcase_card.html", app=app %}
                 {% endfor %}

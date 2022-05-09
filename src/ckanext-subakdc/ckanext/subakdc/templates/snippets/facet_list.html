@@ -43,7 +43,7 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 {% ckan_extends %}
 
 {% block facet_list %}
-	{% set hide_empty = hide_empty or false %}
+	{% set hide_empty = hide_empty or true %}
 	{% with items = items or h.get_facet_items_dict(name, search_facets or c.search_facets) %}
 		{% if items or not hide_empty %}
 			{% if within_tertiary %}
@@ -61,12 +61,9 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 							{% if title == "Dataset coverage to" %}
 								{% set title = "Date coverage" %}
 							{% endif %}
-							<h2 class="module-heading">
-								<i class="fa fa-filter"></i>
+							<h3 class="text-lg">
 								{% set title = title or h.get_facet_title(name) %}
-								<span
-									class="{{ 'text-subak-deep-ocean' if title=='Organizations' else 'text-subak-meadow-teal'
-											if title=='Tags' else 'text-subak-purple-rain' if title=='Formats' else 'text-subak-marine-blue' if title=='Licenses'}}">
+								<span class="">
 									{{ title }}
 									{% if title == "Date coverage" %}
 										<span role="button"
@@ -82,7 +79,7 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 											</svg>
 										</span>
 									{% endif %}
-							</h2>
+							</h3>
 						{% endif %}		
 					{% endblock %}
 
@@ -115,45 +112,38 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 								{% if items %}
 
 									<nav aria-label="{{ title }}">
-										<ul class="{{ nav_class or 'list-unstyled nav nav-simple nav-facet flex flex-wrap' }}">
-											{% for item in items %}										
+										<ul>
+											{% for item in items|sort(attribute='display_name') %}										
 												{% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active
 														else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
 												{% set label = label_function(item) if label_function else item.display_name %}
 												{% set label_truncated = h.truncate(label, 22) if not label_function else label %}
 												{% set count = count_label(item['count']) if count_label else ('%d' % item['count']) %}
-												<li style="padding: 7px 3px !important; border-bottom: none !important;">
-													{% if item.active %}
-														<button class="p-1 font-bold text-white align-middle rounded-full bg-subak-burnt-copper active">
-													{% else %}
-														<button class="hover:bg-subak-burnt-copper text-white font-bold rounded-full p-1 align-middle
-																		{{ 'bg-subak-deep-ocean' if title=='Organizations' else 
-																			'bg-subak-sky-blue' if title=='Groups' else 
-																			'bg-subak-meadow-teal' if title=='Tags' else 
-																			'bg-subak-purple-rain' if title=='Formats' else 
-																			'bg-subak-marine-blue' }}">
-													{% endif %}
-															<a href="{{ href }}" title="{{ label if label != label_truncated else '' }}" class="hover:no-underline">
-																<span
-																	class="p-1 text-white item-label">{{ label_truncated if title != 'Country' else h.truncate(h.scheming_code_to_name(label)) }}</span>
-																<span class="hidden separator"> - </span>
-																<span class="item-count badge">{{ count }}</span>
-															</a>
-														</button>
+												<li>
+													<a href="{{ href }}" 
+														title="{{ label if title != 'Country' else h.truncate(h.scheming_code_to_name(label)) }}" 
+														class="{% if item.active %}border-l-subak-burnt-copper bg-red-50 text-subak-burnt-copper{% else %}border-l-subak-stone-grey text-zinc-700{% endif %} border-l-2 hover:border-l-subak-burnt-copper hover:bg-red-100 px-2 py-1 hover:text-subak-burnt-copper flex gap-2 justify-between hover:no-underline">
+														<span class="">
+															{% if title == 'Country' %}<span class="fi fi-{{ label | lower }}"></span>{% endif %}
+															{{ label if title != 'Country' else h.truncate(h.scheming_code_to_name(label)) }}</span>
+														<span class="">{{ count }}</span>
+													</a>
 												</li>
 											{% endfor %}
 										</ul>
 									</nav>
 
-									<p class="module-footer" style="border-top: none;">
+									<p class="pl-2 border-l-2 border-white font-default">
 										{% if h.get_param_int('_%s_limit' % name) %}
 											{% if h.has_more_facets(name, search_facets or c.search_facets) %}
-												<a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}"
-													class="read-more">{{ _('Show More {facet_type}').format(facet_type=title) if title != 'Country' else 'Show More Countries'}}</a>
+												<a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}">
+													{{ _('Show More {facet_type}').format(facet_type=title) if title != 'Country' else 'Show More Countries'}}
+												</a>
 											{% endif %}
 										{% else %}
-											<a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}"
-												class="read-more">{{ _('Show Only Popular {facet_type}').format(facet_type=title) }}</a>
+											<a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}">
+												{{ _('Show Only Popular {facet_type}').format(facet_type=title) if title != 'Country' else 'Show Only Popular Countries'}}
+											</a>
 										{% endif %}
 									</p>
 
