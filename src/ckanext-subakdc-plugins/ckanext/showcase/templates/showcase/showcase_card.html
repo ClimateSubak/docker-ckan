@@ -18,7 +18,8 @@ app - the data application referred to
                 <span>{{ app.name }}</span> by <span>{{ app.author }}</span>
             </a>
         </h5>
-        <div class="">
+        {% if app.dataset %}
+        <div>
             <p class="m-0">Data sourced from: <a href="{{ h.url_for('dataset.read', id=app.dataset.id) }}">{{ app.dataset.title }}</a><p>
             <a class="flex items-center gap-1 mt-1" href="{{ h.url_for('organization.read', id=app.dataset.organization.id) }}">
                 {% if app.dataset.organization.image_url %}
@@ -27,5 +28,6 @@ app - the data application referred to
                 <span class="block text-sm text-gray-600">{{ app.dataset.organization.title }}</span>
             </a>
         </div>
+        {% endif %}
     </div>
 </div>
