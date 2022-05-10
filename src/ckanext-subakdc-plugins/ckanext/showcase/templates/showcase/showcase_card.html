@@ -5,12 +5,29 @@ Shows a card with a data application of a dataset on the showcase page.
 app - the data application referred to
 
 #}
-<a href="{{ app.external_link }}" target="_blank" class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 mt-3">
-    <img class="object-cover h-full rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
-         src="{{ app.image }}" alt="">
-    <div class="flex flex-col justify-between p-4 leading-normal">
-        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white"><span>{{ app.name }}</span> by
-            <span>{{ app.author }}</span></h5>
-        <p class="mb-3 font-normal text-sm text-gray-700 dark:text-gray-400">{{ app.dataset }}</p>
+<div class="flex flex-col items-stretch w-full bg-white border rounded-lg sm:flex-row">
+    <div class="w-full sm:w-48 grow-0 shrink-0">
+        <a href="{{ app.external_link }}" target="_blank">
+            <img class="object-cover rounded-t-lg sm:h-full sm:rounded-l-lg sm:rounded-tr-none"
+                 src="{{ app.image }}" alt="">
+        </a>
     </div>
-</a>
+    <div class="flex flex-col justify-between p-4 leading-normal">
+        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <a href="{{ app.external_link }}" target="_blank">
+                <span>{{ app.name }}</span> by <span>{{ app.author }}</span>
+            </a>
+        </h5>
+        {% if app.dataset %}
+        <div>
+            <p class="m-0">Data sourced from: <a href="{{ h.url_for('dataset.read', id=app.dataset.id) }}">{{ app.dataset.title }}</a><p>
+            <a class="flex items-center gap-1 mt-1" href="{{ h.url_for('organization.read', id=app.dataset.organization.id) }}">
+                {% if app.dataset.organization.image_url %}
+                <img class="relative max-h-5 -top-px" src="{% if h.is_url(app.dataset.organization.image_url) %}{{ app.dataset.organization.image_url }}{% else %}/uploads/group/{{ app.dataset.organization.image_url }}{% endif %}" />
+                {% endif %}
+                <span class="block text-sm text-gray-600">{{ app.dataset.organization.title }}</span>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
