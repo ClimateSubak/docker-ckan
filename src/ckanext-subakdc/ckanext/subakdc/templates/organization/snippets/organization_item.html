@@ -1,0 +1,38 @@
+{% set url = h.url_for(organization.type ~ '.read', id=organization.name) %}
+
+{% block item %}
+<div class="p-2 border-b last:border-0 hover:bg-slate-100 border-slate-100">
+<a href="{{ url }}" title="{{ _('View {organization_name}').format(organization_name=organization.display_name) }}" class="flex items-center justify-start gap-3">
+  {% block item_inner %}
+  {% block image %}
+    <img class="w-10" src="{{ organization.image_display_url or h.url_for_static('/base/images/placeholder-organization.png') }}" alt="{{ organization.name }}" class="img-fluid media-image">
+  {% endblock %}
+  {% block title %}
+    <h2 class="m-0 text-lg grow">{{ organization.display_name }}</h2>
+  {% endblock %}
+  {#{% block description %}
+    {% if organization.description %}
+      <p class="media-description">{{ h.markdown_extract(organization.description, extract_length=80) }}</p>
+    {% endif %}
+  {% endblock %}}#}
+  {% block datasets %}
+    {% if organization.package_count %}
+      <span class="whitespace-nowrap">{{ ungettext('{num} Dataset', '{num} Datasets', organization.package_count).format(num=organization.package_count) }}</span>
+    {% else %}
+      <span class="whitespace-nowrap">{{ _('0 Datasets') }}</span>
+    {% endif %}
+  {% endblock %}
+  {% block capacity %}
+    {% if show_capacity and organization.capacity %}
+    <p><span class="label label-default">{{ h.roles_translated().get(organization.capacity, organization.capacity) }}</span></p>
+    {% endif %}
+  {% endblock %}
+  {% endblock %}
+</a>
+{% block description %}
+{% if organization.description %}
+    <p class="ml-[3.75em]">{{ h.markdown_extract(organization.description, extract_length=80) }}</p>
+{% endif %}
+{% endblock %}
+</div>
+{% endblock %}

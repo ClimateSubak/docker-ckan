@@ -1,0 +1,7 @@
+{% ckan_extends %}
+
+{% block organization_list %}
+<div class="flex flex-col">
+    {% block organization_list_inner %}{{ super() }}{% endblock %}
+</div>
+{% endblock %}

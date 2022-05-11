@@ -1111,6 +1111,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mb-1 {
   margin-bottom: 0.25rem !important;
 }
+.ml-px {
+  margin-left: 1px !important;
+}
 .mt-2 {
   margin-top: 0.5rem !important;
 }
@@ -1128,6 +1131,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .mb-10 {
   margin-bottom: 2.5rem !important;
+}
+.ml-\[3\.75em\] {
+  margin-left: 3.75em !important;
 }
 .mt-0 {
   margin-top: 0px !important;
@@ -1192,6 +1198,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .min-h-screen {
   min-height: 100vh !important;
 }
+.min-h-\[1\.7em\] {
+  min-height: 1.7em !important;
+}
 .w-full {
   width: 100% !important;
 }
@@ -1225,6 +1234,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-7 {
   width: 1.75rem !important;
 }
+.min-w-\[1\.5em\] {
+  min-width: 1.5em !important;
+}
 .max-w-xl {
   max-width: 36rem !important;
 }
@@ -1242,6 +1254,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .grow-0 {
   flex-grow: 0 !important;
+}
+.grow {
+  flex-grow: 1 !important;
 }
 .table-auto {
   table-layout: auto !important;
@@ -1274,6 +1289,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .items-stretch {
   align-items: stretch !important;
+}
+.justify-start {
+  justify-content: flex-start !important;
 }
 .justify-center {
   justify-content: center !important;
@@ -1316,6 +1334,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .self-center {
   align-self: center !important;
 }
+.self-stretch {
+  align-self: stretch !important;
+}
 .overflow-hidden {
   overflow: hidden !important;
 }
@@ -1352,6 +1373,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .rounded-t-lg {
   border-top-left-radius: 0.5rem !important;
   border-top-right-radius: 0.5rem !important;
+}
+.rounded-l-\[0\.22em\] {
+  border-top-left-radius: 0.22em !important;
+  border-bottom-left-radius: 0.22em !important;
 }
 .rounded-l-\[0\.35em\] {
   border-top-left-radius: 0.35em !important;
@@ -1413,6 +1438,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-subak-stone-grey {
   --tw-border-opacity: 1 !important;
   border-color: rgb(238 238 236 / var(--tw-border-opacity)) !important;
+}
+.border-slate-100 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(241 245 249 / var(--tw-border-opacity)) !important;
 }
 .border-l-subak-burnt-copper {
   --tw-border-opacity: 1 !important;
@@ -1647,6 +1676,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .pl-2 {
   padding-left: 0.5rem !important;
 }
+.pr-2 {
+  padding-right: 0.5rem !important;
+}
 .pt-0 {
   padding-top: 0px !important;
 }
@@ -1784,9 +1816,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1 !important;
   color: rgb(63 63 70 / var(--tw-text-opacity)) !important;
 }
-.text-zinc-500 {
+.text-slate-500 {
   --tw-text-opacity: 1 !important;
-  color: rgb(113 113 122 / var(--tw-text-opacity)) !important;
+  color: rgb(100 116 139 / var(--tw-text-opacity)) !important;
 }
 .text-red-600 {
   --tw-text-opacity: 1 !important;
@@ -1923,6 +1955,11 @@ the theme() function
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+}
+
+.hover\:bg-slate-100:hover {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity)) !important;
 }
 
 .hover\:bg-opacity-100:hover {

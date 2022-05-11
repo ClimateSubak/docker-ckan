@@ -17,10 +17,10 @@ build.ckan:
 	docker compose $(COMPOSE_FILE_PATH) build --no-cache ckan
 
 rebuild.ckan:
-	docker compose $(COMPOSE_FILE_PATH) up -d --no-deps --build ckan
+	docker compose $(COMPOSE_FILE_PATH) up -d --build ckan
 
 restart.ckan:
-	docker compose $(COMPOSE_FILE_PATH) up -d --no-deps --force-recreate ckan
+	docker compose $(COMPOSE_FILE_PATH) up -d --force-recreate ckan
 
 debug.ckan:
 	docker stop ${CKAN_CONTAINER} && docker compose $(COMPOSE_FILE_PATH) run --rm --no-deps --name ckan ckan
@@ -55,7 +55,7 @@ reload.caddy:
 	docker compose ${COMPOSE_FILE_PATH} exec -w /etc/caddy caddy caddy reload
 
 restart.redis:
-	docker compose $(COMPOSE_FILE_PATH) up -d --no-deps --force-recreate redis
+	docker compose $(COMPOSE_FILE_PATH) up -d --force-recreate redis
 
 harvest.gather:
 	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan harvester gather-consumer"

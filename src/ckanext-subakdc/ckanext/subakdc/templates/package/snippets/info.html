@@ -1,6 +1,7 @@
 {% ckan_extends %}
 
 {% block nums %}
+    {% snippet "snippets/subak_coop_badge.html", package=pkg %} 
     {% if 'freshness_score' in h %}
     {% set freshness_score = h.freshness_score(pkg) %}
     {% set freshness_colour_classes = ['text-red-600', 'text-orange-600', 'text-yellow-600', 'text-lime-600', 'text-green-600'] %}
@@ -23,7 +24,7 @@
                               data-placement="right"
                               data-html="true"
                               data-trigger="hover">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="inline relative -top-px h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="relative inline w-5 h-5 -top-px" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                             </svg> 
                             <span class="underline decoration-dashed">{{ _('Dataset freshness') }}</span>

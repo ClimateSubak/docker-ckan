@@ -1,3 +1,4 @@
+import logging
 from urllib.parse import urlparse
 
 import ckan.plugins as p
@@ -12,6 +13,8 @@ HOMEPAGE_TAGS = [
     "Electricity",
     "Crude Oil",
 ]
+
+log = logging.getLogger(__name__)
 
 
 def homepage_tags():
@@ -29,6 +32,18 @@ def is_url(text):
         return False
 
 
+def get_subak_coop_group_from_dataset(pkg):
+    if "groups" not in pkg or not (pkg["groups"]):
+        return None
+
+    groups = list(filter(lambda grp: grp["name"] == "data-cooperative", pkg["groups"]))
+
+    if len(groups) < 1:
+        return None
+    else:
+        return groups[0]
+
+
 class SubakdcPlugin(p.SingletonPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
@@ -44,4 +59,7 @@ class SubakdcPlugin(p.SingletonPlugin):
         """
         Helper function to define homepage quick explore tags
         """
-        return {"homepage_quick_explore_tags": homepage_tags}
+        return {
+            "homepage_quick_explore_tags": homepage_tags,
+            "get_subak_coop_group_from_dataset": get_subak_coop_group_from_dataset,
+        }

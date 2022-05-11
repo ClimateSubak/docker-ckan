@@ -1,0 +1,11 @@
+{% set subak_coop_group = h.get_subak_coop_group_from_dataset(package) %}
+{% if subak_coop_group %}
+<div class="flex">
+    <a class="flex items-center gap-2 pr-2 text-white no-underline border rounded bg-subak-deep-ocean border-subak-deep-ocean" href="{{ h.url_for('group.read', id=subak_coop_group.name) }}">
+        <div class="bg-white rounded-l-[0.22em] min-w-[1.5em] min-h-[1.7em] min self-stretch align-middle">
+            <img class="relative inline object-cover h-5 ml-px" src="{{ subak_coop_group.image_display_url }}" />
+        </div>
+        <span class="relative py-1 text-xs">{{ subak_coop_group.display_name }} member</span>
+    </a>
+</div>
+{% endif %}
