@@ -11,17 +11,17 @@
 <h3 class="flex gap-1 my-2 text-sm">{% if package.organization.image_url %}
     <img class="max-h-5" src="{% if h.is_url(package.organization.image_url) %}{{ package.organization.image_url }}{% else %}/uploads/group/{{ package.organization.image_url }}{% endif %}" />
     {% endif %}
-    <a class="text-zinc-500" href="{{ h.url_for(package.organization.type ~ '.read', id=package.organization.name) }}">{{ package.organization.title }}</a>
+    <a class="text-slate-500" href="{{ h.url_for(package.organization.type ~ '.read', id=package.organization.name) }}">{{ package.organization.title }}</a>
 </h3>
 {% endblock %}
 
 {% block resources %}
-<div class="flex">
+<div class="flex mb-2">
     <div class="flex-auto">
         {{ super() }}
     </div>
     {% if 'freshness_score' in h %}
-    <div class="flex-auto mt-2 text-right">
+    <div class="flex-auto text-right">
         {% set freshness_score = h.freshness_score(package) %}
         {% set freshness_colour_classes = ['text-red-600', 'text-orange-600', 'text-yellow-600', 'text-lime-600', 'text-green-600'] %}
         {% set freshness_tooltip = '<p class="break-normal">This score represents how recently one or more of the data resources was last updated.</p>
@@ -51,4 +51,5 @@
     </div>
     {% endif %}
 </div>
+{% snippet "snippets/subak_coop_badge.html", package=package %}
 {% endblock %}
