@@ -1180,6 +1180,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-4 {
   height: 1rem !important;
 }
+.h-full {
+  height: 100% !important;
+}
 .h-7 {
   height: 1.75rem !important;
 }
@@ -1361,6 +1364,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .rounded-t-lg {
   border-top-left-radius: 0.5rem !important;
   border-top-right-radius: 0.5rem !important;
+}
+.rounded-l-\[0\.22em\] {
+  border-top-left-radius: 0.22em !important;
+  border-bottom-left-radius: 0.22em !important;
 }
 .rounded-l-\[0\.35em\] {
   border-top-left-radius: 0.35em !important;
@@ -1660,6 +1667,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .pl-2 {
   padding-left: 0.5rem !important;
 }
+.pr-2 {
+  padding-right: 0.5rem !important;
+}
 .pt-0 {
   padding-top: 0px !important;
 }
@@ -1797,9 +1807,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1 !important;
   color: rgb(63 63 70 / var(--tw-text-opacity)) !important;
 }
-.text-zinc-500 {
+.text-slate-500 {
   --tw-text-opacity: 1 !important;
-  color: rgb(113 113 122 / var(--tw-text-opacity)) !important;
+  color: rgb(100 116 139 / var(--tw-text-opacity)) !important;
 }
 .text-red-600 {
   --tw-text-opacity: 1 !important;
