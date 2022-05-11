@@ -1129,6 +1129,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mb-10 {
   margin-bottom: 2.5rem !important;
 }
+.ml-\[3\.75em\] {
+  margin-left: 3.75em !important;
+}
 .mt-0 {
   margin-top: 0px !important;
 }
@@ -1243,6 +1246,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .grow-0 {
   flex-grow: 0 !important;
 }
+.grow {
+  flex-grow: 1 !important;
+}
 .table-auto {
   table-layout: auto !important;
 }
@@ -1274,6 +1280,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .items-stretch {
   align-items: stretch !important;
+}
+.justify-start {
+  justify-content: flex-start !important;
 }
 .justify-center {
   justify-content: center !important;
@@ -1413,6 +1422,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-subak-stone-grey {
   --tw-border-opacity: 1 !important;
   border-color: rgb(238 238 236 / var(--tw-border-opacity)) !important;
+}
+.border-slate-100 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(241 245 249 / var(--tw-border-opacity)) !important;
 }
 .border-l-subak-burnt-copper {
   --tw-border-opacity: 1 !important;
@@ -1923,6 +1936,11 @@ the theme() function
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+}
+
+.hover\:bg-slate-100:hover {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity)) !important;
 }
 
 .hover\:bg-opacity-100:hover {
