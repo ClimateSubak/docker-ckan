@@ -51,15 +51,5 @@
     </div>
     {% endif %}
 </div>
-{% set subak_coop_group = h.get_subak_coop_group_from_dataset(package) %}
-{% if subak_coop_group %}
-<div class="flex">
-    <a class="flex items-center gap-1 pr-2 text-white no-underline border rounded bg-subak-deep-ocean border-subak-deep-ocean" href="{{ h.url_for('group.read', id=subak_coop_group.name) }}">
-        <div class="h-6">
-            <img class="relative inline object-cover rounded-l-[0.22em] h-full" src="{{ subak_coop_group.image_display_url }}" />
-        </div>
-        <span class="relative text-xs grow-0">{{ subak_coop_group.display_name }} member</span>
-    </a>
-</div>
-{% endif %}
+{% snippet "snippets/subak_coop_badge.html", package=package %}
 {% endblock %}

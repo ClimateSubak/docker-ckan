@@ -1111,6 +1111,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mb-1 {
   margin-bottom: 0.25rem !important;
 }
+.ml-px {
+  margin-left: 1px !important;
+}
 .mt-2 {
   margin-top: 0.5rem !important;
 }
@@ -1180,9 +1183,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-4 {
   height: 1rem !important;
 }
-.h-full {
-  height: 100% !important;
-}
 .h-7 {
   height: 1.75rem !important;
 }
@@ -1197,6 +1197,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .min-h-screen {
   min-height: 100vh !important;
+}
+.min-h-\[1\.7em\] {
+  min-height: 1.7em !important;
 }
 .w-full {
   width: 100% !important;
@@ -1230,6 +1233,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-7 {
   width: 1.75rem !important;
+}
+.min-w-\[1\.5em\] {
+  min-width: 1.5em !important;
 }
 .max-w-xl {
   max-width: 36rem !important;
@@ -1327,6 +1333,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .self-center {
   align-self: center !important;
+}
+.self-stretch {
+  align-self: stretch !important;
 }
 .overflow-hidden {
   overflow: hidden !important;
