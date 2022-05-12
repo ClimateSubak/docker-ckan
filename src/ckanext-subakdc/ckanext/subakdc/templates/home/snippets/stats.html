@@ -1,8 +1,8 @@
 {% set stats = h.get_site_statistics() %}
 
 <div class="col-12 full-width bg-subak-stone-grey">
-    <div class="container p-16">
-        <h2 class="text-2xl">{{ _('{0} statistics').format(g.site_title) }}</h2>
+    <div class="container p-4 md:p-16">
+        <h2 class="mt-0 text-2xl">Catalouge Statistics</h2>
         <ul class="font-body">
             {% block stats_group %}
             <li>

@@ -51,6 +51,11 @@ body {
   }
 }
 
+.navbar-collapse {
+  box-shadow: none !important;
+  border: none !important;
+}
+
 .masthead {
   background: transparent !important;
 }
