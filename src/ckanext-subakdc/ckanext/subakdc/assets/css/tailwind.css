@@ -1293,6 +1293,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .content-center {
   align-content: center !important;
 }
+.content-start {
+  align-content: flex-start !important;
+}
 .items-start {
   align-items: flex-start !important;
 }
@@ -2210,10 +2213,6 @@ the theme() function
     padding: 4rem !important;
   }
 
-  .md\:p-3 {
-    padding: 0.75rem !important;
-  }
-
   .md\:px-16 {
     padding-left: 4rem !important;
     padding-right: 4rem !important;
@@ -2255,6 +2254,10 @@ the theme() function
 
   .md\:pt-16 {
     padding-top: 4rem !important;
+  }
+
+  .md\:pr-3 {
+    padding-right: 0.75rem !important;
   }
 
   .md\:pr-20 {
