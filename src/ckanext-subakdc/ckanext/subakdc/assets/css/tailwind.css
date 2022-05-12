@@ -1150,6 +1150,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .table {
   display: table !important;
 }
+.grid {
+  display: grid !important;
+}
 .hidden {
   display: none !important;
 }
@@ -1269,6 +1272,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+}
 .flex-col {
   flex-direction: column !important;
 }
@@ -1277,6 +1289,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .flex-wrap {
   flex-wrap: wrap !important;
+}
+.place-items-center {
+  place-items: center !important;
+}
+.content-center {
+  align-content: center !important;
 }
 .items-start {
   align-items: flex-start !important;
@@ -1512,12 +1530,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1 !important;
   background-color: rgb(2 132 199 / var(--tw-bg-opacity)) !important;
 }
-.bg-transparent {
-  background-color: transparent !important;
-}
 .bg-subak-stone-grey {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(238 238 236 / var(--tw-bg-opacity)) !important;
+}
+.bg-transparent {
+  background-color: transparent !important;
 }
 .bg-zinc-100 {
   --tw-bg-opacity: 1 !important;
@@ -1597,6 +1615,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .p-16 {
   padding: 4rem !important;
 }
+.p-12 {
+  padding: 3rem !important;
+}
 .px-2 {
   padding-left: 0.5rem !important;
   padding-right: 0.5rem !important;
@@ -1653,6 +1674,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 1px !important;
   padding-bottom: 1px !important;
 }
+.py-12 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
 .pr-1 {
   padding-right: 0.25rem !important;
 }
@@ -1691,6 +1716,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .pt-0 {
   padding-top: 0px !important;
+}
+.pt-5 {
+  padding-top: 1.25rem !important;
+}
+.pt-16 {
+  padding-top: 4rem !important;
 }
 .pr-14 {
   padding-right: 3.5rem !important;
@@ -1756,6 +1787,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-3xl {
   font-size: 1.875rem !important;
   line-height: 2.25rem !important;
+}
+.text-6xl {
+  font-size: 3.75rem !important;
+  line-height: 1 !important;
 }
 .font-normal {
   font-weight: 400 !important;
@@ -1844,9 +1879,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1 !important;
   color: rgb(156 163 175 / var(--tw-text-opacity)) !important;
 }
-.text-subak-deep-ocean {
+.text-subak-sky-blue {
   --tw-text-opacity: 1 !important;
-  color: rgb(15 43 67 / var(--tw-text-opacity)) !important;
+  color: rgb(59 200 236 / var(--tw-text-opacity)) !important;
 }
 .underline {
   -webkit-text-decoration-line: underline !important;
