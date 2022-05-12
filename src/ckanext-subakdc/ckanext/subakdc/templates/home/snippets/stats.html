@@ -6,17 +6,15 @@
         {% block stats_group %}
         <div class="grid grid-cols-2 gap-12 p-12">
             <div class="flex justify-center">
-                <a href="{{ h.url_for('dataset.search') }}" class="text-white">
-                <strong class="text-6xl text-white hover:no-underline">{{ h.SI_number_span(stats.dataset_count) }}</strong>
-                <br>
-                    {{ _('dataset') if stats.dataset_count == 1 else _('datasets') }}
+                <a href="{{ h.url_for('dataset.search') }}" class="flex flex-col items-center text-white no-underline">
+                    <strong class="text-6xl text-white hover:no-underline">{{ h.SI_number_span(stats.dataset_count) }}</strong>
+                    <span>{{ _('dataset') if stats.dataset_count == 1 else _('datasets') }}</span>
                 </a>
             </div>
             <div class="flex justify-center">
-                <a href="{{ h.url_for(controller='organization', action='index') }}" class="text-white">
-                <strong class="text-6xl text-white hover:no-underline">{{ h.SI_number_span(stats.organization_count) }}</strong>
-                <br>
-                    {{ _('organization') if stats.organization_count == 1 else _('organizations') }}
+                <a href="{{ h.url_for(controller='organization', action='index') }}" class="flex flex-col items-center text-white no-underline">
+                    <strong class="text-6xl text-white hover:no-underline">{{ h.SI_number_span(stats.organization_count) }}</strong>
+                    <span>{{ _('organization') if stats.organization_count == 1 else _('organizations') }}</span>
                 </a>
             </div>
         {% endblock %}

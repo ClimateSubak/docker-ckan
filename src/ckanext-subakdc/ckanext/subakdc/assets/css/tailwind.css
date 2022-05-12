@@ -1272,14 +1272,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
 }
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-}
-.grid-cols-1 {
-  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
 }
 .flex-col {
   flex-direction: column !important;
@@ -1719,9 +1716,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .pt-5 {
   padding-top: 1.25rem !important;
-}
-.pt-16 {
-  padding-top: 4rem !important;
 }
 .pr-14 {
   padding-right: 3.5rem !important;
@@ -2192,6 +2186,10 @@ the theme() function
     align-items: center !important;
   }
 
+  .md\:gap-12 {
+    gap: 3rem !important;
+  }
+
   .md\:self-stretch {
     align-self: stretch !important;
   }
@@ -2210,6 +2208,10 @@ the theme() function
 
   .md\:p-16 {
     padding: 4rem !important;
+  }
+
+  .md\:p-3 {
+    padding: 0.75rem !important;
   }
 
   .md\:px-16 {
@@ -2245,6 +2247,14 @@ the theme() function
 
   .md\:pb-60 {
     padding-bottom: 15rem !important;
+  }
+
+  .md\:pt-12 {
+    padding-top: 3rem !important;
+  }
+
+  .md\:pt-16 {
+    padding-top: 4rem !important;
   }
 
   .md\:pr-20 {
