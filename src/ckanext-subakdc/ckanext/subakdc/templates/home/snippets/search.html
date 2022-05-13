@@ -6,37 +6,38 @@
         <input aria-label="{% block header_site_search_label %}{{ _('Search datasets') }}{% endblock %}"
                id="field-main-search" 
                type="text" 
-               class="w-full pr-32 text-6xl font-black text-white bg-transparent focus:text-subak-deep-ocean font-heading placeholder:opacity-50 focus:bg-white focus:pl-4 peer" 
+               class="w-full text-4xl font-black text-white bg-transparent pr-14 md:pr-20 md:text-6xl focus:text-subak-deep-ocean font-heading placeholder:opacity-50 focus:bg-white focus:pl-4 peer" 
                name="q" 
                value="" 
                autocomplete="off"
                size="1"
                placeholder="Search data" />
-        <button class="absolute right-0 text-white bg-transparent top-4 peer-focus:text-subak-deep-ocean peer-focus:right-4" type="submit" aria-labelledby="search-label">
-            <i class="fa fa-search text-[50px]"></i>
+        <button class="absolute right-0 text-white bg-transparent top-2 md:top-5 peer-focus:text-subak-deep-ocean peer-focus:right-4" type="submit" aria-labelledby="search-label">
+            <i class="text-3xl md:text-5xl fa fa-search"></i>
             <span class="sr-only" id="search-label">{{ _('Search') }}</span>
         </button>
     </form>
     <div>
-        <h2 class="font-mono text-base font-normal">
+        <div class="flex flex-wrap gap-3 my-2 font-mono text-xs font-normal md:text-base">
             <span class="text-white">{{ h.SI_number_span(stats.dataset_count) }} DATASETS</span>
-            <span class="ml-2 mr-2 text-white">|</span>
-            <span class="text-subak-burnt-copper">
-                <img src="{{ 'images/search.svg' }}" class="inline mr-2">SEARCHABLE
+            <span class="whitespace-nowrap">
+                <span class="text-subak-burnt-copper">
+                    <img src="{{ 'images/search.svg' }}" class="inline mr-2">SEARCHABLE
+                </span>
+                <span class="text-subak-burnt-copper">
+                    <img src="{{ 'images/connect.svg' }}" class="inline mx-2">CONNECTED
+                </span>
+                <span class="text-subak-burnt-copper">
+                    <img src="{{ 'images/trust.svg' }}" class="inline mx-2">TRUSTED
+                </span>
             </span>
-            <span class="text-subak-burnt-copper">
-                <img src="{{ 'images/connect.svg' }}" class="inline mx-2">CONNECTED
-            </span>
-            <span class="text-subak-burnt-copper">
-                <img src="{{ 'images/trust.svg' }}" class="inline mx-2">TRUSTED
-            </span>
-        </h2>
+        </div>
     </div>
     <div class="mt-6">
         <h3 class="mb-3 text-xl text-white">{{ _('Quick explore by theme') }}</h3>
         {% for tag in tags %}
         <a href="{% url_for 'dataset.search', tags=tag.name %}">
-            <button type="button" class="px-5 mb-2 mr-1 font-mono text-white uppercase transition duration-150 border-white border-solid btn btn-outline-light hover:bg-white hover:text-subak-deep-ocean hover:transition-all">
+            <button type="button" class="px-5 mb-2 mr-1 font-mono text-xs text-white uppercase transition duration-150 border-white border-solid btn btn-outline-light hover:bg-white hover:text-subak-deep-ocean hover:transition-all md:text-sm">
                 {{ h.truncate(tag.display_name, 22) }}
             </button>
         </a>

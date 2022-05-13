@@ -56,6 +56,15 @@ body {
   }
 }
 
+.module-content {
+  /* padding: 2em 0 !important; */
+}
+
+.navbar-collapse {
+  box-shadow: none !important;
+  border: none !important;
+}
+
 .masthead {
   background: transparent !important;
 }
