@@ -1108,6 +1108,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-6 {
   margin-top: 1.5rem !important;
 }
+.mt-0 {
+  margin-top: 0px !important;
+}
 .mb-4 {
   margin-bottom: 1rem !important;
 }
@@ -1117,6 +1120,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mb-1 {
   margin-bottom: 0.25rem !important;
 }
+.mt-\[3px\] {
+  margin-top: 3px !important;
+}
+.mb-0 {
+  margin-bottom: 0px !important;
+}
 .ml-px {
   margin-left: 1px !important;
 }
@@ -1125,9 +1134,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .-mb-12 {
   margin-bottom: -3rem !important;
-}
-.mt-0 {
-  margin-top: 0px !important;
 }
 .mb-10 {
   margin-bottom: 2.5rem !important;
@@ -1277,6 +1283,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+.flex-row {
+  flex-direction: row !important;
 }
 .flex-col {
   flex-direction: column !important;
@@ -1702,11 +1711,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .pt-12 {
   padding-top: 3rem !important;
 }
-.pt-px {
-  padding-top: 1px !important;
-}
 .pt-2 {
   padding-top: 0.5rem !important;
+}
+.pt-px {
+  padding-top: 1px !important;
 }
 .pl-2 {
   padding-left: 0.5rem !important;
@@ -2181,12 +2190,24 @@ the theme() function
     width: 12rem !important;
   }
 
+  .md\:w-auto {
+    width: auto !important;
+  }
+
+  .md\:flex-1 {
+    flex: 1 1 0% !important;
+  }
+
   .md\:flex-row {
     flex-direction: row !important;
   }
 
   .md\:items-center {
     align-items: center !important;
+  }
+
+  .md\:gap-8 {
+    gap: 2rem !important;
   }
 
   .md\:gap-12 {
@@ -2292,16 +2313,28 @@ the theme() function
     font-size: 1.5rem !important;
     line-height: 2rem !important;
   }
-
-  .md\:text-inherit {
-    color: inherit !important;
-  }
 }
 
 @media (min-width: 1024px) {
 
   .lg\:flex-row {
     flex-direction: row !important;
+  }
+
+  .lg\:flex-row-reverse {
+    flex-direction: row-reverse !important;
+  }
+
+  .lg\:flex-col {
+    flex-direction: column !important;
+  }
+
+  .lg\:items-end {
+    align-items: flex-end !important;
+  }
+
+  .lg\:items-center {
+    align-items: center !important;
   }
 }
 

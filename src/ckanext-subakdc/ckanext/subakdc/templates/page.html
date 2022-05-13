@@ -28,7 +28,7 @@
         </div>
         {% endblock %}
 
-        <div class="flex flex-col-reverse md:flex-row gap-8 {% block wrapper_class %}{% endblock %}{% if self.secondary()|trim == '' or c.action=='resource_read' %} no-nav{% endif %}">
+        <div class="flex flex-col-reverse md:flex-row md:gap-8 {% block wrapper_class %}{% endblock %}{% if self.secondary()|trim == '' or c.action=='resource_read' %} no-nav{% endif %}">
         {#
         The pre_primary block can be used to add content to before the
         rendering of the main content columns of the page.
@@ -37,7 +37,7 @@
         {% endblock %}
 
         {% block secondary %}
-            <aside class="w-full md:w-1/4 secondary shrink-0">
+            <aside class="w-full mt-6 md:w-1/4 secondary shrink-0">
             {#
             The secondary_content block can be used to add content to the
             sidebar of the page. This is the main block that is likely to be

@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block page_heading %}
-<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col items-start justify-between gap-3 lg:flex-row">
   <div>{{ super() }}</div>
   {% if pkg.url and h.is_url(pkg.url) %}
   <div class="">

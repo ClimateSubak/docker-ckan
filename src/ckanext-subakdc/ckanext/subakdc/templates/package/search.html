@@ -41,8 +41,8 @@
 
 {% block secondary_content %}
     <div class="filters">
-        <h2 class="text-white md:text-inherit">Filters</h2>
         <div class="p-6 pt-2 md:p-0 md:pt-0">
+          <h2 class="mt-0">Filters</h2>
           {% for facet in facet_titles %}
             {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, search_facets=search_facets) }}
           {% endfor %}
