@@ -1,13 +1,11 @@
 <footer class="site-footer">
-    <div class="container px-16 pt-8 pb-28">
+    <div class="container px-4 pt-4 pb-16 md:px-16 md:pt-8 md:pb-28">
         {% block footer_content %}
         <div class="row">
             <div class="col-md-8 footer-links font-body">
                 {% block footer_nav %}
                 <ul class="list-unstyled">
                     {% block footer_links %}
-                    <li><a href="{{ h.url_for(controller='home', action='about') }}">{{ _('About
-                            {0}').format(g.site_title) }}</a></li>
                     <li><a href="/pages/cookie-and-privacy-policy">Cookie and Privacy Policy</a></li>
                     {% endblock %}
                 </ul>
@@ -33,7 +31,7 @@
     </div>
 
     <div data-module="cookie_banner" class="fixed bottom-0 z-40 hidden w-full py-3 bg-subak-deep-ocean">
-        <div class="container flex items-center px-24 mx-auto">
+        <div class="container flex items-center mx-auto md:px-24">
             <p class="my-2 font-body">We use cookies to ensure that we give you the best experience on our website. By using this website you agree to our cookie and privacy policy. <a class="underline hover:text-slate-400" href="/pages/cookie-and-privacy-policy">Read More</a></p>
             <button id="accept-cookie-policy" class="px-5 py-3 ml-3 font-mono uppercase bg-subak-marine-blue">Accept</button>
         </div>

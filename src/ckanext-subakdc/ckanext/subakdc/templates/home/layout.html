@@ -1,5 +1,5 @@
 <div class="container relative p-0">
-    <div class="pt-36 pb-60">
+    <div class="pt-12 pb-16 md:pt-36 md:pb-60">
         {% block search %}
         {% snippet 'home/snippets/search.html' %}
         {% endblock %}
@@ -11,9 +11,9 @@
             {% snippet 'home/snippets/welcome.html' %}
             {% snippet 'home/snippets/faq.html' %}
             {% block stats %}
-            {% snippet 'home/snippets/stats.html' %}
+                {% snippet 'home/snippets/stats.html' %}
             {% endblock %}
-            {% snippet 'home/snippets/case_studies.html' %}
+            {#{% snippet 'home/snippets/case_studies.html' %}#}
         </div>
     </div>
 </div>

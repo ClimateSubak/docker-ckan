@@ -8,6 +8,11 @@ body {
   background-size: cover !important;
 }
 
+.background-1 {
+  background: linear-gradient(90deg, rgba(2, 0, 36, 0.6) 0%, rgba(1, 59, 92, 0.6) 0%, rgba(0, 53, 82, 0.6) 100%), url(/images/subak-bg-3.jpeg) no-repeat !important;
+  background-size: cover !important;
+}
+
 .dashboard-link:focus,
 .dashboard-link:hover,
 .masthead .nav>li>a:focus,
@@ -49,6 +54,15 @@ body {
   .wrapper::before {
     border: none !important;
   }
+}
+
+.module-content {
+  /* padding: 2em 0 !important; */
+}
+
+.navbar-collapse {
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .masthead {

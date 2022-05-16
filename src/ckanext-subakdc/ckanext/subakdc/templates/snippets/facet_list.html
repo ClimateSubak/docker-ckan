@@ -123,8 +123,12 @@ Dictionary with search facets(or `c.search_facets` if not provided)
 													<a href="{{ href }}" 
 														title="{{ label if title != 'Country' else h.truncate(h.scheming_code_to_name(label)) }}" 
 														class="{% if item.active %}border-l-subak-burnt-copper bg-red-50 text-subak-burnt-copper{% else %}border-l-subak-stone-grey text-zinc-700{% endif %} border-l-2 hover:border-l-subak-burnt-copper hover:bg-red-100 px-2 py-1 hover:text-subak-burnt-copper flex gap-2 justify-between hover:no-underline">
-														<span class="">
-															{% if title == 'Country' %}<span class="fi fi-{{ label | lower }}"></span>{% endif %}
+														<span class="flex gap-1">
+															{% if title == 'Country' %}
+																<div class="w-5 mt-[3px]">
+																	{% include 'snippets/flags/4x3/' ~ (label | lower) ~ '.svg' ignore missing %}
+																</div>
+															{% endif %}
 															{{ label if title != 'Country' else h.truncate(h.scheming_code_to_name(label)) }}</span>
 														<span class="">{{ count }}</span>
 													</a>
