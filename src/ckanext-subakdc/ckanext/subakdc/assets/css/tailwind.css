@@ -1647,6 +1647,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 1.5rem !important;
   padding-bottom: 1.5rem !important;
 }
+.py-4 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
 .px-4 {
   padding-left: 1rem !important;
   padding-right: 1rem !important;
@@ -1666,10 +1670,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .px-8 {
   padding-left: 2rem !important;
   padding-right: 2rem !important;
-}
-.py-4 {
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
 }
 .px-1 {
   padding-left: 0.25rem !important;
@@ -1836,13 +1836,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1 !important;
   color: rgb(29 131 139 / var(--tw-text-opacity)) !important;
 }
-.text-gray-600 {
-  --tw-text-opacity: 1 !important;
-  color: rgb(75 85 99 / var(--tw-text-opacity)) !important;
-}
 .text-subak-burnt-copper {
   --tw-text-opacity: 1 !important;
   color: rgb(201 94 59 / var(--tw-text-opacity)) !important;
+}
+.text-gray-600 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(75 85 99 / var(--tw-text-opacity)) !important;
 }
 .text-gray-900 {
   --tw-text-opacity: 1 !important;
@@ -2233,6 +2233,11 @@ the theme() function
     padding: 4rem !important;
   }
 
+  .md\:px-8 {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+
   .md\:px-16 {
     padding-left: 4rem !important;
     padding-right: 4rem !important;
@@ -2241,11 +2246,6 @@ the theme() function
   .md\:px-24 {
     padding-left: 6rem !important;
     padding-right: 6rem !important;
-  }
-
-  .md\:px-8 {
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
   }
 
   .md\:py-6 {
@@ -2321,6 +2321,10 @@ the theme() function
 
 @media (min-width: 1024px) {
 
+  .lg\:w-32 {
+    width: 8rem !important;
+  }
+
   .lg\:flex-row {
     flex-direction: row !important;
   }
@@ -2339,6 +2343,13 @@ the theme() function
 
   .lg\:items-center {
     align-items: center !important;
+  }
+}
+
+@media (min-width: 1280px) {
+
+  .xl\:w-48 {
+    width: 12rem !important;
   }
 }
 
