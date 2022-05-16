@@ -18,6 +18,9 @@ def user_show(context, data_dict):
     Check whether access to individual user details is authorised.
     Restricted to organisation admins or self.
     """
+    # log.debug(context)
+    # log.debug(data_dict)
+
     if _requester_is_admin(context):
         return {"success": True}
 
