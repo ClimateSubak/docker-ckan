@@ -32,12 +32,7 @@
                         {{ showcase.intro_text | safe }}
                     </div>
                 </div>
-                <a class="self-center float-right px-4 py-2 text-xl text-white rounded bg-subak-meadow-teal" href="{{ showcase.data.link }}">Browse all {{ showcase.name | lower }} data</a>
-            </div>
-
-            <div id="key-stats" class="flex flex-col gap-4 p-8 bg-white shadow-md">
-                <h2 class="m-0">Key Statistics</h2>
-                <div class="flex flex-col gap-12 sm:flex-row">
+                <div class="flex flex-col gap-12 py-4 md:px-8 sm:flex-row">
                     {% for stat in showcase.key_stats %}
                     <div class="flex flex-col items-center flex-1 gap-3">
                         <span class="text-4xl text-subak-meadow-teal">{{ stat.figure }}</span>
@@ -45,22 +40,7 @@
                     </div>
                     {% endfor %}
                 </div>
-            </div>
-
-            <div id="highlighted-vis" class="flex flex-col flex-1 gap-4 p-8 bg-white shadow-md">
-                <h2 class="m-0">Highlighted data visualisation</h2>
-                {% with vis=showcase.highlighted_vis %}
-                <div>{{ vis.media | safe }}</div>
-                <div>
-                    <p class="m-0">Sourced from: <a href="{{ h.url_for('dataset.read', id=vis.dataset.id) }}">{{ vis.dataset.title }}</a><p>
-                    <a class="flex items-center gap-1 mt-1" href="{{ h.url_for('organization.read', id=vis.dataset.organization.id) }}">
-                        {% if vis.dataset.organization.image_url %}
-                        <img class="relative max-h-5 -top-px" src="{% if h.is_url(vis.dataset.organization.image_url) %}{{ vis.dataset.organization.image_url }}{% else %}/uploads/group/{{ vis.dataset.organization.image_url }}{% endif %}" />
-                        {% endif %}
-                        <span class="block text-sm text-gray-600">{{ vis.dataset.organization.title }}</span>
-                    </a>
-                </div>
-                {% endwith %}
+                <a class="self-center float-right px-4 py-2 text-xl text-white rounded bg-subak-meadow-teal" href="{{ showcase.data.link }}">Browse all {{ showcase.name | lower }} data</a>
             </div>
 
             <div class="flex flex-col gap-8 lg:flex-row">
@@ -93,6 +73,24 @@
                         {% endfor %}
                     </div>
                 </div>  
+            </div>
+
+            <div id="highlighted-vis" class="flex flex-col flex-1 gap-4 p-8 bg-white shadow-md">
+                <h2 class="m-0">Highlighted data visualisation</h2>
+                {% with vis=showcase.highlighted_vis %}
+                <div>{{ vis.media | safe }}</div>
+                    {% if vis.dataset %}
+                    <div>
+                        <p class="m-0">Sourced from: <a href="{{ h.url_for('dataset.read', id=vis.dataset.id) }}">{{ vis.dataset.title }}</a><p>
+                        <a class="flex items-center gap-1 mt-1" href="{{ h.url_for('organization.read', id=vis.dataset.organization.id) }}">
+                            {% if vis.dataset.organization.image_url %}
+                            <img class="relative max-h-5 -top-px" src="{% if h.is_url(vis.dataset.organization.image_url) %}{{ vis.dataset.organization.image_url }}{% else %}/uploads/group/{{ vis.dataset.organization.image_url }}{% endif %}" />
+                            {% endif %}
+                            <span class="block text-sm text-gray-600">{{ vis.dataset.organization.title }}</span>
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endwith %}
             </div>
         </div>
     </div>

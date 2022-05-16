@@ -5,7 +5,7 @@
         "search_query": "power plant",
         "link": "/dataset?q=power+plant"
     },
-    "intro_text": "<p>A huge amount of the energy the world uses is generated in power plants, supplying electricity and heat to cities, factories and power grids worldwide. Power plants can consume coal, gas, nuclear fuel or biomass; they can use the movement of water, or wind, or harness the power of the sun. Each technology produces a different amount of carbon emissions as well as its own particular characteristics. Coal plants can produce 1000 grams of CO2 per kilowatt hour of electricity generated, whereas clean technologies produce almost none over their lifetime. Energy scenarios agree that rapid decarbonisation of the power sector is crucial to meet climate targets. Not only cleaning up power grids, but allowing other sectors to decarbonise through electrification. Coal power should be phased out completely by 2030 in OECD countries and worldwide by 2040. To understand the landscape of power plants we present some key datasets on this page.</p>",
+    "intro_text": "<p>A huge amount of the energy the world uses is generated in power plants, supplying electricity and heat to cities, factories and power grids worldwide.</p><p>IPCC scenarios to net zero involve electrification of transport and industry. Coal power should be phased out completely by 2030 in OECD countries and worldwide by 2040.</p><p>To understand the landscape of power plants we present some key datasets below.</p>",
     "key_stats": [
         {
             "figure": "38%",
