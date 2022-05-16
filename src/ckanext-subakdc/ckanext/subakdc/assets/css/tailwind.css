@@ -1822,6 +1822,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .leading-6 {
   line-height: 1.5rem !important;
 }
+.leading-5 {
+  line-height: 1.25rem !important;
+}
 .tracking-tight {
   letter-spacing: -0.025em !important;
 }
