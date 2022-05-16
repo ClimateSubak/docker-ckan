@@ -1655,10 +1655,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 0.75rem !important;
   padding-bottom: 0.75rem !important;
 }
-.px-24 {
-  padding-left: 6rem !important;
-  padding-right: 6rem !important;
-}
 .px-5 {
   padding-left: 1.25rem !important;
   padding-right: 1.25rem !important;
@@ -2240,6 +2236,11 @@ the theme() function
   .md\:px-16 {
     padding-left: 4rem !important;
     padding-right: 4rem !important;
+  }
+
+  .md\:px-24 {
+    padding-left: 6rem !important;
+    padding-right: 6rem !important;
   }
 
   .md\:px-8 {
