@@ -63,7 +63,7 @@ def get_package(name):
     try:
         pkg = show_package({"ignore_auth": True, "user": None}, {"id": name})
     except NotFound:
-        log.error(f"Package not found for name={name}")
+        log.debug(f"Package not found for name={name}")
         return None
 
     return pkg
