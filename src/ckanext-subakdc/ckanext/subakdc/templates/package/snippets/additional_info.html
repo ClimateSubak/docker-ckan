@@ -49,13 +49,20 @@
                     <div>Countries:</div>
                     <div class="font-body">
                     {% for country_code in pkg_dict.subak_countries %}
+                        {% if loop.index < 30 %}
                         <div class="flex items-center gap-1">
                             <div class="w-5">
                                 {% include 'snippets/flags/4x3/' ~ (country_code | lower) ~ '.svg' ignore missing %}
                             </div>
-                            {#<span class="fi fi-{{ country_code | lower }}"></span>#}
                             {{ h.scheming_code_to_name(country_code) }} 
                         </div>
+                        {% endif %}
+                        {% if loop.index ==30 and loop.length > 30 %}
+                        <div class="flex items-center gap-1">
+                            <div class="w-5"></div>
+                            + {{ loop.length - 30 }} more countries
+                        </div>
+                        {% endif %}
                     {% endfor %}
                     </div>
                 </div>
