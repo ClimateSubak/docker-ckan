@@ -12,6 +12,7 @@ class SecurityPlugin(p.SingletonPlugin):
 
     # ------- IAuthFunctions method implementations ------- #
     def get_auth_functions(self):
-        auth_functions = {"user_list": auth.user_list, "user_show": auth.user_show}
+        # auth_functions = {"user_list": auth.user_list, "user_show": auth.user_show}
+        auth_functions = {}
 
         return auth_functions
