@@ -51,6 +51,12 @@
     </div>
 </div>
 
+{% set orgs = [] %}
+{% set c0 = ["transitionzero", "climatepolicyradar", "ember", "openclimatefix", "newautomotive", "low-carbon-power"] %}
+{% set c1 = ["autonomy", "aimhi-earth", "instrat", "energytag", "the-green-web-foundation", "project-canopy"] %}
+{% set cohorts = c0 + c1 %}
+{% for c in cohorts %}{% set orgs = orgs.append(h.get_organization(org=c)) %}{% endfor %}
+
 <div class="bg-subak-stone-grey col-12 full-width">
     <div class="container p-4 pt-0 md:p-16">
         <h2 class="font-mono text-2xl md:pt-16 text-subak-burnt-copper">ABOUT</h2>
@@ -86,11 +92,24 @@
         <p class="leading-6 font-body">Strictly this site is a metadata catalogue - data about data. We at Subak aren't creating datasets of our own, and we don't want to mirror other folks datasets. What we want to do is catalogue what is already out there, signpost and increase visibility, and increase the quality of what is already being shared. That means more emphasis on metadata standards, machine readability and data quality.</p>
 
         <h3 class="text-2xl">What is Subak?</h3>
-        <p class="leading-6 font-body">The world's first accelerator for non-profits fighting climate change with data. Read more <a href="https://subak.org/about-us" alt="About Subak">here</a>.
+        <p class="leading-6 font-body">The world's first accelerator for not-for-profits fighting climate change with data. Read more <a href="https://subak.org/about-us" alt="About Subak">here</a>.
         We find and fund individuals and organisations, and help them maximise their impact through our accelerator programme and immersing them in a community of practitioners.</p>
 
         <h3 class="text-2xl">Who is this for?</h3>
-        <p class="leading-6 font-body">Anyone who makes use of climate data. Our first users are the analysts, researchers and engineers at non-profit organisations fighting climate change. We know there are a multitude of different people who use climate data for a huge range of different tasks and we hope to serve a range of different communities.</p>
+        <p class="leading-6 font-body">Anyone who makes use of climate data. Our first users are the analysts, researchers and engineers at not-for-profit organisations fighting climate change. We know there are a multitude of different people who use climate data for a huge range of different tasks and we hope to serve a range of different communities.</p>
+
+        <h3 class="text-2xl">Data Sources</h3>
+        <p class="leading-6 font-body">We have source data from a range of existing portals and websites. We expect data to be published on the web and don't intend generally to solely host data on the Catalogue. We have published data shared by the following Subak Members and Fellows:</p>
+        <h3 class="flex gap-1 my-2 text-sm">
+            {% for org in orgs %}
+                {% if org %}
+                    <img class="max-h-5" src="{{ org['image_display_url'] }}" />
+                    <a class="text-slate-500" href="/organization/{{ org['name'] }}">{{ org['display_name'] }}</a>
+                {% endif %}
+            {% endfor %}
+        </h3>
+
+        <p class="leading-6 font-body">The majority of datasets have been aggregated from <a href="https://data.subak.org/harvest/">this list of data portals</a> and will add to it over time.</p>
 
         <h3 class="text-2xl">How can I add my data?</h3>
         <p class="leading-6 font-body">Create an account and let us know at datacooperative@subak.org what data you would like to share. We can then make you an administrator for a publisher organisation you can use to share datasets. Or feel free to suggest ideas to us with the 'Suggest a Dataset' forms above.</p>
@@ -98,7 +117,7 @@
         <h3 class="text-2xl">How is the data licensed? Can I use it freely?</h3>
         <p class="leading-6 font-body">We catalogue data that has been released with open licences as well as more restrictive licenses to give the fullest possible picture of available data. Most <strong>published datasets</strong> display a reference to the licence under which their owner has released them. This is available on each dataset page. If no licence is mentioned, users should consult any licence conditions that are available on the original portal page or publishing page for the dataset, if available.</p>
         <p class="leading-6 font-body">Whether or not a licence is available, copyright always remains with the data author unless explicitly given away using for example a <a href="https://creativecommons.org/share-your-work/public-domain/cc0/">CC0 license</a>.</p>
-        <p class="leading-6 font-body">The <strong>metadata</strong> in Subak's Data Catalogue is licensed under the <a href="https://creativecommons.org/share-your-work/public-domain/cc0/">CC0 license</a> for maximum openness, where it does not fall under the license of the individual dataset concerned. All of the content on Subak's Data Catalogue (that is - not <strong>datasets</strong> or <strong>metadata</strong>), is released under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+        <p class="leading-6 font-body">The <strong>metadata</strong> in Subak's Data Catalogue is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, where it does not fall under the license of the individual dataset concerned. All of the content on Subak's Data Catalogue (that is - not <strong>datasets</strong> or <strong>metadata</strong>), is also released under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
         <h3 class="text-2xl">How did you make the Catalogue?</h3>
         <p class="leading-6 font-body">This website runs using CKAN. In their own words:</p>
