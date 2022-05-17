@@ -51,6 +51,12 @@
     </div>
 </div>
 
+{% set orgs = [] %}
+{% set c0 = ["transitionzero", "climatepolicyradar", "ember", "openclimatefix", "newautomotive", "low-carbon-power"] %}
+{% set c1 = ["autonomy", "aimhi-earth", "instrat", "energytag", "the-green-web-foundation", "project-canopy"] %}
+{% set cohorts = c0 + c1 %}
+{% for c in cohorts %}{% set orgs = orgs.append(h.get_organization(org=c)) %}{% endfor %}
+
 <div class="bg-subak-stone-grey col-12 full-width">
     <div class="container p-4 pt-0 md:p-16">
         <h2 class="font-mono text-2xl md:pt-16 text-subak-burnt-copper">ABOUT</h2>
@@ -91,6 +97,19 @@
 
         <h3 class="text-2xl">Who is this for?</h3>
         <p class="leading-6 font-body">Anyone who makes use of climate data. Our first users are the analysts, researchers and engineers at not-for-profit organisations fighting climate change. We know there are a multitude of different people who use climate data for a huge range of different tasks and we hope to serve a range of different communities.</p>
+
+        <h3 class="text-2xl">Data Sources</h3>
+        <p class="leading-6 font-body">We have source data from a range of existing portals and websites. We expect data to be published on the web and don't intend generally to solely host data on the Catalogue. We have published data shared by the following Subak Members and Fellows:</p>
+        <h3 class="flex gap-1 my-2 text-sm">
+            {% for org in orgs %}
+                {% if org %}
+                    <img class="max-h-5" src="{{ org['image_display_url'] }}" />
+                    <a class="text-slate-500" href="/organization/{{ org['name'] }}">{{ org['display_name'] }}</a>
+                {% endif %}
+            {% endfor %}
+        </h3>
+
+        <p class="leading-6 font-body">The majority of datasets have been aggregated from <a href="https://data.subak.org/harvest/">this list of data portals</a> and will add to it over time.</p>
 
         <h3 class="text-2xl">How can I add my data?</h3>
         <p class="leading-6 font-body">Create an account and let us know at datacooperative@subak.org what data you would like to share. We can then make you an administrator for a publisher organisation you can use to share datasets. Or feel free to suggest ideas to us with the 'Suggest a Dataset' forms above.</p>
