@@ -55,7 +55,7 @@ reload.caddy:
 	docker compose ${COMPOSE_FILE_PATH} exec -w /etc/caddy caddy caddy reload
 
 restart.redis:
-	docker compose $(COMPOSE_FILE_PATH) up -d --force-recreate redis
+	docker compose $(COMPOSE_FILE_PATH) up -d --no-deps --force-recreate redis
 
 harvest.gather:
 	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan harvester gather-consumer"
