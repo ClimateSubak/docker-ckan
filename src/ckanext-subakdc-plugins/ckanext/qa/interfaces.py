@@ -12,9 +12,10 @@ class IQaTask(ABC):
     """
     A task that operates over all or a subset of entities and produces a QA property for each entity e.g. A “broken links” task to test all links associated with a dataset
     """
+
     qa_property_name = ""
     qa_actions = []
-    
+
     @classmethod
     @abstractmethod
     def evaluate(cls, pkg):
@@ -26,18 +27,21 @@ class IQaTask(ABC):
 
 class IQaReport(ABC):
     """
-    A tabular report generated with the ckanext-report plugin that gathers the QA property for all entities for a 
+    A tabular report generated with the ckanext-report plugin that gathers the QA property for all entities for a
     given QA task. e.g. Details a summary of all entities with 'Broken links'
     """
+
     qa_property_name = ""
     qa_actions = []
-    
+
     @classmethod
     def get_qa_actions(cls):
-        return [ action.get_action() for action in cls.qa_actions ]
-    
+        return [action.get_action() for action in cls.qa_actions]
+
     @classmethod
-    def build(cls, fields=None, computed_fields=None, action_is_running=False):
+    def build(
+        cls, fields=None, computed_fields=None, action_is_running=False, limit=500
+    ):
         """
         Builds the report table
 
@@ -51,54 +55,58 @@ class IQaReport(ABC):
         """
         # Get all packages
         pkgs = get_all_pkgs()
-        
+
         # Build report table detailing packages with no resources
         report_table = []
         if fields is None:
-            fields = ['id', 'title']
-            
+            fields = ["id", "title"]
+
         for pkg in pkgs:
-            if cls.qa_property_name is None or ('subak_qa' in pkg and cls.qa_property_name in pkg['subak_qa'] and cls.should_show_in_report(pkg['subak_qa'][cls.qa_property_name])):
-                report_fields = { k: pkg[k] for k in fields}
+            if cls.qa_property_name is None or (
+                "subak_qa" in pkg
+                and cls.qa_property_name in pkg["subak_qa"]
+                and cls.should_show_in_report(pkg["subak_qa"][cls.qa_property_name])
+            ):
+                report_fields = {k: pkg[k] for k in fields}
                 if computed_fields is not None:
                     for title, field in computed_fields.items():
                         report_fields[title] = field(pkg)
-                    
+
                 report_table.append(report_fields)
-                
+
         return {
-            'table': list(report_table),
-            'total_num_packages': len(pkgs),
-            'qa_actions': cls.get_qa_actions(),
-            'action_is_running': action_is_running
+            "table": list(report_table),
+            "total_num_packages": len(pkgs),
+            "qa_actions": cls.get_qa_actions(),
+            "action_is_running": action_is_running,
         }
-        
+
     @classmethod
     def run_action(cls):
         """
-        Determine which QA action to run based on the button that was clicked in the 
-        report and run the QA action as a background job. This should be called by 
-        the generate method in this class before building the report table. 
+        Determine which QA action to run based on the button that was clicked in the
+        report and run the QA action as a background job. This should be called by
+        the generate method in this class before building the report table.
         """
-        actions = list(filter(lambda item: item.startswith('action.'), tk.request.form))
+        actions = list(filter(lambda item: item.startswith("action."), tk.request.form))
         if len(actions) == 0:
             return False
-        
-        pkg_ids = tk.request.form.getlist('id')
+
+        pkg_ids = tk.request.form.getlist("id")
         if len(pkg_ids) == 0:
             return False
-        
-        action_name = actions[0].split('.', 1)[1]
+
+        action_name = actions[0].split(".", 1)[1]
         for action in cls.qa_actions:
             if action.name == action_name:
                 action.run_job(pkg_ids, form_vars=tk.request.form.to_dict(flat=False))
                 return True
-        
+
     @classmethod
     @abstractmethod
     def generate(cls):
         """
-        This method gets called from ckanext-report when generting report. 
+        This method gets called from ckanext-report when generting report.
         It should define some fields and call cls.build
         """
         pass
@@ -107,7 +115,7 @@ class IQaReport(ABC):
     @abstractmethod
     def should_show_in_report(cls, value):
         """
-        Evaluate value against some condition and return True if item should show 
+        Evaluate value against some condition and return True if item should show
         in the report, False if not
         """
         pass
@@ -115,34 +123,37 @@ class IQaReport(ABC):
 
 class IQaAction(ABC):
     """
-    An action that can be taken using information in the QA report to modify the 
-    entities for a given QA task. e.g. Remove the links, or mark the datasets as 
-    'stale'. A QA action should also be able to be run from the command line as 
+    An action that can be taken using information in the QA report to modify the
+    entities for a given QA task. e.g. Remove the links, or mark the datasets as
+    'stale'. A QA action should also be able to be run from the command line as
     a CKAN command
     """
+
     name = ""
     form_button_text = ""
     snippet = None
-    
+
     @classmethod
     def get_action(cls):
         """
-        Returns a dict of the name and form_button_text to be used in the report 
+        Returns a dict of the name and form_button_text to be used in the report
         template
         """
-        action = { "name": f"action.{cls.name}", 
-                   "form_button_text": cls.form_button_text }
-        
+        action = {
+            "name": f"action.{cls.name}",
+            "form_button_text": cls.form_button_text,
+        }
+
         if cls.snippet is not None:
-            action['snippet'] = cls.snippet
-            
+            action["snippet"] = cls.snippet
+
         return action
-    
+
     @classmethod
     def run_job(cls, pkg_ids, form_vars):
         func = cls.run
-        tk.enqueue_job(func, [ pkg_ids, form_vars ], rq_kwargs={ 'timeout': 3600 })
-    
+        tk.enqueue_job(func, [pkg_ids, form_vars], rq_kwargs={"timeout": 3600})
+
     @classmethod
     @abstractmethod
     def run(cls, pkg_ids, form_vars):
