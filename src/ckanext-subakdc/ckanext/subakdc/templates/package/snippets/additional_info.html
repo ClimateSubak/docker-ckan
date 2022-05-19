@@ -97,6 +97,23 @@
         <div>Source: <span class="font-body">{{ pkg_dict.url }}</span></div>
         {% endif %}
 
+        <div>License: <span class="font-body">
+        {% if 'license_url' in pkg_dict %}
+            <a href="{{ pkg_dict.license_url }}">{{ pkg_dict.license_title }}</a>
+        {% else %}
+            {% if pkg_dict.license_id %}
+                <span property="dc:rights">{{ pkg_dict.license_title }}</span>
+            {% else %}
+                <span>{{ _('No License Specified') }}</span>
+            {% endif %}
+        {% endif %}
+        {% if pkg_dict.isopen %}
+            <a class="px-1 py-px text-xs text-white no-underline bg-green-500 rounded-sm " href="http://opendefinition.org/okd/" title="{{ _('This dataset satisfies the Open Definition.') }}">
+                Open license
+            </a>
+        {% endif %}
+        </div>
+
         {% if pkg_dict.author %}
         <div>Contact: <span class="font-body">{{ pkg_dict.author }}</span></div>
         {% endif %}

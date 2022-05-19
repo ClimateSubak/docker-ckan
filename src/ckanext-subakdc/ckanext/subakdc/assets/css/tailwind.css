@@ -1054,6 +1054,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .m-0 {
   margin: 0px !important;
 }
+.m-8 {
+  margin: 2rem !important;
+}
 .my-2 {
   margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
@@ -1125,6 +1128,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .ml-px {
   margin-left: 1px !important;
+}
+.mt-32 {
+  margin-top: 8rem !important;
 }
 .mb-3 {
   margin-bottom: 0.75rem !important;
@@ -1231,6 +1237,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-4 {
   width: 1rem !important;
 }
+.w-fit {
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+}
 .w-36 {
   width: 9rem !important;
 }
@@ -1278,8 +1289,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
-.grid-cols-1 {
-  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+.cursor-pointer {
+  cursor: pointer !important;
 }
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -1301,9 +1312,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .content-center {
   align-content: center !important;
-}
-.content-start {
-  align-content: flex-start !important;
 }
 .items-start {
   align-items: flex-start !important;
@@ -1394,6 +1402,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .rounded-md {
   border-radius: 0.375rem !important;
 }
+.rounded-sm {
+  border-radius: 0.125rem !important;
+}
 .rounded-t-lg {
   border-top-left-radius: 0.5rem !important;
   border-top-right-radius: 0.5rem !important;
@@ -1459,6 +1470,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-subak-deep-ocean {
   --tw-border-opacity: 1 !important;
   border-color: rgb(15 43 67 / var(--tw-border-opacity)) !important;
+}
+.border-slate-300 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity)) !important;
 }
 .border-subak-stone-grey {
   --tw-border-opacity: 1 !important;
@@ -1546,6 +1561,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-zinc-100 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(244 244 245 / var(--tw-bg-opacity)) !important;
+}
+.bg-green-500 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity)) !important;
 }
 .bg-opacity-40 {
   --tw-bg-opacity: 0.4 !important;
@@ -1661,6 +1680,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .py-12 {
   padding-top: 3rem !important;
   padding-bottom: 3rem !important;
+}
+.px-1 {
+  padding-left: 0.25rem !important;
+  padding-right: 0.25rem !important;
+}
+.py-px {
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
 }
 .pr-1 {
   padding-right: 0.25rem !important;
@@ -2028,6 +2055,11 @@ the theme() function
   color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
 }
 
+.hover\:text-slate-600:hover {
+  --tw-text-opacity: 1 !important;
+  color: rgb(71 85 105 / var(--tw-text-opacity)) !important;
+}
+
 .hover\:text-subak-deep-ocean:hover {
   --tw-text-opacity: 1 !important;
   color: rgb(15 43 67 / var(--tw-text-opacity)) !important;
@@ -2262,14 +2294,6 @@ the theme() function
 
   .md\:pt-12 {
     padding-top: 3rem !important;
-  }
-
-  .md\:pt-16 {
-    padding-top: 4rem !important;
-  }
-
-  .md\:pr-3 {
-    padding-right: 0.75rem !important;
   }
 
   .md\:pr-20 {
