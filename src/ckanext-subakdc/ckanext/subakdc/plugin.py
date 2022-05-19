@@ -13,6 +13,7 @@ HOMEPAGE_TAGS = [
     "Electricity",
     "Crude Oil",
 ]
+SUBAK_COOP_GROUP_NAME = "data-cooperative"
 
 log = logging.getLogger(__name__)
 
@@ -36,12 +37,32 @@ def get_subak_coop_group_from_dataset(pkg):
     if "groups" not in pkg or not (pkg["groups"]):
         return None
 
-    groups = list(filter(lambda grp: grp["name"] == "data-cooperative", pkg["groups"]))
+    groups = list(
+        filter(lambda grp: grp["name"] == SUBAK_COOP_GROUP_NAME, pkg["groups"])
+    )
 
     if len(groups) < 1:
         return None
     else:
         return groups[0]
+
+
+def get_subak_coop_orgs():
+    group_package_show = tk.get_action("group_package_show")
+    # organization_show = tk.get_action("organization_show")
+
+    pkgs = group_package_show(
+        {"ignore_auth": True, "user": None}, {"id": SUBAK_COOP_GROUP_NAME}
+    )
+
+    orgs = list(
+        {pkg["organization"]["name"]: pkg["organization"] for pkg in pkgs}.values()
+    )
+
+    if len(orgs) < 1:
+        return None
+    else:
+        return orgs
 
 
 class SubakdcPlugin(p.SingletonPlugin):
@@ -62,4 +83,5 @@ class SubakdcPlugin(p.SingletonPlugin):
         return {
             "homepage_quick_explore_tags": homepage_tags,
             "get_subak_coop_group_from_dataset": get_subak_coop_group_from_dataset,
+            "get_subak_coop_orgs": get_subak_coop_orgs,
         }
