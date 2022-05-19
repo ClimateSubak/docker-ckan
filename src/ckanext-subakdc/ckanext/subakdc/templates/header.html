@@ -2,7 +2,7 @@
 
 {% block header_wrapper %} 
   <nav class="navbar navbar-expand-lg fixed-top masthead bg-opacity-20 bg-slate-900">
-    <div class="container px-0">
+    <div class="container px-0 py-2">
 
       <!-- Left hand side -->
       <div class="ml-4 mr-auto">
@@ -14,7 +14,7 @@
 
         {% block header_logo %}
         {% if g.site_logo %}
-        <a class="z-50 p-0 mt-1 navbar-brand logo"
+        <a class="z-50 p-0 mt-1 md:ml-0 navbar-brand logo"
           href="{{ h.url_for('home.index') }}">
           <img class="float-left" src="/images/SUBAK_LOGO.png" aria-label="Home page" />
         </a>
