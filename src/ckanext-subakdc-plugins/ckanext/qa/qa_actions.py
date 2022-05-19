@@ -81,7 +81,7 @@ class QaCleanDatasetsAction(IQaAction):
     @classmethod
     def run(cls, pkg_ids, form_vars):
         package_show = tk.get_action("package_show")
-        resource_patch = tk.get_action("resource_patch")
+        package_patch = tk.get_action("package_patch")
 
         # Loop over all the provided package ids and call patch API action
         for pkg_id in pkg_ids:
@@ -89,13 +89,17 @@ class QaCleanDatasetsAction(IQaAction):
                 package = package_show(
                     {"ignore_auth": True, "user": None}, {"id": pkg_id}
                 )
-                for resource in package["resources"]:
+
+                resources = package["resources"]
+
+                for k, resource in enumerate(resources):
                     # patch the format if it is not a valid format
-                    new_format = resource["format"].replace(".", "").upper()
-                    resource_patch(
-                        {"ignore_auth": True, "user": None},
-                        {"id": resource["id"], "format": new_format},
-                    )
+                    resources[k]["format"] = resource["format"].replace(".", "").upper()
+
+                package_patch(
+                    {"ignore_auth": True, "user": None},
+                    {"id": package["id"], "resources": resources},
+                )
 
             except Exception as e:
                 log.error(
