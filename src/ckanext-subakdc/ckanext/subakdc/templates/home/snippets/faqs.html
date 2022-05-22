@@ -156,14 +156,16 @@
                 <p class="leading-6 font-body">We have source data from a range of existing portals and websites. We expect data to be published on the web and don't intend generally to solely host data on the Catalogue. We have published data shared by the following Subak Members and Fellows:</p>
                 <div class="flex flex-wrap gap-4 my-2 text-sm">
                     {% set orgs = h.get_subak_coop_orgs() %}
-                    {% for org in orgs %}
-                        {% if org %}
-                        <div class="flex gap-1 whitespace-nowrap">
-                            <img class="max-h-5" src="{% if h.is_url(org.image_url) %}{{ org.image_url }}{% else %}/uploads/group/{{ org.image_url }}{% endif %}" />
-                            <a class="text-slate-500" href="/organization/{{ org['name'] }}">{{ org['title'] }}</a>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
+                    {% if orgs %}
+                        {% for org in orgs %}
+                            {% if org %}
+                            <div class="flex gap-1 whitespace-nowrap">
+                                <img class="max-h-5" src="{% if h.is_url(org.image_url) %}{{ org.image_url }}{% else %}/uploads/group/{{ org.image_url }}{% endif %}" />
+                                <a class="text-slate-500" href="/organization/{{ org['name'] }}">{{ org['title'] }}</a>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 <p class="leading-6 font-body">The majority of datasets have been aggregated from <a href="https://data.subak.org/harvest/">this list of data portals</a> and will add to it over time.</p>
             </div>
