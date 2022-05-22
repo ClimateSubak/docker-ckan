@@ -1,7 +1,8 @@
 <div class="bg-white col-12 full-width">
     <div class="container p-4 pt-0 pb-8 md:p-16">
         {% snippet 'home/snippets/showcases.html' %}
-        <div class="flex flex-col gap-3 md:flex-row ">
+        <!-- <div class="flex flex-col gap-3 md:flex-row "> -->
+        <div class="flex flex-col px-0 md:px-16">
             <a class="flex-1 p-4 text-lg no-underline transition duration-150 border rounded hover:text-white hover:bg-gradient-to-br hover:from-subak-deep-ocean hover:to-subak-meadow-teal border-subak-deep-ocean"
                href="https://github.com/ClimateSubak/community/issues/new?assignees=&labels=enhancement&template=request-a-dataset.md&title=%5BDataset+Request%5D">
                 <svg xmlns="http://www.w3.org/2000/svg" class="relative inline w-6 h-6 -top-px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -9,13 +10,13 @@
                 </svg> Request a Dataset
                 <p class="p-1 pt-3 m-0 text-sm">If you can't find a dataset in our catalogue that fits your needs, please file a request and we will try our best to find and index one or more suitable datasets</p>
             </a>
-            <a class="flex-1 p-4 text-lg no-underline transition duration-150 border rounded hover:text-white hover:bg-gradient-to-br hover:from-subak-deep-ocean hover:to-subak-meadow-teal border-subak-deep-ocean"
+            <!-- <a class="flex-1 p-4 text-lg no-underline transition duration-150 border rounded hover:text-white hover:bg-gradient-to-br hover:from-subak-deep-ocean hover:to-subak-meadow-teal border-subak-deep-ocean"
                href="https://github.com/ClimateSubak/community/issues/new?assignees=&labels=enhancement&template=suggest-a-dataset.md&title=%5BDataset+Request%5D">
                 <svg xmlns="http://www.w3.org/2000/svg" class="relative inline w-6 h-6 -top-px " fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg> Suggest a Dataset
                 <p class="p-1 pt-3 m-0 text-sm">if you know of a great climate-themed dataset that we should be indexing, let us know!</p>
-            </a>
+            </a> -->
         </div>
     </div>
 </div>
@@ -183,7 +184,7 @@
                 </svg>
             </h3>
             <div x-show="open">
-                <p class="leading-6 font-body">Create an account and let us know at datacooperative@subak.org what data you would like to share. We can then make you an administrator for a publisher organisation you can use to share datasets. Or feel free to suggest ideas to us with the 'Suggest a Dataset' forms above.</p>
+                <p class="leading-6 font-body">Create an account and let us know at datacooperative@subak.org what data you would like to share. We can then make you an administrator for a publisher organisation you can use to share datasets.</p>
             </div>
         </div>
 
@@ -223,6 +224,7 @@
                     <p class="leading-6 font-body">CKAN is used by governments and user groups worldwide and powers a variety of official and community data portals including portals for local, national and international government, such as the UK’s data.gov.uk and the European Union’s publicdata.eu, the Brazilian dados.gov.br, Dutch and Netherland government portals, as well as city and municipal sites in the US, UK, Argentina, Finland and elsewhere.</p>
                     <p class="leading-6 font-body">CKAN: http://ckan.org/</p>
                 </blockquote>
+                <p class="leading-6 font-body">We have extended the core functionality, leaning on the extensive work of the CKAN community and other users. The code that runs this site lives here: <a href="https://github.com/ClimateSubak/docker-ckan/">https://github.com/ClimateSubak/docker-ckan/</a></p>
             </div>
         </div>
         
