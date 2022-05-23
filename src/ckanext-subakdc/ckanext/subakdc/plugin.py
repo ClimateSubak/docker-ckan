@@ -5,13 +5,13 @@ import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 
 HOMEPAGE_TAGS = [
-    "CO2",
-    "Energy",
-    "Agriculture",
-    "Wind",
-    "Solar",
-    "Electricity",
-    "Crude Oil",
+    "co2",
+    "energy",
+    "agriculture",
+    "wind",
+    "solar",
+    "electricity",
+    "crude oil",
 ]
 SUBAK_COOP_GROUP_NAME = "data-cooperative"
 
