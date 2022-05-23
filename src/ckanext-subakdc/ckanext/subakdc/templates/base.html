@@ -1,5 +1,18 @@
 {% ckan_extends %}
 
+{% block meta %}
+{{ super() }}
+    <meta name="description" value="Subak Data Catalogue" />
+    <meta property="og:title" content="Subak Data Catalogue">
+    <meta property="og:image" content="https://data.subak.org/images/DC - LinkedIn.jpg">
+    <meta property="og:description" content="Making climate data searchable, trusted and connected. The Subak Data Catalogue brings together climate data from all over the internet, helping our community of innovators work faster on climate.">
+    <meta property="og:url" content="https://data.subak.org">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@climatesubak">
+    <meta name="twitter:creator" content="@climatesubak">
+    <meta name="twitter:image" content="https://data.subak.org/images/DC - Twitter.jpg" />
+{% endblock %}
+
 {% block links -%}
     {{ super() }}
     <link rel="shortcut icon" href="/images/favicon.ico" />

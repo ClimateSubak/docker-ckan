@@ -18,3 +18,4 @@ stop_local_dev.sh
 subak.code-workspace
 .vscode/settings.json
 .vscode/tasks.json
+.idea
