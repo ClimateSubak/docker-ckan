@@ -1180,6 +1180,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-5 {
   height: 1.25rem !important;
 }
+.h-\[40px\] {
+  height: 40px !important;
+}
 .h-auto {
   height: auto !important;
 }
@@ -1233,6 +1236,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-5 {
   width: 1.25rem !important;
+}
+.w-\[40px\] {
+  width: 40px !important;
 }
 .w-8 {
   width: 2rem !important;

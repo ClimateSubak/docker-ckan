@@ -12,10 +12,8 @@
                   {{ c.userobj.display_name }}
               </span>
               <div class="relative inline-block align-middle">
-                <div class="overflow-hidden border rounded-full border-white-500">
-                  <div class="overflow-hidden border rounded-full border-black-500">
-                    {{ h.user_image((c.user if c and c.user else ''), size=35) }}
-                  </div>
+                <div class="object-cover overflow-hidden border rounded-full border-white-500 w-[40px] h-[40px]">
+                    {{ h.user_image((c.user if c and c.user else ''), size=40) }}
                 </div>
                 {% if new_activities > 0 %}
                   <span class="absolute badge -bottom-2 -right-2">{{ new_activities }}</span>
