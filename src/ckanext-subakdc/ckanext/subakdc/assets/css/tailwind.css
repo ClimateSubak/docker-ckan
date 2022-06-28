@@ -1869,18 +1869,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1 !important;
   color: rgb(63 63 70 / var(--tw-text-opacity)) !important;
 }
-.text-green-700 {
-  --tw-text-opacity: 1 !important;
-  color: rgb(21 128 61 / var(--tw-text-opacity)) !important;
-}
-.text-slate-600 {
-  --tw-text-opacity: 1 !important;
-  color: rgb(71 85 105 / var(--tw-text-opacity)) !important;
-}
-.text-red-700 {
-  --tw-text-opacity: 1 !important;
-  color: rgb(185 28 28 / var(--tw-text-opacity)) !important;
-}
 .text-slate-500 {
   --tw-text-opacity: 1 !important;
   color: rgb(100 116 139 / var(--tw-text-opacity)) !important;
@@ -1908,6 +1896,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-gray-400 {
   --tw-text-opacity: 1 !important;
   color: rgb(156 163 175 / var(--tw-text-opacity)) !important;
+}
+.text-green-700 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(21 128 61 / var(--tw-text-opacity)) !important;
+}
+.text-slate-600 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(71 85 105 / var(--tw-text-opacity)) !important;
+}
+.text-red-700 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(185 28 28 / var(--tw-text-opacity)) !important;
 }
 .text-subak-sky-blue {
   --tw-text-opacity: 1 !important;

@@ -1,7 +1,10 @@
 {% ckan_extends %}
 
 {% block nums %}
-    {% snippet "snippets/subak_coop_badge.html", package=pkg %} 
+    <div class="mb-2">
+        {% snippet "snippets/subak_coop_badge.html", package=pkg %}
+    </div>
+    {% snippet "snippets/up-down-voting.html", package=pkg, size="large" %}
     {% if 'freshness_score' in h %}
     {% set freshness_score = h.freshness_score(pkg) %}
     {% set freshness_colour_classes = ['text-red-600', 'text-orange-600', 'text-yellow-600', 'text-lime-600', 'text-green-600'] %}
