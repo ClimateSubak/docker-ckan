@@ -84,4 +84,6 @@ class SubakdcPlugin(p.SingletonPlugin):
             "homepage_quick_explore_tags": homepage_tags,
             "get_subak_coop_group_from_dataset": get_subak_coop_group_from_dataset,
             "get_subak_coop_orgs": get_subak_coop_orgs,
+            "user_has_upvoted_dataset": lambda pkg_id: False,
+            "user_has_downvoted_dataset": lambda pkg_id: False,
         }
