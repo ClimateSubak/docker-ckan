@@ -25,12 +25,44 @@ down_votes = []
 
 
 def vote_handler(pkg_id, vote_type):
-    log.debug(f"{vote_type} voted package {pkg_id}")
-    log.debug(request.args.get("size"))
-    if vote_type == "up":
-        up_votes.append(pkg_id)
-    elif vote_type == "down":
-        down_votes.append(pkg_id)
+    # Get the required API actions
+    show_package = tk.get_action("package_show")
+    patch_package = tk.get_action("package_patch")
+
+    # Get the full package
+    pkg = show_package({"ignore_auth": True, "user": None}, {"id": pkg_id})
+
+    # Only consider packages that are datasets
+    if pkg.get("type", None) == "dataset":
+
+        # Get current vote count for package
+        n_votes = (
+            int(pkg["subak_votes"])
+            if "subak_votes" in pkg and pkg["subak_votes"] is not None
+            else 0
+        )
+
+        # Determine new vote count for package
+        if vote_type == "up":
+            try:
+                down_votes.remove(pkg_id)
+            except ValueError:
+                pass
+            up_votes.append(pkg_id)
+            n_votes = n_votes + 1
+        elif vote_type == "down":
+            try:
+                up_votes.remove(pkg_id)
+            except ValueError:
+                pass
+            down_votes.append(pkg_id)
+            n_votes = n_votes - 1
+
+        # Update the vote count on the package
+        patch_package(
+            {"ignore_auth": True, "user": None},
+            {"id": pkg["id"], "subak_votes": n_votes},
+        )
 
     size = request.args.get("size", default="small")
     return render_template("snippets/voting.html", pkg_id=pkg_id, size=size)
