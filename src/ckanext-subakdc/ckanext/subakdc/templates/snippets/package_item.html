@@ -5,7 +5,7 @@
         <a href="{{ h.url_for('%s.read' % package.type, id=package.name) }}">
         {{ title }}
         </a>
-        {% snippet "snippets/up-down-voting.html", package=package %}
+        {% snippet "snippets/voting.html", pkg_id=package.id %}
     </div>
 {% endblock %}
 

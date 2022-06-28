@@ -1,6 +1,7 @@
 subakdc_js:
   contents:
     - js/alpine-3.9.1.min.js
+    - js/htmx-1.7.0.min.js
     - js/cookie-banner.js
     - js/date-facet.js
   filters: rjsmin

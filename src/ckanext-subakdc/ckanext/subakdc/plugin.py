@@ -1,5 +1,6 @@
 import logging
 from urllib.parse import urlparse
+from flask import Blueprint, render_template, request
 
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
@@ -16,6 +17,23 @@ HOMEPAGE_TAGS = [
 SUBAK_COOP_GROUP_NAME = "data-cooperative"
 
 log = logging.getLogger(__name__)
+
+# Temporary in-memory storage of votes
+# TODO replace with db storage of votes
+up_votes = []
+down_votes = []
+
+
+def vote_handler(pkg_id, vote_type):
+    log.debug(f"{vote_type} voted package {pkg_id}")
+    log.debug(request.args.get("size"))
+    if vote_type == "up":
+        up_votes.append(pkg_id)
+    elif vote_type == "down":
+        down_votes.append(pkg_id)
+
+    size = request.args.get("size", default="small")
+    return render_template("snippets/voting.html", pkg_id=pkg_id, size=size)
 
 
 def homepage_tags():
@@ -66,8 +84,24 @@ def get_subak_coop_orgs():
 
 
 class SubakdcPlugin(p.SingletonPlugin):
+    p.implements(p.IBlueprint)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
+
+    # ------- IBlueprint method implementations ------- #
+    def get_blueprint(self):
+        # Create Blueprint for plugin
+        blueprint = Blueprint(self.name, self.__module__)
+        # blueprint.template_folder = u'templates'
+
+        blueprint.add_url_rule(
+            "/dataset/<string:pkg_id>/vote/<string:vote_type>",
+            "dataset_vote",
+            vote_handler,
+            methods=["POST"],
+        )
+
+        return blueprint
 
     # ------- IConfigurer method implementations ------- #
     def update_config(self, config):
@@ -84,6 +118,6 @@ class SubakdcPlugin(p.SingletonPlugin):
             "homepage_quick_explore_tags": homepage_tags,
             "get_subak_coop_group_from_dataset": get_subak_coop_group_from_dataset,
             "get_subak_coop_orgs": get_subak_coop_orgs,
-            "user_has_upvoted_dataset": lambda pkg_id: False,
-            "user_has_downvoted_dataset": lambda pkg_id: False,
+            "user_has_upvoted_dataset": lambda pkg_id: pkg_id in up_votes,
+            "user_has_downvoted_dataset": lambda pkg_id: pkg_id in down_votes,
         }
