@@ -193,6 +193,7 @@ attribute with the form `ckan-X.Y` -->
     <field name="subak_temporal_resolution" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="subak_spatial_resolution" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="subak_update_frequency" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="subak_votes" type="int" indexed="true" stored="true" multiValued="false"/>
 </fields>
 
 <uniqueKey>index_id</uniqueKey>
