@@ -1,11 +1,8 @@
-import logging
 from flask import Blueprint, render_template, request
 
 import ckan.plugins.toolkit as tk
 
 from ckanext.subakdc.voting.model import UserDatasetVotes
-
-log = logging.getLogger(__name__)
 
 # Create Blueprint for plugin
 voting = Blueprint("voting", __name__)
@@ -29,8 +26,6 @@ def view(pkg_id, vote_type):
             else 0
         )
 
-        log.debug(n_votes)
-
         # Create vote record against user/dataset
         vote_state = UserDatasetVotes.create(
             user_id=tk.g.userobj.id, dataset_id=pkg["id"], vote_type=vote_type
@@ -43,8 +38,6 @@ def view(pkg_id, vote_type):
             vote_change = -1
         elif vote_state == "switched":
             vote_change = 2
-
-        log.debug(vote_change)
 
         if vote_type == "up":
             n_votes = n_votes + vote_change

@@ -1,11 +1,8 @@
 import enum
-import logging
 from sqlalchemy import types, Column, Enum, ForeignKey, Table
 
 from ckan import model
 from ckan.model.meta import metadata, mapper
-
-log = logging.getLogger(__name__)
 
 
 class VoteTypeEnum(enum.Enum):
@@ -49,7 +46,7 @@ class UserDatasetVotes(object):
         vote = UserDatasetVotes.getUserVoteForDataset(
             user_id=user_id, dataset_id=dataset_id
         )
-        log.debug(vote)
+
         if vote is None:
             vote = cls(user_id=user_id, object_id=dataset_id, vote_type=vote_type)
             model.Session.add(vote)
@@ -64,8 +61,6 @@ class UserDatasetVotes(object):
                 state = "switched"
 
         model.Session.flush()
-
-        log.debug(state)
         return state
 
     @classmethod

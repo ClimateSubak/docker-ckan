@@ -1,9 +1,6 @@
-import logging
 import ckan.plugins.toolkit as tk
 
 from ckanext.subakdc.voting.model import VoteTypeEnum, UserDatasetVotes
-
-log = logging.getLogger(__name__)
 
 
 def user_has_upvoted_dataset(pkg_id):
