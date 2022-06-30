@@ -1897,6 +1897,22 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1 !important;
   color: rgb(156 163 175 / var(--tw-text-opacity)) !important;
 }
+.text-green-700 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(21 128 61 / var(--tw-text-opacity)) !important;
+}
+.text-slate-300 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(203 213 225 / var(--tw-text-opacity)) !important;
+}
+.text-slate-600 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(71 85 105 / var(--tw-text-opacity)) !important;
+}
+.text-red-700 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(185 28 28 / var(--tw-text-opacity)) !important;
+}
 .text-subak-sky-blue {
   --tw-text-opacity: 1 !important;
   color: rgb(59 200 236 / var(--tw-text-opacity)) !important;

@@ -118,7 +118,9 @@ body {
 
 /* Hide the QA field in the dataset create/update form */
 #field-subak_qa,
-label[for="field-subak_qa"] {
+#field-subak_votes,
+label[for="field-subak_qa"],
+label[for="field-subak_votes"] {
   display: none !important;
 }
 

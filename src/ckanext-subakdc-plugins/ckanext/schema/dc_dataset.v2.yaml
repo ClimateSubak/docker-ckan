@@ -3,8 +3,8 @@ dataset_type: dataset
 about: Custom schema for the Climate Subak Data Catalogue
 about_url: https://github.com/ClimateSubak/ckanext-subakdc-plugins/tree/main/ckanext/schema
 
-# Non-default CKAN fields are prefixed with `subak_` to avoid name/format conflicts with 
-# existing fields in the database and new ones that may be created due to harvest imports 
+# Non-default CKAN fields are prefixed with `subak_` to avoid name/format conflicts with
+# existing fields in the database and new ones that may be created due to harvest imports
 dataset_fields:
   - field_name: title
     label: Title
@@ -20,7 +20,7 @@ dataset_fields:
     preset: dataset_slug
     display_property: dct:identifier
     form_placeholder: eg. uk-wholesale-electricity-prices
-    
+
   # Dropdown list populated with CKAN organisations
   - field_name: owner_org
     label: Organization
@@ -57,7 +57,7 @@ dataset_fields:
     preset: select
     display_property: dcat:theme
     choices_helper: scheming_taxonomy_choices
-    
+
   # Tags will come from preset list
   # TODO determine relevant climate-themed tag list
   # TODO create custom preset that serves predefined tag list
@@ -75,7 +75,7 @@ dataset_fields:
     preset: date
     display_property: dcat:startDate
     help_text: Earliest date the dataset covers e.g. 2016-01-01.
-    
+
   # Will be used to build a filter (e.g. by year)
   # Assume not set if temporal_start is also empty, otherwise assume end = present
   - field_name: subak_temporal_end
@@ -91,28 +91,28 @@ dataset_fields:
     required: false
     preset: select
     choices:
-    - value: year
-      label: Year
-    - value: quarter
-      label: Quarter
-    - value: month
-      label: Month
-    - value: week
-      label: Week
-    - value: day
-      label: Day
-    - value: hour
-      label: Hour
-    - value: minute
-      label: Minute
-    - value: second
-      label: Second
-    - value: sub_second
-      label: Sub-second
-    
+      - value: year
+        label: Year
+      - value: quarter
+        label: Quarter
+      - value: month
+        label: Month
+      - value: week
+        label: Week
+      - value: day
+        label: Day
+      - value: hour
+        label: Hour
+      - value: minute
+        label: Minute
+      - value: second
+        label: Second
+      - value: sub_second
+        label: Sub-second
+
     display_property: dcat:temporalResolution
     help_text: For time-series data, please select the smallest resolution represented in your dataset. If your dataset resolution falls between the values given here, please select the closest resolution (e.g. for readings every 30 seconds select minute).
-  
+
   # Could be used to automate communication with publisher to update their dataset
   # Could also feed into freshness or future data quality scores
   - field_name: subak_update_frequency
@@ -120,20 +120,20 @@ dataset_fields:
     required: false
     preset: select
     choices:
-    - value: hourly
-      label: Hourly
-    - value: daily
-      label: Daily
-    - value: weekly
-      label: Weekly
-    - value: monthly
-      label: Monthly
-    - value: quarterly
-      label: Quarterly
-    - value: annually
-      label: Annually
-    - value: never
-      label: Never
+      - value: hourly
+        label: Hourly
+      - value: daily
+        label: Daily
+      - value: weekly
+        label: Weekly
+      - value: monthly
+        label: Monthly
+      - value: quarterly
+        label: Quarterly
+      - value: annually
+        label: Annually
+      - value: never
+        label: Never
     display_property: dcat:accrualPeriodicity
     help_text: Select the closest value that reflects the frequency with which the dataset is updated.
 
@@ -143,20 +143,20 @@ dataset_fields:
     required: false
     preset: select
     choices:
-    - value: world
-      label: World
-    - value: africa
-      label: Africa
-    - value: americas
-      label: Americas
-    - value: antarctica
-      label: Antarctica
-    - value: asia
-      label: Asia
-    - value: europe
-      label: Europe
-    - value: oceania
-      label: Oceania
+      - value: world
+        label: World
+      - value: africa
+        label: Africa
+      - value: americas
+        label: Americas
+      - value: antarctica
+        label: Antarctica
+      - value: asia
+        label: Asia
+      - value: europe
+        label: Europe
+      - value: oceania
+        label: Oceania
     display_property: dct:Location
     help_text: Select the broad region that most closely represents your dataset's geographic coverage.
 
@@ -175,36 +175,36 @@ dataset_fields:
     required: false
     preset: select
     choices:
-    - value: global
-      label: Global
-    - value: continent_region
-      label: Continent/Region
-    - value: country
-      label: Country
-    - value: state_county
-      label: State/County
-    - value: city_town
-      label: City/Town
-    - value: street_postcode
-      label: Street/Postcode
-    - value: building/residence
-      label: Building/Residence
-    - value: device_asset
-      label: Device/Asset
+      - value: global
+        label: Global
+      - value: continent_region
+        label: Continent/Region
+      - value: country
+        label: Country
+      - value: state_county
+        label: State/County
+      - value: city_town
+        label: City/Town
+      - value: street_postcode
+        label: Street/Postcode
+      - value: building/residence
+        label: Building/Residence
+      - value: device_asset
+        label: Device/Asset
 
-    # These values are probably most useful for satellite data
-    - value: 100km-grid
-      label: 100km grid
-    - value: 10km-grid
-      label: 10km grid
-    - value: 1km-grid
-      label: 1km grid
-    - value: 100m-grid
-      label: 100m grid
-    - value: 10m-grid
-      label: 10m grid
-    - value: 1m-grid
-      label: 1m grid
+      # These values are probably most useful for satellite data
+      - value: 100km-grid
+        label: 100km grid
+      - value: 10km-grid
+        label: 10km grid
+      - value: 1km-grid
+        label: 1km grid
+      - value: 100m-grid
+        label: 100m grid
+      - value: 10m-grid
+        label: 10m grid
+      - value: 1m-grid
+        label: 1m grid
     help_text: For data with a spatial component, select the spatial resolution that most closely represents the samples or aggregations within your data.
 
   - field_name: license_id
@@ -236,32 +236,32 @@ dataset_fields:
     repeating_label: Application
     form_blanks: 0
     repeating_subfields:
-    - field_name: category
-      label: Category
-      required: true
-      preset: select
-      choices:
-      - value: tutorials
-        label: Tutorials
-      - value: tools_and_applications
-        label: Tools and Applications
-      - value: publications
-        label: Publications
-      
-    - field_name: title
-      label: Title
-      required: true
-      form_snippet: text.html
+      - field_name: category
+        label: Category
+        required: true
+        preset: select
+        choices:
+          - value: tutorials
+            label: Tutorials
+          - value: tools_and_applications
+            label: Tools and Applications
+          - value: publications
+            label: Publications
 
-    - field_name: url
-      label: URL
-      required: true
-      form_snippet: text.html
+      - field_name: title
+        label: Title
+        required: true
+        form_snippet: text.html
 
-    - field_name: author
-      label: Author
-      required: false
-      form_snippet: text.html
+      - field_name: url
+        label: URL
+        required: true
+        form_snippet: text.html
+
+      - field_name: author
+        label: Author
+        required: false
+        form_snippet: text.html
 
   # On automated submissions, a SOURCES.md file will populate this field if present
   - field_name: subak_data_sources
@@ -275,7 +275,10 @@ dataset_fields:
     label: QA
     required: false
     preset: json_object
-    
+
+  - field_name: subak_votes
+    label: votes
+    required: false
 
 resource_fields:
   - field_name: url
@@ -321,31 +324,31 @@ resource_fields:
     repeating_label: Data field
     form_blanks: 0
     repeating_subfields:
-    - field_name: name
-      label: Field name
-      required: true
-      form_snippet: text.html
+      - field_name: name
+        label: Field name
+        required: true
+        form_snippet: text.html
 
-    - field_name: type
-      label: Field type
-      required: false
-      preset: select
-      choices:
-      - value: numeric
-        label: Numeric
-      - value: text
-        label: Text
-      - value: date_time
-        label: Date and/or time
+      - field_name: type
+        label: Field type
+        required: false
+        preset: select
+        choices:
+          - value: numeric
+            label: Numeric
+          - value: text
+            label: Text
+          - value: date_time
+            label: Date and/or time
 
-    - field_name: description
-      label: Field description
-      required: false
-      preset: markdown
-      help_text: Describe what this field contains. Detail things like date formats, range of values and/or data quality issues.
+      - field_name: description
+        label: Field description
+        required: false
+        preset: markdown
+        help_text: Describe what this field contains. Detail things like date formats, range of values and/or data quality issues.
 
-    - field_name: units
-      label: Field units
-      required: false
-      form_snippet: text.html
-      form_placeholder: optional, e.g. hours or kWh
+      - field_name: units
+        label: Field units
+        required: false
+        form_snippet: text.html
+        form_placeholder: optional, e.g. hours or kWh
