@@ -128,3 +128,18 @@ label[for="field-subak_votes"] {
 [x-cloak] {
   display: none !important;
 }
+
+/* HTMX loading state. See https://htmx.org/attributes/hx-indicator/ */
+.htmx-indicator {
+  display: none !important;
+}
+
+.htmx-request .htmx-indicator {
+  display: inline !important;
+  z-index: 1
+}
+
+.htmx-request.htmx-indicator {
+  display: inline !important;
+  z-index: 1
+}

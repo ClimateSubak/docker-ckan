@@ -1024,6 +1024,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .left-0 {
   left: 0px !important;
 }
+.top-0 {
+  top: 0px !important;
+}
 .-top-\[3px\] {
   top: -3px !important;
 }
@@ -1300,6 +1303,22 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
+}
+@-webkit-keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin {
+  -webkit-animation: spin 1s linear infinite !important;
+          animation: spin 1s linear infinite !important;
 }
 .cursor-pointer {
   cursor: pointer !important;
