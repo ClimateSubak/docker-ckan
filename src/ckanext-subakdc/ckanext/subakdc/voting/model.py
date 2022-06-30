@@ -1,9 +1,11 @@
 import enum
-from sqlalchemy import types, Column, Enum, ForeignKey, MetaData, Table
-from sqlalchemy.orm import mapper
+import logging
+from sqlalchemy import types, Column, Enum, ForeignKey, Table
 
 from ckan import model
-from ckan.model.meta import metadata
+from ckan.model.meta import metadata, mapper
+
+log = logging.getLogger(__name__)
 
 
 class VoteTypeEnum(enum.Enum):
@@ -33,6 +35,39 @@ user_dataset_votes_table = Table(
 
 
 class UserDatasetVotes(object):
+    def __init__(self, **kwargs):
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+    @classmethod
+    def create(cls, user_id, dataset_id, vote_type):
+        if vote_type == "up":
+            vote_type = VoteTypeEnum.up
+        else:
+            vote_type = VoteTypeEnum.down
+
+        vote = UserDatasetVotes.getUserVoteForDataset(
+            user_id=user_id, dataset_id=dataset_id
+        )
+        log.debug(vote)
+        if vote is None:
+            vote = cls(user_id=user_id, object_id=dataset_id, vote_type=vote_type)
+            model.Session.add(vote)
+            state = "new"
+        else:
+            # If vote type hasn't changed
+            if vote.vote_type == vote_type:
+                model.Session.delete(vote)
+                state = "cancelled"
+            else:
+                vote.vote_type = vote_type
+                state = "switched"
+
+        model.Session.flush()
+
+        log.debug(state)
+        return state
+
     @classmethod
     def getUserVoteForDataset(cls, user_id, dataset_id):
         item = (
@@ -41,6 +76,7 @@ class UserDatasetVotes(object):
             .filter(cls.object_id == dataset_id)
             .first()
         )
+
         if not item:
             return None
 

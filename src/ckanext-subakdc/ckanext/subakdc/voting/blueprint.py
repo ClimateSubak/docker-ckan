@@ -1,6 +1,11 @@
+import logging
 from flask import Blueprint, render_template, request
 
 import ckan.plugins.toolkit as tk
+
+from ckanext.subakdc.voting.model import UserDatasetVotes
+
+log = logging.getLogger(__name__)
 
 # Create Blueprint for plugin
 voting = Blueprint("voting", __name__)
@@ -14,10 +19,8 @@ def view(pkg_id, vote_type):
     # Get the full package
     pkg = show_package({"ignore_auth": True, "user": None}, {"id": pkg_id})
 
-    # TODO check for logged_in user
-
-    # Only consider packages that are datasets
-    if pkg.get("type", None) == "dataset":
+    # Only consider packages that are datasets and only if user is logged in
+    if pkg.get("type", None) == "dataset" and tk.g.userobj is not None:
 
         # Get current vote count for package
         n_votes = (
@@ -26,21 +29,27 @@ def view(pkg_id, vote_type):
             else 0
         )
 
+        log.debug(n_votes)
+
+        # Create vote record against user/dataset
+        vote_state = UserDatasetVotes.create(
+            user_id=tk.g.userobj.id, dataset_id=pkg["id"], vote_type=vote_type
+        )
+
         # Determine new vote count for package
+        if vote_state == "new":
+            vote_change = 1
+        elif vote_state == "cancelled":
+            vote_change = -1
+        elif vote_state == "switched":
+            vote_change = 2
+
+        log.debug(vote_change)
+
         if vote_type == "up":
-            # try:
-            #     down_votes.remove(pkg_id)
-            # except ValueError:
-            #     pass
-            # up_votes.append(pkg_id)
-            n_votes = n_votes + 1
+            n_votes = n_votes + vote_change
         elif vote_type == "down":
-            # try:
-            #     up_votes.remove(pkg_id)
-            # except ValueError:
-            #     pass
-            # down_votes.append(pkg_id)
-            n_votes = n_votes - 1
+            n_votes = n_votes - vote_change
 
         # Update the vote count on the package
         patch_package(

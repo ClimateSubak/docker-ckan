@@ -1901,9 +1901,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1 !important;
   color: rgb(21 128 61 / var(--tw-text-opacity)) !important;
 }
-.text-slate-400 {
+.text-slate-300 {
   --tw-text-opacity: 1 !important;
-  color: rgb(148 163 184 / var(--tw-text-opacity)) !important;
+  color: rgb(203 213 225 / var(--tw-text-opacity)) !important;
 }
 .text-slate-600 {
   --tw-text-opacity: 1 !important;
