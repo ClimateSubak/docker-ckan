@@ -14,6 +14,8 @@ def view(pkg_id, vote_type):
     # Get the full package
     pkg = show_package({"ignore_auth": True, "user": None}, {"id": pkg_id})
 
+    # TODO check for logged_in user
+
     # Only consider packages that are datasets
     if pkg.get("type", None) == "dataset":
 
