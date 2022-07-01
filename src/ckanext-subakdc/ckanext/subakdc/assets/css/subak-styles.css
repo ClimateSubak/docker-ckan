@@ -118,11 +118,28 @@ body {
 
 /* Hide the QA field in the dataset create/update form */
 #field-subak_qa,
-label[for="field-subak_qa"] {
+#field-subak_votes,
+label[for="field-subak_qa"],
+label[for="field-subak_votes"] {
   display: none !important;
 }
 
 /* Hides alpine elements with x-cloak attribute before alpine initialises */
 [x-cloak] {
   display: none !important;
+}
+
+/* HTMX loading state. See https://htmx.org/attributes/hx-indicator/ */
+.htmx-indicator {
+  display: none !important;
+}
+
+.htmx-request .htmx-indicator {
+  display: inline !important;
+  z-index: 1
+}
+
+.htmx-request.htmx-indicator {
+  display: inline !important;
+  z-index: 1
 }
