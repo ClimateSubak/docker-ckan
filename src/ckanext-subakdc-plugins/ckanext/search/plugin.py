@@ -56,9 +56,10 @@ class SearchPlugin(p.SingletonPlugin):
         search_params["fq"] = fq
 
         # Apply boosting function to amend the relevancy score based on up/down votes
-        # TODO this may need to be tweaked but currently a linear function: 0.5 * subak_votes + 0
+        # TODO this may need to be tweaked but currently a linear function: 0.5 * subak_votes + 1
         # As we should expect subak_votes to be low, perhaps the linear coefficient could be higher
-        # N.b the boosting function is additive. ie. new_score = score + boost
-        search_params["bf"] = "linear(subak_votes,0.5,0)"
+        # N.b the boosting function is multiplicative. ie. new_score = score * boost
+        search_params["defType"] = "edismax"
+        search_params["boost"] = "linear(subak_votes,0.5,1)"
 
         return search_params
