@@ -19,6 +19,9 @@ build.ckan:
 rebuild.ckan:
 	docker compose $(COMPOSE_FILE_PATH) up -d --build ckan
 
+volume.caddy:
+	docker volume create caddy_data
+
 restart.ckan:
 	docker compose $(COMPOSE_FILE_PATH) up -d --force-recreate ckan
 
