@@ -247,19 +247,20 @@ class ASDIHarvester(HarvesterBase):
                     [t for t in default_tags if t not in package_dict["tags"]]
                 )
 
+            # No default groups for Subak
             # Set default groups if needed
-            default_groups = self.config.get("default_groups", [])
-            if default_groups:
-                if "groups" not in package_dict:
-                    package_dict["groups"] = []
-                existing_group_ids = [g["id"] for g in package_dict["groups"]]
-                package_dict["groups"].extend(
-                    [
-                        g
-                        for g in self.config["default_group_dicts"]
-                        if g["id"] not in existing_group_ids
-                    ]
-                )
+            # default_groups = self.config.get("default_groups", [])
+            # if default_groups:
+            #     if "groups" not in package_dict:
+            #         package_dict["groups"] = []
+            #     existing_group_ids = [g["id"] for g in package_dict["groups"]]
+            #     package_dict["groups"].extend(
+            #         [
+            #             g
+            #             for g in self.config["default_group_dicts"]
+            #             if g["id"] not in existing_group_ids
+            #         ]
+            #     )
 
             # Set org
             source_dataset = tk.get_action("package_show")(
