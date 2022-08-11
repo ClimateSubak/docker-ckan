@@ -287,7 +287,7 @@ class ASDIHarvester(HarvesterBase):
                         name = match.group().lstrip("[").rstrip("]")
                     else:
                         log.info(f"Organization {remote_org.lower()} does not have name as a formatted markdown link")
-                        name = remote_org.lower()
+                        name = remote_org.title()
 
                     org_name = re.sub(r"[^\s\w]", "", name).replace(
                         " ", "-"
@@ -301,7 +301,7 @@ class ASDIHarvester(HarvesterBase):
                         )
                         validated_org = org["id"]
                     except NotFound:
-                        log.info(f"Organization {remote_org} is not available")
+                        log.info(f"Organization {org_name} is not available")
                         if remote_orgs == "create":
                             try:
                                 org = tk.get_action("organization_create")(
@@ -309,16 +309,16 @@ class ASDIHarvester(HarvesterBase):
                                         "ignore_auth": True,
                                         "user": self._get_user_name(),
                                     },
-                                    {"name": org_name, "title": remote_org},
+                                    {"name": org_name, "title": name},
                                 )
 
                                 log.info(
-                                    f"Organization {remote_org} has been newly created"
+                                    f"Organization {name} has been newly created"
                                 )
                                 validated_org = org["id"]
 
                             except ValidationError as e:
-                                log.error(f"Could not get remote org {remote_org}, {e}")
+                                log.error(f"Could not get remote org {name}, {e}")
 
                 package_dict["owner_org"] = validated_org or local_org
 
