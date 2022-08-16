@@ -87,8 +87,8 @@ db.backup:
 
 db.nuke:
 	# shut down postgres and solr & remove volumes
-	docker compose stop db solr & docker volume rm docker-ckan_pg_data docker-ckan_solr_data \
-	up restart.ckan
+	docker compose stop db solr && docker volume rm docker-ckan_pg_data docker-ckan_solr_data \
+	&& up
 
 
 dev:
