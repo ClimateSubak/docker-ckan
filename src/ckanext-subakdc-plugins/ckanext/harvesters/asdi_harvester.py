@@ -64,7 +64,7 @@ class ASDIHarvester(HarvesterBase):
 
         object_ids = []
 
-        for counter, file_url in enumerate(files):
+        for counter, file_url in enumerate(files[:50]):
             if counter % 10 == 0:
                 log.info(f"Processing {counter} of {len(files)}")
             try:
@@ -247,20 +247,20 @@ class ASDIHarvester(HarvesterBase):
                     [t for t in default_tags if t not in package_dict["tags"]]
                 )
 
-            # No default groups for Subak
             # Set default groups if needed
-            # default_groups = self.config.get("default_groups", [])
-            # if default_groups:
-            #     if "groups" not in package_dict:
-            #         package_dict["groups"] = []
-            #     existing_group_ids = [g["id"] for g in package_dict["groups"]]
-            #     package_dict["groups"].extend(
-            #         [
-            #             g
-            #             for g in self.config["default_group_dicts"]
-            #             if g["id"] not in existing_group_ids
-            #         ]
-            #     )
+            default_groups = self.config.get("default_groups", [])
+            if default_groups:
+                if "groups" not in package_dict:
+                    package_dict["groups"] = []
+                existing_group_ids = [g["id"] for g in package_dict["groups"]]       
+
+                package_dict["groups"].extend(
+                    [
+                        g
+                        for g in self.config["default_groups"]
+                        if g["id"] not in existing_group_ids
+                    ]
+                )
 
             # Set org
             source_dataset = tk.get_action("package_show")(
@@ -310,7 +310,7 @@ class ASDIHarvester(HarvesterBase):
                                         "ignore_auth": True,
                                         "user": self._get_user_name(),
                                     },
-                                    {"name": org_name, "title": name},
+                                    {"name": org_name, "title": name.title()},
                                 )
 
                                 log.info(
