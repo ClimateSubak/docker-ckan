@@ -188,6 +188,16 @@ def create_sysadmin():
         print("[prerun] Made user {0} a sysadmin".format(name))
 
 
+def subak_db_updates():
+    subak_db_command = ["ckan", "-c", ckan_ini, "voting" "initdb"]
+    print("[prerun] Subak db changes - start")
+    try:
+        subprocess.check_output(subak_db_command, stderr=subprocess.STDOUT)
+        print("[prerun] Adding Subak dataset voting tables")
+    except subprocess.CalledProcessError as e:
+        print(e.output)
+        raise e
+
 if __name__ == "__main__":
 
     maintenance = os.environ.get("MAINTENANCE_MODE", "").lower() == "true"
@@ -201,4 +211,5 @@ if __name__ == "__main__":
         check_datastore_db_connection()
         init_datastore_db()
         check_solr_connection()
+        subak_db_updates()
         create_sysadmin()

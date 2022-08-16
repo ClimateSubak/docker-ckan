@@ -19,6 +19,9 @@ build.ckan:
 rebuild.ckan:
 	docker compose $(COMPOSE_FILE_PATH) up -d --build ckan
 
+volumes.create:
+	docker volume create caddy_data & docker volume create ckan_storage
+
 restart.ckan:
 	docker compose $(COMPOSE_FILE_PATH) up -d --force-recreate ckan
 
@@ -81,6 +84,12 @@ search.reindex:
 db.backup:
 	./backup_db.sh $(ENVIRONMENT) db ckan && \
 	./backup_db.sh $(ENVIRONMENT) db datastore
+
+db.nuke:
+	# shut down postgres and solr & remove volumes
+	docker compose stop db solr && docker volume rm docker-ckan_pg_data docker-ckan_solr_data \
+	&& up
+
 
 dev:
 	cd src/ckanext-subakdc && npm run dev

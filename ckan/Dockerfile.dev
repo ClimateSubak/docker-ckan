@@ -14,7 +14,7 @@ RUN pip install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pag
     pip install -e git+https://github.com/ckan/ckanext-dcat.git@v1.1.3#egg=ckanext-dcat && \
     pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.1.3/requirements.txt && \
     pip install -e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest && \
-    pip install -r https://raw.githubusercontent.com/ckan/ckanext-harvest/master/pip-requirements.txt && \
+    pip install -r https://raw.githubusercontent.com/ckan/ckanext-harvest/master/requirements.txt && \
     pip install -e git+https://github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader && \
     pip install -r https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt && \
     pip install -e git+https://github.com/climatesubak/ckanext-scheming.git#egg=ckanext-scheming && \

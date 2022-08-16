@@ -58,9 +58,12 @@ def get_subak_coop_orgs():
     group_package_show = tk.get_action("group_package_show")
     # organization_show = tk.get_action("organization_show")
 
-    pkgs = group_package_show(
-        {"ignore_auth": True, "user": None}, {"id": SUBAK_COOP_GROUP_NAME}
-    )
+    try:
+        pkgs = group_package_show(
+            {"ignore_auth": True, "user": None}, {"id": SUBAK_COOP_GROUP_NAME}
+        )
+    except:
+        return None
 
     orgs = list(
         {pkg["organization"]["name"]: pkg["organization"] for pkg in pkgs}.values()

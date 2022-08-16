@@ -64,7 +64,7 @@ class ASDIHarvester(HarvesterBase):
 
         object_ids = []
 
-        for counter, file_url in enumerate(files):
+        for counter, file_url in enumerate(files[:50]):
             if counter % 10 == 0:
                 log.info(f"Processing {counter} of {len(files)}")
             try:
@@ -252,11 +252,12 @@ class ASDIHarvester(HarvesterBase):
             if default_groups:
                 if "groups" not in package_dict:
                     package_dict["groups"] = []
-                existing_group_ids = [g["id"] for g in package_dict["groups"]]
+                existing_group_ids = [g["id"] for g in package_dict["groups"]]       
+
                 package_dict["groups"].extend(
                     [
                         g
-                        for g in self.config["default_group_dicts"]
+                        for g in self.config["default_groups"]
                         if g["id"] not in existing_group_ids
                     ]
                 )
@@ -287,7 +288,7 @@ class ASDIHarvester(HarvesterBase):
                         name = match.group().lstrip("[").rstrip("]")
                     else:
                         log.info(f"Organization {remote_org.lower()} does not have name as a formatted markdown link")
-                        name = remote_org.lower()
+                        name = remote_org.title()
 
                     org_name = re.sub(r"[^\s\w]", "", name).replace(
                         " ", "-"
@@ -301,7 +302,7 @@ class ASDIHarvester(HarvesterBase):
                         )
                         validated_org = org["id"]
                     except NotFound:
-                        log.info(f"Organization {remote_org} is not available")
+                        log.info(f"Organization {org_name} is not available")
                         if remote_orgs == "create":
                             try:
                                 org = tk.get_action("organization_create")(
@@ -309,16 +310,16 @@ class ASDIHarvester(HarvesterBase):
                                         "ignore_auth": True,
                                         "user": self._get_user_name(),
                                     },
-                                    {"name": org_name, "title": remote_org},
+                                    {"name": org_name, "title": name.title()},
                                 )
 
                                 log.info(
-                                    f"Organization {remote_org} has been newly created"
+                                    f"Organization {name} has been newly created"
                                 )
                                 validated_org = org["id"]
 
                             except ValidationError as e:
-                                log.error(f"Could not get remote org {remote_org}, {e}")
+                                log.error(f"Could not get remote org {name}, {e}")
 
                 package_dict["owner_org"] = validated_org or local_org
 
