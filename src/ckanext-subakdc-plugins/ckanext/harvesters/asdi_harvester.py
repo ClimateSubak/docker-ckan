@@ -64,7 +64,7 @@ class ASDIHarvester(HarvesterBase):
 
         object_ids = []
 
-        for counter, file_url in enumerate(files[:50]):
+        for counter, file_url in enumerate(files):
             if counter % 10 == 0:
                 log.info(f"Processing {counter} of {len(files)}")
             try:
