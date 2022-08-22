@@ -18,6 +18,7 @@ from authlib.oidc.core import CodeIDToken
 
 log = logging.getLogger(__name__)
 
+# TODO regenerate these and move them to env vars
 GOOGLE_CLIENT_ID = (
     "1053861686053-2v763h747gc3vrhllr6t1cgvijve5lid.apps.googleusercontent.com"
 )
