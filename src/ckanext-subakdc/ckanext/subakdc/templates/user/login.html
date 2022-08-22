@@ -1,0 +1,6 @@
+{% ckan_extends %}
+
+{% block form %}
+{{ super() }}
+<a href="{{ h.url_for('oauth.login') }}">Login with Google</a>
+{% endblock %}
