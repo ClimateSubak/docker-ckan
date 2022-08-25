@@ -56,3 +56,5 @@ Some customisation of the CKAN web UI is not controlled within the theme, but in
 ## Plugin requirements
 The dataset voting plugin enhancement requires the following command to create the db tables:  
 `ckan voting initdb`
+
+`ckan sysadmin add ckan_admin`
