@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 
-from ckanext.subakdc.oauth.OAuthClient import login
+from ckanext.subakdc.oauth.OAuth2 import OAuth2
 import ckanext.subakdc.oauth.blueprint as oauth
 from ckanext.subakdc.voting.cli import get_commands
 import ckanext.subakdc.voting.blueprint as voting
@@ -85,8 +85,10 @@ class SubakdcPlugin(p.SingletonPlugin):
     p.implements(p.ITemplateHelpers)
 
     # ------- IAuthenticator method implementations ------- #
-    # def login(self):
-    #     return login()
+    def identify(self):
+        # oauth = OAuth2()
+        # oauth.identify(token)
+        pass
 
     # ------- IBlueprint method implementations ------- #
     def get_blueprint(self):
