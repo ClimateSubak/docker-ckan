@@ -60,17 +60,35 @@ class ZenodoHarvester(HarvesterBase):
     def gather_stage(self, harvest_job):
         log.debug("ZenodoHarvester gather_stage")
 
-        keyword = "climate"  # About 9000 records in Zenodo as of Sep '22
+        self._set_config(harvest_job.source.config)
 
-        # 10K rows is max for single Zenodo API query
-        url = f"{self.base_url}/records?q={keyword}&type=dataset"
-        r = requests.get(url)
-        res = r.json()
-        datasets = res["hits"]["hits"]
+        search_query = self.config.get(
+            "zenodo_search_query", "climate"
+        )  # "climate" returns ~9000 records in Zenodo as of Sep '22
 
+        more_datasets = True
         package_ids = []
-        for ds in datasets:
-            package_ids.append(ds["id"])
+        n = 1
+        while more_datasets:
+            # N.B 10K rows is max for single Zenodo API query, we ask for 1000 per requests
+            # to keep response times manageable. A rate limit of 60 reqs per minute applies
+            # https://developers.zenodo.org/#rate-limiting
+            url = f"{self.base_url}/records?q={search_query}&type=dataset&size=1000&page={n}"
+            r = requests.get(url)
+            res = r.json()
+            datasets = res["hits"]["hits"]
+
+            log.debug(f"query={search_query}")
+            log.debug(f"n datasets={len(datasets)}")
+
+            for ds in datasets:
+                package_ids.append(ds["id"])
+
+            more_datasets = "links" in res and "next" in res["links"]
+            n += 1
+
+        log.debug(f"total datasets={len(package_ids)}")
+        return None
 
         try:
             object_ids = []
@@ -111,7 +129,7 @@ class ZenodoHarvester(HarvesterBase):
 
         content = {}
 
-        # Transform zenodo schema to CKAN schema
+        # Transform Zenodo schema to CKAN schema
         title = ""
         if "title" in dataset.keys():
             title = dataset["title"]
@@ -151,10 +169,12 @@ class ZenodoHarvester(HarvesterBase):
             {"url": f"{self.base_url.replace('/api', '')}/record/{harvest_object.guid}"}
         )
 
-        # TODO Add data sources from dataset['references']
+        # TODO Add data sources from dataset["references"]
 
+        # TODO should maybe use dataset["doi"] instead?
         content.update({"id": harvest_object.guid})
 
+        # TODO everything below needs checking/updating
         if has_records == True:
             resource = {}
             resource.update(
