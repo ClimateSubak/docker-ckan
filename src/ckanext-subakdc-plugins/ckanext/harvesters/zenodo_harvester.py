@@ -64,15 +64,15 @@ class ZenodoHarvester(HarvesterBase):
 
         search_query = self.config.get(
             "zenodo_search_query", "climate"
-        )  # "climate" returns ~9000 records in Zenodo as of Sep '22
+        )  # "climate" returns ~10000 records in Zenodo as of Oct '22
 
         more_datasets = True
         package_ids = []
         n = 1
         while more_datasets:
-            # N.B 10K rows is max for single Zenodo API query, we ask for 1000 per requests
-            # to keep response times manageable. A rate limit of 60 reqs per minute applies
-            # https://developers.zenodo.org/#rate-limiting
+            # N.B 10K rows is max the Zenodo API will return for any query, we ask for 1000
+            # per request to keep response times manageable. A rate limit of 60 reqs per
+            # minute also applies https://developers.zenodo.org/#rate-limiting
             url = f"{self.base_url}/records?q={search_query}&type=dataset&size=1000&page={n}"
             r = requests.get(url)
             res = r.json()
@@ -85,10 +85,10 @@ class ZenodoHarvester(HarvesterBase):
                 package_ids.append(ds["id"])
 
             more_datasets = "links" in res and "next" in res["links"]
+
             n += 1
 
         log.debug(f"total datasets={len(package_ids)}")
-        return None
 
         try:
             object_ids = []
@@ -121,12 +121,12 @@ class ZenodoHarvester(HarvesterBase):
             r = requests.get(fetch_url)
             res = r.json()
             dataset = res["metadata"]
-            has_records = len(res["files"]) > 0
 
         except Exception as e:
             log.exception(f"Could not load URL: {fetch_url}")
-            self._save_object_error(e.message, harvest_object)
+            return self._save_object_error(e.message, harvest_object)
 
+        has_records = "files" in res and len(res["files"]) > 0
         content = {}
 
         # Transform Zenodo schema to CKAN schema
@@ -135,7 +135,11 @@ class ZenodoHarvester(HarvesterBase):
             title = dataset["title"]
             content.update({"title": title})
 
-        if "creators" in dataset.keys() and len(dataset["creators"]) > 0:
+        if (
+            "creators" in dataset.keys()
+            and len(dataset["creators"]) > 0
+            and "affiliation" in dataset["creators"][0]
+        ):
             publisher = dataset["creators"][0]["affiliation"]
             content.update({"owner_org": publisher})
             content.update({"author": publisher})
@@ -156,25 +160,28 @@ class ZenodoHarvester(HarvesterBase):
             content.update({"license_id": dataset["license"]["id"]})
 
         if "keywords" in dataset.keys():
-            tags = [{"name": tag.strip()} for tag in dataset["keyword"]]
+            if len(dataset["keywords"]) == 1:
+                tags = [
+                    {"name": tag.strip()} for tag in dataset["keywords"][0].split(",")
+                ]
+            else:
+                tags = [{"name": tag.strip()} for tag in dataset["keywords"]]
             content.update({"tags": tags})
 
-        if "updated" in dataset.keys():
+        if "created" in res.keys():
             # Ignore milliseconds and timezone adjustments
-            content.update(
-                {"metadata_modified": re.split(r"\.|\+", dataset["updated"])[0]}
-            )
+            content.update({"metadata_created": re.split(r"\.|\+", res["created"])[0]})
+
+        if "updated" in res.keys():
+            # Ignore milliseconds and timezone adjustments
+            content.update({"metadata_modified": re.split(r"\.|\+", res["updated"])[0]})
 
         content.update(
             {"url": f"{self.base_url.replace('/api', '')}/record/{harvest_object.guid}"}
         )
 
-        # TODO Add data sources from dataset["references"]
-
-        # TODO should maybe use dataset["doi"] instead?
         content.update({"id": harvest_object.guid})
 
-        # TODO everything below needs checking/updating
         if has_records == True:
             resource = {}
             resource.update(
@@ -187,10 +194,10 @@ class ZenodoHarvester(HarvesterBase):
             if "title" in dataset.keys():
                 resource.update({"name": dataset["title"]})
 
-            if "data_processed" in dataset.keys():
+            if "updated" in res.keys():
                 # Ignore milliseconds and timezone adjustments
                 resource.update(
-                    {"last_modified": re.split(r"\.|\+", dataset["data_processed"])[0]}
+                    {"last_modified": re.split(r"\.|\+", res["updated"])[0]}
                 )
 
             if "fields" in dataset and len(dataset["fields"]) > 0:
