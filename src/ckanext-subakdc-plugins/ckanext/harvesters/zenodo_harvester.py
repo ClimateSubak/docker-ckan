@@ -124,7 +124,9 @@ class ZenodoHarvester(HarvesterBase):
 
         except Exception as e:
             log.exception(f"Could not load URL: {fetch_url}")
-            return self._save_object_error(e.message, harvest_object)
+            return self._save_object_error(
+                f"Could not load URL: {fetch_url}", harvest_object
+            )
 
         has_records = "files" in res and len(res["files"]) > 0
         content = {}
