@@ -86,10 +86,10 @@ db.backup:
 	./backup_db.sh $(ENVIRONMENT) db datastore
 
 db.nuke:
-	# shut down containers & remove volumes
-	down \
-	&& docker volume rm docker-ckan_pg_data docker-ckan_solr_data \
+	# shut down postgres and solr & remove volumes
+	docker compose stop db solr && docker volume rm docker-ckan_pg_data docker-ckan_solr_data \
 	&& up
+
 
 dev:
 	cd src/ckanext-subakdc && npm run dev
