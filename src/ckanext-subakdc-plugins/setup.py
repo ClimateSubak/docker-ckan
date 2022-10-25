@@ -76,6 +76,7 @@ setup(
         search=ckanext.search.plugin:SearchPlugin
         security=ckanext.security.plugin:SecurityPlugin
         showcase=ckanext.showcase.plugin:ShowcasePlugin
+        zenodo_harvester=ckanext.harvesters:ZenodoHarvester
         
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan
