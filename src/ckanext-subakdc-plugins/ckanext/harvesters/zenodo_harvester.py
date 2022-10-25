@@ -1,6 +1,6 @@
 import logging
 import json
-from os import path
+import os
 import re
 import requests
 from markdownify import markdownify as md
@@ -13,9 +13,14 @@ from ckanext.harvest.harvesters import HarvesterBase
 
 log = logging.getLogger(__name__)
 
+# Access token allows for improved API rate limit
+ACCESS_TOKEN = os.environ.get("ZENODO_ACCESS_TOKEN")
+
 
 def get_countries():
-    with open(path.join(path.dirname(__file__), "..", "countries-iso-3166.json")) as f:
+    with open(
+        os.path.join(os.path.dirname(__file__), "..", "countries-iso-3166.json")
+    ) as f:
         countries = json.load(f)
 
     return list(map(lambda c: {"value": c["alpha-2"], "label": c["name"]}, countries))
@@ -73,7 +78,7 @@ class ZenodoHarvester(HarvesterBase):
             # N.B 10K rows is max the Zenodo API will return for any query, we ask for 1000
             # per request to keep response times manageable. A rate limit of 60 reqs per
             # minute also applies https://developers.zenodo.org/#rate-limiting
-            url = f"{self.base_url}/records?q={search_query}&type=dataset&size=1000&page={n}"
+            url = f"{self.base_url}/records?q={search_query}&type=dataset&size=1000&page={n}&access_token={ACCESS_TOKEN}"
             r = requests.get(url)
             res = r.json()
             datasets = res["hits"]["hits"]
@@ -114,7 +119,7 @@ class ZenodoHarvester(HarvesterBase):
 
         self._set_config(harvest_object.job.source.config)
 
-        fetch_url = f"{self.base_url}/records/{harvest_object.guid}"
+        fetch_url = f"{self.base_url}/records/{harvest_object.guid}?&access_token={ACCESS_TOKEN}"
         dataset = {}
 
         try:
