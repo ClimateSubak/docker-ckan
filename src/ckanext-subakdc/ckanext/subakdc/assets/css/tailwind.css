@@ -1201,6 +1201,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-4 {
   height: 1rem !important;
 }
+.h-\[46px\] {
+  height: 46px !important;
+}
 .h-10 {
   height: 2.5rem !important;
 }
@@ -1251,6 +1254,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-4 {
   width: 1rem !important;
+}
+.w-\[191px\] {
+  width: 191px !important;
 }
 .w-fit {
   width: -webkit-fit-content !important;
@@ -1607,6 +1613,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-gradient-to-t {
   background-image: linear-gradient(to top, var(--tw-gradient-stops)) !important;
 }
+.bg-\[url\(\'\/images\/btn_google_signin_dark_normal_web\@2x\.png\'\)\] {
+  background-image: url('/images/btn_google_signin_dark_normal_web@2x.png') !important;
+}
 .from-slate-50 {
   --tw-gradient-from: #f8fafc !important;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(248 250 252 / 0)) !important;
@@ -1624,6 +1633,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .bg-cover {
   background-size: cover !important;
+}
+.bg-contain {
+  background-size: contain !important;
 }
 .bg-center {
   background-position: center !important;
@@ -2065,6 +2077,10 @@ the theme() function
 
 .hover\:bg-opacity-80:hover {
   --tw-bg-opacity: 0.8 !important;
+}
+
+.hover\:bg-\[url\(\'\/images\/btn_google_signin_dark_hover_web\@2x\.png\'\)\]:hover {
+  background-image: url('/images/btn_google_signin_dark_hover_web@2x.png') !important;
 }
 
 .hover\:text-gray-700:hover {
