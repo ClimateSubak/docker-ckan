@@ -1027,6 +1027,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .top-0 {
   top: 0px !important;
 }
+.left-1\/2 {
+  left: 50% !important;
+}
 .-top-\[3px\] {
   top: -3px !important;
 }
@@ -1082,6 +1085,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .my-6 {
   margin-top: 1.5rem !important;
   margin-bottom: 1.5rem !important;
+}
+.my-8 {
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
 }
 .my-4 {
   margin-top: 1rem !important;
@@ -1162,6 +1169,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .flex {
   display: flex !important;
 }
+.inline-flex {
+  display: inline-flex !important;
+}
 .table {
   display: table !important;
 }
@@ -1200,6 +1210,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-4 {
   height: 1rem !important;
+}
+.h-px {
+  height: 1px !important;
+}
+.h-\[46px\] {
+  height: 46px !important;
 }
 .h-10 {
   height: 2.5rem !important;
@@ -1252,6 +1268,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-4 {
   width: 1rem !important;
 }
+.w-\[191px\] {
+  width: 191px !important;
+}
 .w-fit {
   width: -webkit-fit-content !important;
   width: -moz-fit-content !important;
@@ -1299,6 +1318,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .translate-y-0 {
   --tw-translate-y: 0px !important;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
+}
+.-translate-x-1\/2 {
+  --tw-translate-x: -50% !important;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
 .transform {
@@ -1417,6 +1440,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .whitespace-nowrap {
   white-space: nowrap !important;
 }
+.whitespace-pre-wrap {
+  white-space: pre-wrap !important;
+}
 .break-normal {
   overflow-wrap: normal !important;
   word-break: normal !important;
@@ -1450,6 +1476,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .border {
   border-width: 1px !important;
+}
+.border-0 {
+  border-width: 0px !important;
 }
 .border-b {
   border-bottom-width: 1px !important;
@@ -1574,6 +1603,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1 !important;
   background-color: rgb(226 232 240 / var(--tw-bg-opacity)) !important;
 }
+.bg-gray-300 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity)) !important;
+}
 .bg-subak-stone-grey {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(238 238 236 / var(--tw-bg-opacity)) !important;
@@ -1607,6 +1640,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-gradient-to-t {
   background-image: linear-gradient(to top, var(--tw-gradient-stops)) !important;
 }
+.bg-\[url\(\'\/images\/btn_google_signin_dark_normal_web\@2x\.png\'\)\] {
+  background-image: url('/images/btn_google_signin_dark_normal_web@2x.png') !important;
+}
 .from-slate-50 {
   --tw-gradient-from: #f8fafc !important;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(248 250 252 / 0)) !important;
@@ -1624,6 +1660,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .bg-cover {
   background-size: cover !important;
+}
+.bg-contain {
+  background-size: contain !important;
 }
 .bg-center {
   background-position: center !important;
@@ -1831,6 +1870,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .font-bold {
   font-weight: 700 !important;
+}
+.font-medium {
+  font-weight: 500 !important;
 }
 .font-black {
   font-weight: 900 !important;
@@ -2065,6 +2107,10 @@ the theme() function
 
 .hover\:bg-opacity-80:hover {
   --tw-bg-opacity: 0.8 !important;
+}
+
+.hover\:bg-\[url\(\'\/images\/btn_google_signin_dark_hover_web\@2x\.png\'\)\]:hover {
+  background-image: url('/images/btn_google_signin_dark_hover_web@2x.png') !important;
 }
 
 .hover\:text-gray-700:hover {

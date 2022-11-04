@@ -4,8 +4,10 @@ from urllib.parse import urlparse
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 
+from ckanext.subakdc.oauth.OAuth2 import OAuth2
+import ckanext.subakdc.oauth.blueprint as oauth
 from ckanext.subakdc.voting.cli import get_commands
-import ckanext.subakdc.voting.blueprint as views
+import ckanext.subakdc.voting.blueprint as voting
 from ckanext.subakdc.voting.helpers import (
     user_has_upvoted_dataset,
     user_has_downvoted_dataset,
@@ -76,14 +78,21 @@ def get_subak_coop_orgs():
 
 
 class SubakdcPlugin(p.SingletonPlugin):
+    p.implements(p.IAuthenticator, inherit=True)
     p.implements(p.IBlueprint)
     p.implements(p.IClick)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
 
+    # ------- IAuthenticator method implementations ------- #
+    def identify(self):
+        # oauth = OAuth2()
+        # oauth.identify(token)
+        pass
+
     # ------- IBlueprint method implementations ------- #
     def get_blueprint(self):
-        return views.get_blueprints()
+        return voting.get_blueprints() + oauth.get_blueprints()
 
     # ------- IClick method implementations ------- #
     def get_commands(self):
