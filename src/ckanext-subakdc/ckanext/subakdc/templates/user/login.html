@@ -1,0 +1,24 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+  <section class="module">
+    <div class="">
+      <h1 class="page-heading">{% block page_heading %}{{ _('Login') }}{% endblock %}</h1>
+      {% block form %}
+        {% snippet "user/snippets/login_form.html", action=g.login_handler, error_summary=error_summary %}
+        <div class="inline-flex items-center justify-center w-full">
+            <hr class="w-full h-px my-8 bg-gray-300 border-0">
+            <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">or</span>
+        </div>
+        <a class="block bg-[url('/images/btn_google_signin_dark_normal_web@2x.png')] hover:bg-[url('/images/btn_google_signin_dark_hover_web@2x.png')] w-[191px] h-[46px] bg-contain" href="{{ h.url_for('oauth.login') }}" title="Login with Google"></a>
+
+        {# hack to preload the hover state for social login btns #}
+        <img class="hidden" src="/images/btn_google_signin_dark_hover_web@2x.png" />
+    {% endblock %}
+    </div>
+  </section>
+{% endblock %}
+
+{% block help_forgotten_button %}
+<a class="whitespace-pre-wrap btn btn-default" href="{{ h.url_for('user.request_reset') }}">{{ _('Forgot your password?') }}</a>
+{% endblock %}
