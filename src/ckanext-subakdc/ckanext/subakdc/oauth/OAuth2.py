@@ -1,9 +1,11 @@
 import logging
+import os
 import sys
 
 import requests
 from requests.exceptions import HTTPError
 from flask import redirect, make_response
+from sqlalchemy.exc import IntegrityError
 
 import ckan.model as model
 import ckan.plugins.toolkit as tk
@@ -15,15 +17,15 @@ from authlib.oidc.core import CodeIDToken
 
 log = logging.getLogger(__name__)
 
-BASE_URL = "https://9bbb-51-148-176-70.eu.ngrok.io"
-# TODO regenerate these and move them to env vars
-GOOGLE_CLIENT_ID = (
-    "1053861686053-2v763h747gc3vrhllr6t1cgvijve5lid.apps.googleusercontent.com"
-)
-GOOGLE_CLIENT_SECRET = "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"
+# TODO read from CKAN_SITE_URL rather than hardcoded ngrok url
+BASE_URL = "https://17ef-82-163-125-51.eu.ngrok.io"
+# BASE_URL = os.environ.get("CKAN_SITE_URL")
+
+
+GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
 GOOGLE_ACCESS_TOKEN_URI = "https://oauth2.googleapis.com/token"
 GOOGLE_AUTHORIZE_TOKEN_URI = "https://accounts.google.com/o/oauth2/auth"
-# SCOPE = "https://www.googleapis.com/auth/userinfo.email,https://www.googleapis.com/auth/userinfo.profile"
 SCOPE = "openid email profile"
 
 
@@ -59,7 +61,7 @@ class OAuth2:
 
         return token
 
-    def identify(self, token):
+    def identify(self, token, username=None):
         # Get the public keys used to sign id_token JWT in token
         keys_resp = requests.get("https://www.googleapis.com/oauth2/v3/certs")
         keys = keys_resp.json()
@@ -68,29 +70,38 @@ class OAuth2:
         jwt = JsonWebToken(["RS256"])
         claims = jwt.decode(token["id_token"], keys, claims_cls=CodeIDToken)
         claims.validate()
+        
+        log.debug(claims)
 
-        user = self.get_or_create_db_user(claims["email"])
+        user = self.get_user(claims["email"])
+        log.debug(user)
+        
+        if user is None and username is not None:
+            user = self.create_user(claims['email'], username)
 
         return user
 
-    def get_or_create_db_user(self, email):
-
+    def get_user(self, email):
         # Find user by email address
         users = model.User.by_email(email)
         if len(users) > 0:
             return users[0]
+        
+        return None
+    
+    def create_user(self, email, username):
+        try:
+            user = model.User(email=email)
 
-        # If the user does not exist, we have to create it...
-        user = model.User(email=email)
+            user.name = username
 
-        # TODO Allow user to select username via form
-        user.name = "testing"
-
-        # Save user
-        model.Session.add(user)
-        model.Session.commit()
-        model.Session.remove()
-
+            # Save user
+            model.Session.add(user)
+            model.Session.commit()
+            model.Session.remove()
+        except IntegrityError as e:
+            return None
+        
         return user
 
     def remember_user(self, user_name):
@@ -104,7 +115,7 @@ class OAuth2:
         identity = {"repoze.who.userid": user_name}
         headers = rememberer.remember(environ, identity)
 
-        response = make_response(tk.redirect_to("home.index"))
+        response = make_response(tk.redirect_to("dashboard.index"))
         for key, value in headers:
             response.headers[key] = value
 
