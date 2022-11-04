@@ -17,9 +17,8 @@ from authlib.oidc.core import CodeIDToken
 
 log = logging.getLogger(__name__)
 
-# TODO read from CKAN_SITE_URL rather than hardcoded ngrok url
-BASE_URL = "https://17ef-82-163-125-51.eu.ngrok.io"
-# BASE_URL = os.environ.get("CKAN_SITE_URL")
+# BASE_URL = "https://17ef-82-163-125-51.eu.ngrok.io" # For local testing, use ngrok
+BASE_URL = os.environ.get("CKAN_SITE_URL")
 
 
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
@@ -48,13 +47,13 @@ class OAuth2:
         client = self.make_client()
 
         authorization_response = f"{BASE_URL}{tk.request.full_path}"
-        log.debug(authorization_response)
+        # log.debug(authorization_response)
 
         try:
             token = client.fetch_token(
                 GOOGLE_ACCESS_TOKEN_URI, authorization_response=authorization_response
             )
-            log.debug(token)
+            # log.debug(token)
 
         except HTTPError as e:
             log.debug(e.response.text)
@@ -70,12 +69,9 @@ class OAuth2:
         jwt = JsonWebToken(["RS256"])
         claims = jwt.decode(token["id_token"], keys, claims_cls=CodeIDToken)
         claims.validate()
-        
-        log.debug(claims)
+        # log.debug(claims)
 
         user = self.get_user(claims["email"])
-        log.debug(user)
-        
         if user is None and username is not None:
             user = self.create_user(claims['email'], username)
 
@@ -92,7 +88,6 @@ class OAuth2:
     def create_user(self, email, username):
         try:
             user = model.User(email=email)
-
             user.name = username
 
             # Save user
