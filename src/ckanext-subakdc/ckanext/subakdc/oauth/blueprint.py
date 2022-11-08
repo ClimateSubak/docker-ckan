@@ -64,9 +64,9 @@ def submit_username_view():
     
     if error_summary:
         data = {"username": username}
-        return choose_username_view(auth_token=token, data=data, error_summary=error_summary)
+        return choose_username_view(provider=provider, auth_token=token, data=data, error_summary=error_summary)
     
-    response = oauth.remember_user(user.name)
+    response = oauth.remember_user(user["name"])
     return response
 
 def abort_login():

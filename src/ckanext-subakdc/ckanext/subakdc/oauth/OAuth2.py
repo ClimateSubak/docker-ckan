@@ -3,10 +3,10 @@ import os
 import sys
 
 import requests
-from requests.exceptions import HTTPError
-from flask import redirect, make_response, request
-from sqlalchemy.exc import IntegrityError
 
+from flask import redirect, make_response
+
+from ckan.logic.schema import validator_args
 import ckan.model as model
 import ckan.plugins.toolkit as tk
 
@@ -17,8 +17,8 @@ from authlib.oidc.core import CodeIDToken
 
 log = logging.getLogger(__name__)
 
-BASE_URL = "https://bac4-51-148-176-70.eu.ngrok.io" # For local testing, use ngrok
-# BASE_URL = os.environ.get("CKAN_SITE_URL")
+# BASE_URL = "https://bac4-51-148-176-70.eu.ngrok.io" # For local testing, use ngrok
+BASE_URL = os.environ.get("CKAN_SITE_URL")
 
 class OAuth2:
     def make_client(self, provider):
@@ -52,7 +52,7 @@ class OAuth2:
         client = self.make_client(provider)
 
         authorization_response = f"{BASE_URL}{tk.request.full_path}"
-        log.debug(authorization_response)
+        # log.debug(authorization_response)
         
         if provider == "microsoft":
             access_token_uri = f"https://login.microsoftonline.com/organizations/oauth2/v2.0/token"
@@ -63,7 +63,7 @@ class OAuth2:
             token = client.fetch_token(
                 access_token_uri, authorization_response=authorization_response
             )
-            log.debug(token)
+            # log.debug(token)
         except:
             return None
 
@@ -83,7 +83,7 @@ class OAuth2:
             keys = keys_resp.json()
             claims = jwt.decode(token["id_token"], keys, claims_cls=CodeIDToken)
             claims.validate()
-            log.debug(claims)
+            # log.debug(claims)
         except:
             return None
 
@@ -98,15 +98,14 @@ class OAuth2:
         return None
     
     def create_user(self, email, username):
+        user_create = tk.get_action("user_create")
+        schema = custom_user_schema()
+        
         try:
-            user = model.User(email=email)
-            user.name = username
-
-            # Save user
-            model.Session.add(user)
-            model.Session.commit()
-            model.Session.remove()
-        except IntegrityError as e:
+            user = user_create({"ignore_auth": True, "user": None, "schema": schema}, 
+                               {"email": email, "name": username})
+        except Exception as e:
+            # log.debug(e)
             return None
         
         return user
@@ -127,3 +126,10 @@ class OAuth2:
             response.headers[key] = value
 
         return response
+
+
+@validator_args
+def custom_user_schema(unicode_safe, name_validator, user_name_validator, 
+                       email_is_unique, not_empty, email_validator):
+    return {'name': [not_empty, name_validator, user_name_validator, unicode_safe],
+            'email': [not_empty, email_validator, email_is_unique, unicode_safe]}
