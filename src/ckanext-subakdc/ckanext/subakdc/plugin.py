@@ -78,17 +78,10 @@ def get_subak_coop_orgs():
 
 
 class SubakdcPlugin(p.SingletonPlugin):
-    p.implements(p.IAuthenticator, inherit=True)
     p.implements(p.IBlueprint)
     p.implements(p.IClick)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
-
-    # ------- IAuthenticator method implementations ------- #
-    def identify(self):
-        # oauth = OAuth2()
-        # oauth.identify(token)
-        pass
 
     # ------- IBlueprint method implementations ------- #
     def get_blueprint(self):

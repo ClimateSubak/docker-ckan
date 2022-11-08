@@ -4,7 +4,7 @@ import sys
 
 import requests
 from requests.exceptions import HTTPError
-from flask import redirect, make_response
+from flask import redirect, make_response, request
 from sqlalchemy.exc import IntegrityError
 
 import ckan.model as model
@@ -17,65 +17,77 @@ from authlib.oidc.core import CodeIDToken
 
 log = logging.getLogger(__name__)
 
-# BASE_URL = "https://17ef-82-163-125-51.eu.ngrok.io" # For local testing, use ngrok
-BASE_URL = os.environ.get("CKAN_SITE_URL")
-
-
-GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
-GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
-GOOGLE_ACCESS_TOKEN_URI = "https://oauth2.googleapis.com/token"
-GOOGLE_AUTHORIZE_TOKEN_URI = "https://accounts.google.com/o/oauth2/auth"
-SCOPE = "openid email profile"
-
+BASE_URL = "https://bac4-51-148-176-70.eu.ngrok.io" # For local testing, use ngrok
+# BASE_URL = os.environ.get("CKAN_SITE_URL")
 
 class OAuth2:
-    def make_client(self):
+    def make_client(self, provider):
+        if provider == "microsoft":
+            client_id = os.environ.get("MICROSOFT_OAUTH_CLIENT_ID")
+            client_secret = os.environ.get("MICROSOFT_OAUTH_CLIENT_SECRET")
+        else:
+            client_id = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
+            client_secret = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
+        
         return OAuth2Session(
-            GOOGLE_CLIENT_ID,
-            GOOGLE_CLIENT_SECRET,
-            scope=SCOPE,
-            redirect_uri=f"{BASE_URL}/oauth/authorize",
+            client_id,
+            client_secret,
+            scope="openid email profile",
+            redirect_uri=f"{BASE_URL}/oauth/authorize?provider={provider}",
         )
 
-    def challenge(self):
-        client = self.make_client()
-        uri, _ = client.create_authorization_url(GOOGLE_AUTHORIZE_TOKEN_URI)
+    def challenge(self, provider):
+        client = self.make_client(provider)
+
+        if provider == "microsoft":
+            provider_auth_uri = "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize"
+        else:
+            provider_auth_uri = "https://accounts.google.com/o/oauth2/auth"
+            
+        uri, _ = client.create_authorization_url(provider_auth_uri)
 
         return redirect(uri)
 
-    def get_token(self):
-        client = self.make_client()
+    def get_token(self, provider):
+        client = self.make_client(provider)
 
         authorization_response = f"{BASE_URL}{tk.request.full_path}"
-        # log.debug(authorization_response)
+        log.debug(authorization_response)
+        
+        if provider == "microsoft":
+            access_token_uri = f"https://login.microsoftonline.com/organizations/oauth2/v2.0/token"
+        else:
+            access_token_uri = "https://oauth2.googleapis.com/token"
 
         try:
             token = client.fetch_token(
-                GOOGLE_ACCESS_TOKEN_URI, authorization_response=authorization_response
+                access_token_uri, authorization_response=authorization_response
             )
-            # log.debug(token)
-
-        except HTTPError as e:
-            log.debug(e.response.text)
+            log.debug(token)
+        except:
+            return None
 
         return token
-
-    def identify(self, token, username=None):
-        # Get the public keys used to sign id_token JWT in token
-        keys_resp = requests.get("https://www.googleapis.com/oauth2/v3/certs")
-        keys = keys_resp.json()
-
+    
+    def get_token_user_email(self, provider, token):
         # Decode/validate the id_token
         jwt = JsonWebToken(["RS256"])
-        claims = jwt.decode(token["id_token"], keys, claims_cls=CodeIDToken)
-        claims.validate()
-        # log.debug(claims)
+        
+        try:
+            # Get the public keys used to sign id_token JWT in token
+            if provider == "microsoft":
+                keys_resp = requests.get("https://login.microsoftonline.com/common/discovery/v2.0/keys")
+            else: # Google
+                keys_resp = requests.get("https://www.googleapis.com/oauth2/v3/certs")
+            
+            keys = keys_resp.json()
+            claims = jwt.decode(token["id_token"], keys, claims_cls=CodeIDToken)
+            claims.validate()
+            log.debug(claims)
+        except:
+            return None
 
-        user = self.get_user(claims["email"])
-        if user is None and username is not None:
-            user = self.create_user(claims['email'], username)
-
-        return user
+        return claims["email"]
 
     def get_user(self, email):
         # Find user by email address
