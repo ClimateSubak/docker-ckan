@@ -10,10 +10,15 @@
             <hr class="w-full h-px my-8 bg-gray-300 border-0">
             <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">or</span>
         </div>
-        <a class="block bg-[url('/images/btn_google_signin_dark_normal_web@2x.png')] hover:bg-[url('/images/btn_google_signin_dark_hover_web@2x.png')] w-[191px] h-[46px] bg-contain" href="{{ h.url_for('oauth.login') }}" title="Login with Google"></a>
+        <div class="flex flex-col gap-2 md:flex-row">
+          <a class="block bg-[url('/images/btn_google_signin_dark_normal_web@2x.png')] hover:bg-[url('/images/btn_google_signin_dark_hover_web@2x.png')] w-[191px] h-[46px] bg-contain" href="{{ h.url_for('oauth.login', provider='google') }}" title="Login with Google"></a>
+
+          <a class="block bg-[url('/images/btn_microsoft_signin_light_normal_web.png')] hover:bg-[url('/images/btn_microsoft_signin_dark_normal_web.png')] w-[215px] h-[41px] relative left-[3px] top-[3px]" href="{{ h.url_for('oauth.login', provider='microsoft') }}" title="Login with Microsoft"></a>
+        </div>
 
         {# hack to preload the hover state for social login btns #}
         <img class="hidden" src="/images/btn_google_signin_dark_hover_web@2x.png" />
+        <img class="hidden" src="/images/btn_microsoft_signin_dark_normal_web.png" />
     {% endblock %}
     </div>
   </section>
