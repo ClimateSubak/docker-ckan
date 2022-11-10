@@ -1,0 +1,30 @@
+{% ckan_extends %}
+
+{% block primary_content_inner %}
+  <h2 class="hide-heading">{{ _('My Datasets') }}</h2>
+  {% if user_dict.datasets %}
+    {% snippet 'snippets/package_list.html', packages=user_dict.datasets %}
+  {% elif not h.organizations_available() %}
+    <div class="p-6 mb-4 border border-gray-200 border-yellow-400 rounded-md">
+        <div class="flex flex-col items-center gap-4 md:items-start md:flex-row">
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-yellow-400">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+        </div>
+        <div>
+            <p>Before you can upload your dataset(s), you first need to be a member of an organisation registered with the Data Catalogue. If your organisation is already listed <a href="{{ h.url_for('organization.index') }}">here</a>, you should reach out to your organisation's administrator so they can add you as a member. If you don't know who your administator is, please <a href="datacooperative@subak.org">email us</a> and we will reach out to them on your behalf.</p>
+
+            <p>To register a <strong>new organisation</strong> on the Data Catalogue and begin uploading your datasets, please <a href="{{ h.url_for('organization.new') }}"><strong>start here</strong></a>.</p>
+        </div>
+        </div>
+    </div>
+  {% else %}
+    <p class="empty">
+      {{ _('You haven\'t created any datasets.') }}
+      {% if h.check_access('package_create') %}
+        {% link_for _('Create one now?'), named_route='dataset.new' %}
+      {% endif %}
+    </p>
+  {% endif %}
+{% endblock %}
