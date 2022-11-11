@@ -1,0 +1,3 @@
+Dear {{ user_name }},
+
+Please confirm your email address to access {{ site_name }} by clicking the verification link: {{ verify_link }}
