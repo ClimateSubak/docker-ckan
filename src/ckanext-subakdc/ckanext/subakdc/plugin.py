@@ -4,7 +4,8 @@ from urllib.parse import urlparse
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 
-from ckanext.subakdc.oauth.OAuth2 import OAuth2
+from ckanext.subakdc.verification import actions
+import ckanext.subakdc.verification.blueprint as verification
 import ckanext.subakdc.oauth.blueprint as oauth
 from ckanext.subakdc.voting.cli import get_commands
 import ckanext.subakdc.voting.blueprint as voting
@@ -78,14 +79,21 @@ def get_subak_coop_orgs():
 
 
 class SubakdcPlugin(p.SingletonPlugin):
+    p.implements(p.IActions)
     p.implements(p.IBlueprint)
     p.implements(p.IClick)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
+    
+    # ------- IActions method implementations ------- #
+    def get_actions(self):
+        return {
+            "user_create": actions.user_create,
+        }
 
     # ------- IBlueprint method implementations ------- #
     def get_blueprint(self):
-        return voting.get_blueprints() + oauth.get_blueprints()
+        return verification.get_blueprints() + oauth.get_blueprints() + voting.get_blueprints()
 
     # ------- IClick method implementations ------- #
     def get_commands(self):
