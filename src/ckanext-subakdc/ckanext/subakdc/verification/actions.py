@@ -4,9 +4,8 @@ import logging
 from ckan import model
 import ckan.plugins.toolkit as tk
 
+from ckanext.subakdc.verification import NAMESPACE
 from ckanext.subakdc.verification.utils import generate_verification_code
-
-NAMESPACE = "verification"
 
 log = logging.getLogger(__name__)
 

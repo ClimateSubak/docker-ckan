@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 
-from ckanext.subakdc.verification import actions
+from ckanext.subakdc.verification import actions, auth
 import ckanext.subakdc.verification.blueprint as verification
 import ckanext.subakdc.oauth.blueprint as oauth
 from ckanext.subakdc.voting.cli import get_commands
@@ -80,6 +80,7 @@ def get_subak_coop_orgs():
 
 class SubakdcPlugin(p.SingletonPlugin):
     p.implements(p.IActions)
+    p.implements(p.IAuthFunctions)
     p.implements(p.IBlueprint)
     p.implements(p.IClick)
     p.implements(p.IConfigurer)
@@ -90,6 +91,13 @@ class SubakdcPlugin(p.SingletonPlugin):
         return {
             "user_create": actions.user_create,
             'user_update': actions.user_update,
+        }
+        
+    # ------- IAuthFunctions method implementations ------- #
+    def get_auth_functions(self):
+        return {
+            "package_create": auth.package_create,
+            "organization_create": auth.organization_create,
         }
 
     # ------- IBlueprint method implementations ------- #
