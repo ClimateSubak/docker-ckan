@@ -29,16 +29,32 @@ def user_create(action_func, context, data_dict):
         
     user['verification_code'] = plugin_extras[NAMESPACE]['code']
     
-    # TODO Send verification email
-    send_verification_email(user_obj, plugin_extras[NAMESPACE]['code'])
+    _send_verification_email(user_obj, plugin_extras[NAMESPACE]['code'])
     return user
 
-def send_verification_email(user, code):
-    log.debug(tk.config)
+@tk.chained_action
+def user_update(action_func, context, data_dict):
+    """
+    Intercepts the user_update call to update/clear email verification code if necessary
+    """
+    user_id = tk.get_or_bust(data_dict, 'id')
+    user_model = context.get('model', model)
+    user_obj = user_model.User.get(user_id)
+
+    if user_obj is not None and "email_verification_code" in data_dict:
+        user_dict = tk.get_action("user_show")(context.copy(), {"id": user_id})
+        plugin_extras = _init_plugin_extras(user_obj.plugin_extras)
+        plugin_extras[NAMESPACE]['code'] = data_dict["email_verification_code"]
+        user_dict["plugin_extras"] = plugin_extras
+        
+        log.debug(user_dict)
+
+    return action_func(context, user_dict)
+
+def _send_verification_email(user, code):
     site_name = tk.config.get('ckan.site_title')
     verify_link = tk.url_for("verification.email_verification", code=code, _external=True)
     body = tk.render('emails/verify_user.txt', {"site_name": site_name, "user_name": user.name, "verify_link": verify_link})
-    log.debug(body)
     tk.mail_recipient(user.name, 
                       user.email, 
                       subject=f"Verify your email for {site_name}",

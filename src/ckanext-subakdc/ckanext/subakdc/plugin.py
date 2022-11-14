@@ -89,6 +89,7 @@ class SubakdcPlugin(p.SingletonPlugin):
     def get_actions(self):
         return {
             "user_create": actions.user_create,
+            'user_update': actions.user_update,
         }
 
     # ------- IBlueprint method implementations ------- #
