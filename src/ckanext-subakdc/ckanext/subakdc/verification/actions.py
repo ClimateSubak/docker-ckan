@@ -41,14 +41,13 @@ def user_update(action_func, context, data_dict):
     user_obj = user_model.User.get(user_id)
 
     if user_obj is not None and "email_verification_code" in data_dict:
-        user_dict = tk.get_action("user_show")(context.copy(), {"id": user_id})
+        code = data_dict['email_verification_code']
+        data_dict = tk.get_action("user_show")(context.copy(), {"id": user_id})
         plugin_extras = _init_plugin_extras(user_obj.plugin_extras)
-        plugin_extras[NAMESPACE]['code'] = data_dict["email_verification_code"]
-        user_dict["plugin_extras"] = plugin_extras
-        
-        log.debug(user_dict)
+        plugin_extras[NAMESPACE]['code'] = code
+        data_dict["plugin_extras"] = plugin_extras
 
-    return action_func(context, user_dict)
+    return action_func(context, data_dict)
 
 def _send_verification_email(user, code):
     site_name = tk.config.get('ckan.site_title')
