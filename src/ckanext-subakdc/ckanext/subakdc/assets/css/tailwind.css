@@ -1027,14 +1027,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .top-0 {
   top: 0px !important;
 }
-.left-1\/2 {
-  left: 50% !important;
-}
 .left-\[3px\] {
   left: 3px !important;
 }
 .top-\[3px\] {
   top: 3px !important;
+}
+.left-1\/2 {
+  left: 50% !important;
 }
 .-top-\[3px\] {
   top: -3px !important;
@@ -1217,14 +1217,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-4 {
   height: 1rem !important;
 }
-.h-px {
-  height: 1px !important;
-}
 .h-\[46px\] {
   height: 46px !important;
 }
 .h-\[41px\] {
   height: 41px !important;
+}
+.h-px {
+  height: 1px !important;
 }
 .h-10 {
   height: 2.5rem !important;
