@@ -2,6 +2,8 @@ import copy
 import logging
 
 from ckan import model
+import ckan.lib.helpers as h
+from ckan.lib.mailer import MailerException
 import ckan.plugins.toolkit as tk
 
 from ckanext.subakdc.verification import NAMESPACE
@@ -25,10 +27,9 @@ def user_create(action_func, context, data_dict):
     if not context.get('defer_commit'):
         user_model = context.get('model', model)
         user_model.Session.commit()
-        
-    user['verification_code'] = plugin_extras[NAMESPACE]['code']
-    
+            
     _send_verification_email(user_obj, plugin_extras[NAMESPACE]['code'])
+    
     return user
 
 @tk.chained_action
@@ -53,10 +54,14 @@ def _send_verification_email(user, code):
     site_name = tk.config.get('ckan.site_title')
     verify_link = tk.url_for("verification.email_verification", code=code, _external=True)
     body = tk.render('emails/verify_user.txt', {"site_name": site_name, "user_name": user.name, "verify_link": verify_link})
-    tk.mail_recipient(user.name, 
-                      user.email, 
-                      subject=f"Verify your email for {site_name}",
-                      body=body)
+    try:
+        tk.mail_recipient(user.name, 
+                        user.email, 
+                        subject=f"Verify your email for {site_name}",
+                        body=body)
+        h.flash_notice(f"Please follow the confirmation link sent to your email address ({user.email}) to fully activate your account")
+    except MailerException:
+        h.flash_error(f"We could not send a confirmation link to your email address to activate your account. Please get in touch with the {site_name} team to resolve this issue")
 
 def _get_user_obj(context):
     if 'user_obj' in context:
