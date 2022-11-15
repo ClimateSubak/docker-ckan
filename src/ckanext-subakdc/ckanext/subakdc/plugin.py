@@ -5,6 +5,7 @@ import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 
 import ckanext.subakdc.oauth.blueprint as oauth
+import ckanext.subakdc.custom_pages.blueprint as custom_pages
 from ckanext.subakdc.verification import actions, auth
 import ckanext.subakdc.verification.blueprint as verification
 from ckanext.subakdc.verification.helpers import user_unverified
@@ -103,7 +104,7 @@ class SubakdcPlugin(p.SingletonPlugin):
 
     # ------- IBlueprint method implementations ------- #
     def get_blueprint(self):
-        return verification.get_blueprints() + oauth.get_blueprints() + voting.get_blueprints()
+        return verification.get_blueprints() + oauth.get_blueprints() + custom_pages.get_blueprints() + voting.get_blueprints()
 
     # ------- IClick method implementations ------- #
     def get_commands(self):
