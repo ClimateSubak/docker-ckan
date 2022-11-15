@@ -8,7 +8,7 @@
       <div class="ml-4 mr-auto">
         {% block header_debug %} 
         {% if g.debug and not g.debug_supress_header %}
-        <div class="absolute z-10 -top-7 debug">Controller : {{ c.controller }} | Action : {{ c.action }}</div>
+        <div class="absolute z-10 pt-px -top-3 left-4 debug">Controller : {{ c.controller }} | Action : {{ c.action }}</div>
         {% endif %} 
         {% endblock %}
 
