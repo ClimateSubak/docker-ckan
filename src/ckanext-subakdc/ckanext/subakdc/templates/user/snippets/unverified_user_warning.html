@@ -7,7 +7,7 @@
         
       </div>
       <div>
-        <p class="m-0">Before you can upload dataset(s), please follow the confirmation link sent to your email address ({{c.userobj.email}}) to fully activate your account.</p>
+        <p class="m-0">Before you can upload dataset(s), please follow the confirmation link sent to your email address ({{c.userobj.email}}) to fully activate your account. <a href="{{ h.url_for('verification.resend_email_verification') }}">Resend confirmation email</a></p>
       </div>
     </div>
   </div>

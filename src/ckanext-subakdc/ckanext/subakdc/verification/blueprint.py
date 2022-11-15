@@ -4,6 +4,10 @@ from flask import Blueprint
 import ckan.lib.helpers as h
 import ckan.plugins.toolkit as tk
 
+from ckanext.subakdc.verification import NAMESPACE
+from ckanext.subakdc.verification.helpers import user_unverified
+from ckanext.subakdc.verification.utils import send_verification_email
+
 log = logging.getLogger(__name__)
 
 # Create Blueprint for plugin
@@ -24,10 +28,27 @@ def verification_view(code=None):
     h.flash_success("Your email address was successfully verified")
     return tk.redirect_to("dashboard.index")
 
+def resend_verification_view():
+    if not tk.g.userobj:
+        raise tk.NotAuthorized()
+    
+    if not user_unverified():
+        raise tk.NotAuthorized()
+    else:
+        code = tk.g.userobj.plugin_extras[NAMESPACE]["code"]
+        send_verification_email(tk.g.userobj, code)
+        return tk.redirect_to("dashboard.index")
+
 verification_blueprint.add_url_rule(
     "/auth/email-verification/<string:code>",
     "email_verification",
     verification_view,
+)
+
+verification_blueprint.add_url_rule(
+    "/auth/resend-email-verification",
+    "resend_email_verification",
+    resend_verification_view,
 )
 
 def get_blueprints():
