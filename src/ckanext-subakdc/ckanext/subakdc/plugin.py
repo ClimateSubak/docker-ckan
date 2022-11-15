@@ -4,9 +4,10 @@ from urllib.parse import urlparse
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 
+import ckanext.subakdc.oauth.blueprint as oauth
 from ckanext.subakdc.verification import actions, auth
 import ckanext.subakdc.verification.blueprint as verification
-import ckanext.subakdc.oauth.blueprint as oauth
+from ckanext.subakdc.verification.helpers import user_unverified
 from ckanext.subakdc.voting.cli import get_commands
 import ckanext.subakdc.voting.blueprint as voting
 from ckanext.subakdc.voting.helpers import (
@@ -125,4 +126,5 @@ class SubakdcPlugin(p.SingletonPlugin):
             "get_subak_coop_orgs": get_subak_coop_orgs,
             "user_has_upvoted_dataset": user_has_upvoted_dataset,
             "user_has_downvoted_dataset": user_has_downvoted_dataset,
+            "user_unverified": user_unverified,
         }

@@ -1217,9 +1217,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-4 {
   height: 1rem !important;
 }
-.h-16 {
-  height: 4rem !important;
-}
 .h-px {
   height: 1px !important;
 }
@@ -1234,6 +1231,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-7 {
   height: 1.75rem !important;
+}
+.h-16 {
+  height: 4rem !important;
 }
 .max-h-5 {
   max-height: 1.25rem !important;
@@ -1277,9 +1277,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-4 {
   width: 1rem !important;
 }
-.w-16 {
-  width: 4rem !important;
-}
 .w-\[191px\] {
   width: 191px !important;
 }
@@ -1296,6 +1293,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-7 {
   width: 1.75rem !important;
+}
+.w-16 {
+  width: 4rem !important;
 }
 .min-w-\[1\.5em\] {
   min-width: 1.5em !important;
@@ -1542,10 +1542,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-border-opacity: 1 !important;
   border-color: rgb(255 255 255 / var(--tw-border-opacity)) !important;
 }
-.border-yellow-400 {
-  --tw-border-opacity: 1 !important;
-  border-color: rgb(250 204 21 / var(--tw-border-opacity)) !important;
-}
 .border-slate-300 {
   --tw-border-opacity: 1 !important;
   border-color: rgb(203 213 225 / var(--tw-border-opacity)) !important;
@@ -1557,6 +1553,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-slate-100 {
   --tw-border-opacity: 1 !important;
   border-color: rgb(241 245 249 / var(--tw-border-opacity)) !important;
+}
+.border-yellow-400 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(250 204 21 / var(--tw-border-opacity)) !important;
 }
 .border-l-subak-burnt-copper {
   --tw-border-opacity: 1 !important;
@@ -1996,13 +1996,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1 !important;
   color: rgb(185 28 28 / var(--tw-text-opacity)) !important;
 }
-.text-yellow-400 {
-  --tw-text-opacity: 1 !important;
-  color: rgb(250 204 21 / var(--tw-text-opacity)) !important;
-}
 .text-subak-sky-blue {
   --tw-text-opacity: 1 !important;
   color: rgb(59 200 236 / var(--tw-text-opacity)) !important;
+}
+.text-yellow-400 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(250 204 21 / var(--tw-text-opacity)) !important;
 }
 .underline {
   -webkit-text-decoration-line: underline !important;
