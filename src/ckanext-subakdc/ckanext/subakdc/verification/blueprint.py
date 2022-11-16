@@ -16,6 +16,7 @@ verification_blueprint = Blueprint("verification", __name__)
 def verification_view(code=None):
     # If user not logged in, send to login first
     if not tk.g.user:
+        h.flash_notice("Please login to complete the email verification process")
         return tk.redirect_to("user.login", came_from=tk.url_for("verification.email_verification", code=code))
     
     stored_code = tk.g.userobj.plugin_extras['verification']['code']
