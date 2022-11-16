@@ -1,0 +1,18 @@
+<div class="p-6 mb-4 border rounded-md border-subak-deep-ocean">
+    <div class="flex flex-col items-center gap-4 md:items-start md:flex-row">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-subak-deep-ocean">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+        </svg>
+      </div>
+      <div>
+        <p class="mt-0">Before you can upload your dataset(s), you first need to be a member of an organisation registered with the Data Catalogue. If your organisation is already listed <a href="{{ h.url_for('organization.index') }}">here</a>, you should reach out to your organisation's administrator so they can add you as a member. If you don't know who your administator is, please <a href="mailto:datacooperative@subak.org">email us</a> and we will reach out to them on your behalf.</p>
+
+        <p class="mt-0">To register a <strong>new organisation</strong> on the Data Catalogue and begin uploading your datasets, start here:</p>
+        <a class="inline-block px-3 py-2 my-2 text-white no-underline bg-opacity-100 rounded bg-subak-deep-ocean hover:bg-opacity-80 font-default whitespace-nowrap" href="{{ h.url_for('organization.new') }}">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="relative inline w-6 h-6 -top-px">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+          </svg> Create a new organisation</a>
+      </div>
+    </div>
+  </div>

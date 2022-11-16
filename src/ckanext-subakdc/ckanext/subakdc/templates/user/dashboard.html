@@ -20,5 +20,14 @@
   </ul>
 {% endblock %}
 
+{% block primary_content_inner %}
+  {% if h.user_unverified() %}
+    {% snippet "user/snippets/unverified_user_warning.html" %}
+  {% elif not h.organizations_available() %}
+    {% snippet "user/snippets/no_orgs_user_notice.html" %}
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+
 
 

@@ -1,0 +1,61 @@
+{% extends "page.html" %}
+
+{% block title %}{{ _('Submit your dataset(s)') }} - {{ super() }}{% endblock %}
+
+{% block breadcrumb_content %}
+    <li>{{ h.nav_link(_('Submit your dataset(s)'), named_route='custom_pages.submit_dataset') }}</li>
+{% endblock %}
+
+{% block secondary %}{% endblock %}
+
+{% block primary %}
+    <div class="prose prose-headings:font-heading font-body max-w-none">
+        <section class="module-content">
+            <h1 class="page-heading">Submit a dataset</h1>
+            <div class="ckanext-pages-content">
+                <div class="flex flex-col items-center gap-4 md:flex-row">
+                    <img class="flex-1" src="/images/earth-Hristina-Hristova.png" alt="Earth illustration" />
+                    <div class="w-full md:w-3/4">
+                        <p>We are thrilled you want to join us in improving access to climate data.</p>
+                        <p>We have been carefully curating climate datasets at Subak over the last year or so. Now we are welcoming everyone to contribute.<p>
+
+                        <p>We also offer a concierge service to help find the climate data you are looking for, if it exists, and to make it available within our data catalogue. If you can't find the climate data you want, please tell us via our <a href="{{ h.url_for('custom_pages.request_dataset')}}">data request form</a>. 
+                    </div>
+                </div>
+
+                {% if c.userobj %}
+                    {% if h.user_unverified() %}
+                        {% snippet "user/snippets/unverified_user_warning.html" %}
+                    {% elif not h.organizations_available() %}
+                        {% snippet "user/snippets/no_orgs_user_notice.html" %}
+                    {% endif %}
+                {% else %}
+                <div class="p-6 mb-4 border rounded-md border-subak-deep-ocean">
+                    <div class="flex flex-col items-center gap-4 md:flex-row">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-subak-deep-ocean">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p>Please <a href="{{ h.url_for('user.login') }}">login</a> or <a href="{{ h.url_for('user.register') }}">register for an account</a> to start adding your datasets into the Subak Data Catalogue</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <h2>How can we help?</h2>
+                
+                <ul>
+                    <li>If your data doesn't already have a home online, we can help you publish it somewhere.</li>
+                    <li>If you would like to see data that is behind a paywall appear in the Data Catalogue, we can't of course help get it in front of the paywall, but we can catalogue it and point the community to where the data is so they can find it more easily.</li>
+                    <li>If you're not sure your data is the right fit - just ask.</li>
+                    <li>If your data is very large - then we can point you to places that are able to host that for you.</li>
+                    <li>If you don't know how to license your data - we can help</li>
+                </ul>
+
+                <p>Please get in touch with any issues at <a href="mailto:datacooperative@subak.org">datacooperative@subak.org</a></p>
+            </div>
+        </section>
+    </div>
+{% endblock %}
