@@ -8,13 +8,13 @@ from ckanext.subakdc.voting.model import UserDatasetVotes
 voting = Blueprint("voting", __name__)
 
 
-def view(pkg_id, vote_type):
+def view(pkg_name, vote_type):
     # Get the required API actions
     show_package = tk.get_action("package_show")
     patch_package = tk.get_action("package_patch")
 
     # Get the full package
-    pkg = show_package({"ignore_auth": True, "user": None}, {"id": pkg_id})
+    pkg = show_package({"ignore_auth": True, "user": None}, {"id": pkg_name})
 
     # Only consider packages that are datasets and only if user is logged in
     if pkg.get("type", None) == "dataset" and tk.g.userobj is not None:
@@ -22,7 +22,7 @@ def view(pkg_id, vote_type):
         # Get current vote count for package
         n_votes = (
             int(pkg["subak_votes"])
-            if "subak_votes" in pkg and pkg["subak_votes"] is not None
+            if "subak_votes" in pkg and pkg["subak_votes"] is not None and pkg["subak_votes"] != ''
             else 0
         )
 
@@ -51,11 +51,11 @@ def view(pkg_id, vote_type):
         )
 
     size = request.args.get("size", default="small")
-    return render_template("snippets/voting.html", pkg_id=pkg_id, size=size)
+    return render_template("snippets/voting.html", pkg=pkg, size=size)
 
 
 voting.add_url_rule(
-    "/dataset/<string:pkg_id>/vote/<string:vote_type>",
+    "/dataset/<string:pkg_name>/vote/<string:vote_type>",
     "dataset_vote",
     view,
     methods=["POST"],

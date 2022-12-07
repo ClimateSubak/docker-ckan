@@ -5,18 +5,20 @@
         <a href="{{ h.url_for('%s.read' % package.type, id=package.name) }}">
         {{ title }}
         </a>
+        {% if c.userobj %}
         <div class="whitespace-nowrap">
             <span role="button"
             tabindex="0"
             title="Up/Down voting" 
             data-target="popover" 
             data-content="<p>By up/down voting, you influence the search results within the data catalogue. This will help other users to more easily find great datasets and de-rank poor datasets.</p>" 
-            data-placement="top"
+            data-placement="left"
             data-html="true"
             data-trigger="hover">
-                {% snippet "snippets/voting.html", pkg_id=package.id %}
+                {% snippet "snippets/voting.html", pkg=package %}
             </span>
         </div>
+        {% endif %}
     </div>
 {% endblock %}
 

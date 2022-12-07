@@ -69,6 +69,9 @@ harvest.fetch:
 harvest.run:
 	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan harvester run"
 
+harvest.purge:
+	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan harvester purge-queues"
+
 xloader.submit:
 	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan xloader submit all"
 
