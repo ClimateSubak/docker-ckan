@@ -22,7 +22,7 @@ def view(pkg_name, vote_type):
         # Get current vote count for package
         n_votes = (
             int(pkg["subak_votes"])
-            if "subak_votes" in pkg and pkg["subak_votes"] is not None
+            if "subak_votes" in pkg and pkg["subak_votes"] is not None and pkg["subak_votes"] != ''
             else 0
         )
 

@@ -1465,6 +1465,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   overflow-wrap: normal !important;
   word-break: normal !important;
 }
+.break-all {
+  word-break: break-all !important;
+}
 .rounded {
   border-radius: 0.25rem !important;
 }

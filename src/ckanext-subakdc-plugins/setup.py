@@ -70,6 +70,7 @@ setup(
         [ckan.plugins]
         asdi_harvester=ckanext.harvesters:ASDIHarvester
         freshness=ckanext.freshness.plugin:FreshnessPlugin
+        figshare_harvester=ckanext.harvesters:FigshareHarvester
         opendatasoft_harvester=ckanext.harvesters:OpendatasoftHarvester
         qa=ckanext.qa.plugin:QAPlugin
         schema=ckanext.schema.plugin:SchemaPlugin
