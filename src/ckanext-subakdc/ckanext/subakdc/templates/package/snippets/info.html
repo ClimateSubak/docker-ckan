@@ -38,6 +38,7 @@
         {% endif %}
     {% endif %}
     
+    {% if c.userobj %}
     <div class="nums">
         <dl class="w-full">
             <dt><span role="button"
@@ -53,9 +54,10 @@
                   </svg>
                 <span class="underline decoration-dashed">Up/Down vote this dataset</span>
             </span><dt>
-            <dd>{% snippet "snippets/voting.html", pkg_id=pkg.id, size="large" %}</dd>
+            <dd>{% snippet "snippets/voting.html", pkg=pkg, size="large" %}</dd>
         </dl>
     </div>
+    {% endif %}
   
   {{ super() }}
 {% endblock %}

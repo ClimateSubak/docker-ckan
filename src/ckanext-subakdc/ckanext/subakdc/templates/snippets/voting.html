@@ -1,8 +1,8 @@
 {% if c.userobj %}
 <div id="voting" class="relative">
-    <a class="no-underline {% if h.user_has_upvoted_dataset(pkg_id) %}text-green-700{% elif h.user_has_downvoted_dataset(pkg_id) %}text-slate-300{% else %}text-slate-600{% endif %}" 
+    <a class="no-underline {% if h.user_has_upvoted_dataset(pkg.id) %}text-green-700{% elif h.user_has_downvoted_dataset(pkg.id) %}text-slate-300{% else %}text-slate-600{% endif %}" 
         href="#"
-        hx-post="{{ h.url_for('voting.dataset_vote', pkg_id=pkg_id, vote_type='up', size=size) }}"
+        hx-post="{{ h.url_for('voting.dataset_vote', pkg_name=pkg.name, vote_type='up', size=size) }}"
         hx-target="closest #voting"
         hx-indicator="closest #voting"
         hx-swap="outerHTML">
@@ -10,9 +10,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
         </svg>
     </a>
-    <a class="no-underline {% if h.user_has_downvoted_dataset(pkg_id) %}text-red-700{% elif h.user_has_upvoted_dataset(pkg_id) %}text-slate-300{% else %}text-slate-600{% endif %}" 
+    <a class="no-underline {% if h.user_has_downvoted_dataset(pkg.id) %}text-red-700{% elif h.user_has_upvoted_dataset(pkg.id) %}text-slate-300{% else %}text-slate-600{% endif %}" 
         href="#"
-        hx-post="{{ h.url_for('voting.dataset_vote', pkg_id=pkg_id, vote_type='down', size=size) }}"
+        hx-post="{{ h.url_for('voting.dataset_vote', pkg_name=pkg.name, vote_type='down', size=size) }}"
         hx-target="closest #voting"
         hx-indicator="closest #voting"
         hx-swap="outerHTML">
