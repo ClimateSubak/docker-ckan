@@ -9,7 +9,7 @@
             </svg> Temporal information
         </h3>
 
-        {% if not('subak_temporal_start' in pkg_keys or 'subak_temporal_end' in pkg_keys or 'subak_temporal_resolution' in pkg_keys) %}
+        {% if ('subak_temporal_start' not in pkg_keys or pkg_dict.subak_temporal_start == '') and ('subak_temporal_end' not in pkg_keys or pkg_dict.subak_temporal_end == '') and ('subak_temporal_resolution' not in pkg_keys or pkg_dict.subak_temporal_resolution == '') %}
         None
         {% else %}
         {% if pkg_dict.subak_temporal_start %}

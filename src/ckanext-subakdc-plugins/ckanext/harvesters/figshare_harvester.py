@@ -91,6 +91,9 @@ class FigshareHarvester(HarvesterBase):
             # API docs: https://docs.figshare.com/#articles_search
             url = f"{self.base_url}/articles/search"
             r = requests.post(url, json={"search_for": search_query, "item_type": 3, "page_size": page_size, "page": n})
+            if r.status_code == 400:
+                break
+            
             datasets = r.json()
 
             log.debug(f"query={search_query}")
@@ -199,6 +202,9 @@ class FigshareHarvester(HarvesterBase):
 
         if "figshare_url" in dataset.keys():
             content.update({"url": dataset["figshare_url"]})
+            
+        if "citation" in dataset.keys():
+            content.update({"author": dataset["citation"]})
 
         content.update({"id": dataset['doi']})
 
@@ -220,7 +226,6 @@ class FigshareHarvester(HarvesterBase):
                     resource.update(
                         {"last_modified": re.split(r"\.|\+", dataset["modified_date"])[0][0:-1]})
             
-                    
                 resources.append(resource)
 
             content.update({"resources": resources})
