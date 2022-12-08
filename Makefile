@@ -81,8 +81,11 @@ qa.run:
 qa.init:
 	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan report initdb"
 
-search.reindex:
+search.buildindex:
 	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan search-index rebuild"
+
+search.refresh:
+	docker exec $(CKAN_CONTAINER) /bin/bash -c "ckan search-index rebuild -r"
 
 db.backup:
 	./backup_db.sh $(ENVIRONMENT) db ckan && \

@@ -132,7 +132,7 @@ attribute with the form `ckan-X.Y` -->
     <field name="license_id" type="string" indexed="true" stored="true" />
     <field name="tags" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="groups" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="organization" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="organization" type="text_general" indexed="true" stored="true" multiValued="false"/>
 
     <field name="capacity" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="permission_labels" type="string" indexed="true" stored="false" multiValued="true"/>
