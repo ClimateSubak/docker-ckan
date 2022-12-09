@@ -27,6 +27,17 @@ class SearchPlugin(p.SingletonPlugin):
         data_dict["subak_countries"] = json.loads(
             data_dict.get("subak_countries", "[]")
         )
+        
+        # Set the organization to use org title rather than org name in index 
+        # for better searchability
+        try:
+            validated_pkg_dict = json.loads(data_dict['validated_data_dict'])
+            org_title = validated_pkg_dict['organization']['title']
+            data_dict['organization'] = org_title
+        except:
+            log.debug('Could not determine org title in before_index')
+            pass
+        
         return data_dict
 
     def before_search(self, search_params):
