@@ -69,6 +69,7 @@ class EuropaHarvester(HarvesterBase):
         more_datasets = True
         package_ids = []
         page_size = 500
+        max_datasets = 10000
         n = 0
         while more_datasets:
             # Search datasets on data.europa.eu
@@ -88,8 +89,8 @@ class EuropaHarvester(HarvesterBase):
                 # package_ids.append(ds["id"])
                 package_ids.append(ds["id"])
 
-            # more_datasets = len(datasets) == page_size
-            more_datasets = False
+            more_datasets = len(datasets) == page_size and len(package_ids) < max_datasets
+            # more_datasets = False
 
             n += 1
 
@@ -141,7 +142,7 @@ class EuropaHarvester(HarvesterBase):
         except KeyError:
             try:
                 title = dataset["title"][list(dataset["title"].keys())[0]]
-            except KeyError:
+            except (KeyError, IndexError):
                 title = ""
         
         content.update({"title": title})
@@ -160,7 +161,7 @@ class EuropaHarvester(HarvesterBase):
         except KeyError:
             try:
                 description = dataset["description"][list(dataset["description"].keys())[0]]
-            except KeyError:
+            except (KeyError, IndexError):
                 description = ""
         
         description = md(description)
@@ -269,7 +270,7 @@ class EuropaHarvester(HarvesterBase):
 
         content.update({"resources": resources})
 
-        print(content)
+        # print(content)
         # Save the fetched contents in the HarvestObject
         harvest_object.content = json.dumps(content)
         harvest_object.save()
