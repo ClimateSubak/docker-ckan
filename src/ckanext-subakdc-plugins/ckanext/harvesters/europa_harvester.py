@@ -1,5 +1,6 @@
 import logging
 import json
+from os import path
 import re
 import requests
 from markdownify import markdownify as md
@@ -12,38 +13,19 @@ from ckanext.harvest.harvesters import HarvesterBase
 
 log = logging.getLogger(__name__)
 
-def is_acceptable_dataset(dataset):
-    """
-    Filters out any datasets that:
-        - have no files 
-        - have only a single docx file
-    """
-    if 'files' not in dataset or len(dataset['files']) == 0:
-        return False
-
-    if len(dataset['files']) == 1:
-        file_types = ['doc', 'docx']
-        if any(map(lambda x: dataset['files'][0]['name'].lower().endswith(x), file_types)):
-            return False
+def get_countries():
+    with open(path.join(path.dirname(__file__), "..", "countries-iso-3166.json")) as f:
+        countries = json.load(f)
     
-    return True
-
-def format_package_title(title):
-    """
-    Removes prefixes that look like Table_1_ or DataSheet1_ etc
-    Removes suffixes that look like .docx or .XLSX etc
-    """
-    title = re.sub(r'.*_(.*)', r'\1', title)
-    title = re.sub(r'(.*)\..*', r'\1', title)
-    return title
+    return list(map(lambda c: {"value": c["alpha-2"], "label": c["name"]}, countries))
     
 
 class EuropaHarvester(HarvesterBase):
     """
-    A Harvester for datasets hosted on Figshare
+    A Harvester for datasets hosted on data.europa.eu
     """
     config = None
-    base_url = "https://api.figshare.com/v2"
+    base_url = "https://data.europa.eu/api/hub/search"
 
     def _set_config(self, config_str):
         if config_str:
@@ -58,9 +40,9 @@ class EuropaHarvester(HarvesterBase):
 
     def info(self):
         return {
-            "name": "figshare",
-            "title": "figshare",
-            "description": "Harvests remote figshare datasets",
+            "name": "data.europa.eu",
+            "title": "data.europa.eu",
+            "description": "Harvests remote data.europa.eu datasets",
             "form_config_interface": "Text",
         }
 
@@ -74,37 +56,40 @@ class EuropaHarvester(HarvesterBase):
         return package_dict
 
     def gather_stage(self, harvest_job):
-        log.debug("FigshareHarvester gather_stage")
+        log.debug("EuropaHarvester gather_stage")
 
         self._set_config(harvest_job.source.config)
 
         search_query = self.config.get(
-            "figshare_search_query", "climate"
+            "europa_search_query", "climate"
         )
+        
+        log.debug(f"query={search_query}")
 
         more_datasets = True
         package_ids = []
         page_size = 500
-        n = 1
+        n = 0
         while more_datasets:
-            # Search datasets on Figshare
-            # API docs: https://docs.figshare.com/#articles_search
-            url = f"{self.base_url}/articles/search"
-            r = requests.post(url, json={"search_for": search_query, "item_type": 3, "page_size": page_size, "page": n})
+            # Search datasets on data.europa.eu
+            # API docs: https://data.europa.eu/api/hub/search/#tag/Search/operation/searchGet
+            url = f"{self.base_url}/search?q={search_query}&limit={page_size}&page={n}&includes=id"
+            r = requests.get(url)
             if r.status_code == 400:
                 break
             
-            datasets = r.json()
+            res = r.json()
+            datasets = res["result"]["results"]
 
-            log.debug(f"query={search_query}")
+            log.debug(f"page={n}")
             log.debug(f"n datasets={len(datasets)}")
 
             for ds in datasets:
                 # package_ids.append(ds["id"])
-                package_ids.append(ds["url"])
+                package_ids.append(ds["id"])
 
-            more_datasets = len(datasets) == page_size
-            # more_datasets = False
+            # more_datasets = len(datasets) == page_size
+            more_datasets = False
 
             n += 1
 
@@ -130,106 +115,161 @@ class EuropaHarvester(HarvesterBase):
             self._save_gather_error(e.message, harvest_job)
 
     def fetch_stage(self, harvest_object):
-        log.debug("FigshareHarvester fetch_stage")
+        log.debug("EuropaHarvester fetch_stage")
 
         self._set_config(harvest_object.job.source.config)
 
-        fetch_url = harvest_object.guid
         dataset = {}
-
         try:
-            r = requests.get(fetch_url)
-            dataset = r.json()
+            url = f"{self.base_url}/datasets/{harvest_object.guid}"
+            res = requests.get(url).json()
+            dataset = res["result"]
 
         except Exception as e:
-            log.exception(f"Could not load URL: {fetch_url}")
+            log.exception(f"Could not load URL: {url}")
             return self._save_object_error(
-                f"Could not load URL: {fetch_url}", harvest_object
+                f"Could not load URL: {url}", harvest_object
             )
-        
-        if not is_acceptable_dataset(dataset):
-            return 'unchanged'
 
         content = {}
+        content.update({ "id": f"europa-{harvest_object.guid}" })
 
-        # Transform Figshare schema to CKAN schema
-        title = ""
-        if "title" in dataset.keys():
-            name = dataset["title"]
-            content.update({"name": name})
+        # Transform data.europa.eu schema to CKAN schema
+        # Title
+        try:
+            title = dataset["title"]["en"]
+        except KeyError:
+            try:
+                title = dataset["title"][list(dataset["title"].keys())[0]]
+            except KeyError:
+                title = ""
+        
+        content.update({"title": title})
+
+        # Publisher
+        try:
+            publisher = dataset["catalog"]["publisher"]["name"]
+            content.update({"owner_org": publisher})
+            content.update({"author": publisher})
+        except KeyError:
+            pass
+
+        # Description
+        try:
+            description = dataset["description"]["en"]
+        except KeyError:
+            try:
+                description = dataset["description"][list(dataset["description"].keys())[0]]
+            except KeyError:
+                description = ""
+        
+        description = md(description)
+
+        # If empty description just use title otherwise CKAN will not
+        # import as notes field mustn't be empty
+        if len(description.strip()) == 0:
+            description = title
+
+        content.update({"notes": description})
+
+        # License
+        try:
+            license = dataset["license"]["name"]
+            content.update({"license_id": license})
+        except KeyError:
+            pass
+
+        # Tags
+        tags = []
+        try:
+            keywords = dataset["keywords"]
+            if keywords is not None:
+                for kw in keywords:
+                    if kw["language"] == "en":
+                        tags.append(kw["label"])
+        except KeyError:
+            pass
+                    
+        try:
+            categories = dataset["categories"]
+            if categories is not None:
+                for category in categories:
+                    tags = tags + [tag.strip() for tag in category["label"]["en"].split(",")]
+        except KeyError:
+            pass
+        
+        # empty tag to bypass validation error on no tags
+        if len(tags) == 0:
+            tags = ["no-tag"]
             
-            title = format_package_title(name)
-            content.update({"title": title})
-
-        # There is no consistent way to identify the publishing org from the API response
-        # Sometimes it can be listed in the author field, a custom field or extracted from
-        # the figshare_url but not easily discernable without human discretion
-        # if (
-        #     "creators" in dataset.keys()
-        #     and len(dataset["creators"]) > 0
-        #     and "affiliation" in dataset["creators"][0]
-        # ):
-        #     publisher = dataset["creators"][0]["affiliation"]
-        #     content.update({"owner_org": publisher})
-        #     content.update({"author": publisher})
-
-        if "description" in dataset.keys():
-            description = md(dataset["description"])
-
-            # If empty description just use title otherwise CKAN will not
-            # import as notes field mustn't be empty
-            if len(description.strip()) == 0:
-                description = title
-
-            content.update({"notes": description})
-        else:
-            content.update({"notes": title})
-
-        if "license" in dataset.keys():
-            content.update({"license_id": dataset["license"]["name"]})
-
-        if "tags" in dataset.keys():
-            tags = [{"name": tag.strip()} for tag in dataset["tags"]]
-            content.update({"tags": tags})
-
-        if "created_date" in dataset.keys():
-            # Ignore milliseconds and timezone adjustments
-            content.update({"metadata_created": re.split(r"\.|\+", dataset["created_date"])[0]})
-
-        if "modified_date" in dataset.keys():
-            # Ignore milliseconds and timezone adjustments
-            content.update({"metadata_modified": re.split(r"\.|\+", dataset["modified_date"])[0]})
-
-        if "figshare_url" in dataset.keys():
-            content.update({"url": dataset["figshare_url"]})
+        tags = [{"name": tag.strip()} for tag in set(tags)]
+        content.update({"tags": tags})
             
-        if "citation" in dataset.keys():
-            content.update({"author": dataset["citation"]})
+        # Creation date
+        try:
+            # Ignore milliseconds and timezone adjustments
+            created_at = re.split(r"\.|\+", dataset["catalog_record"]["issued"])[0]
+            content.update({"metadata_created": created_at})
+        except KeyError:
+            pass
 
-        content.update({"id": dataset['doi']})
+        # Last modified
+        try:
+            # Ignore milliseconds and timezone adjustments
+            modified_at = re.split(r"\.|\+", dataset["catalog_record"]["modified"])[0]
+            content.update({"metadata_modified": modified_at})
+        except KeyError:
+            pass
 
-        if "files" in dataset and len(dataset["files"]) > 0:
-            resources = []
-            for f in dataset['files']:
-                resource = {}
-                resource.update(
-                    {
-                        "url": f["download_url"],
-                        "format": re.split(r"\.", f["name"])[-1],
-                    }
-                )
+        # Country
+        try:
+            countries = get_countries()
+            country_codes = [c['value'] for c in countries]
+            c = dataset['country']["id"].upper()
+            if c in country_codes:
+                content.update({ "subak_countries": [c] })
+        except KeyError:
+            pass
 
-                resource.update({"name": f["name"]})
+        # Source URL
+        try:
+            source = dataset["resource"]
+            content.update({"url": source})
+        except KeyError:
+            pass
 
-                if "modified_date" in dataset.keys():
-                    # Ignore milliseconds and timezone adjustments
+        # Resources
+        resources = []
+        if "distributions" in dataset:
+            for f in dataset['distributions']:
+                try:
+                    resource = {}
                     resource.update(
-                        {"last_modified": re.split(r"\.|\+", dataset["modified_date"])[0][0:-1]})
-            
-                resources.append(resource)
+                        {
+                            "url": f["access_url"],
+                            "format": f["format"]["label"]
+                        }
+                    )
+                    
+                    name = content.get("title", "")
+                    if "description" in f:
+                        name = f["description"]["en"]
+                    elif "title" in f:
+                        name = f["title"]["en"]
+                        
+                    resource.update({"name": name})
 
-            content.update({"resources": resources})
+                    # Ignore milliseconds and timezone adjustments and drop Z character
+                    modified_at = re.split(r"\.|\+", dataset["catalog_record"]["modified"])[0][0:-1]
+                    resource.update({"last_modified": modified_at})
+                
+                    resources.append(resource)
+                except KeyError:
+                    pass
 
+        content.update({"resources": resources})
+
+        print(content)
         # Save the fetched contents in the HarvestObject
         harvest_object.content = json.dumps(content)
         harvest_object.save()
@@ -237,7 +277,7 @@ class EuropaHarvester(HarvesterBase):
         return True
 
     def import_stage(self, harvest_object):
-        log.debug("FigshareHarvester import_stage")
+        log.debug("EuropaHarvester import_stage")
 
         if not harvest_object:
             log.error("No harvest object received")
