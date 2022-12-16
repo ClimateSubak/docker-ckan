@@ -139,10 +139,10 @@ class EuropaHarvester(HarvesterBase):
         # Title
         try:
             title = dataset["title"]["en"]
-        except KeyError:
+        except:
             try:
                 title = dataset["title"][list(dataset["title"].keys())[0]]
-            except (KeyError, IndexError):
+            except:
                 title = ""
         
         content.update({"title": title})
@@ -158,10 +158,10 @@ class EuropaHarvester(HarvesterBase):
         # Description
         try:
             description = dataset["description"]["en"]
-        except KeyError:
+        except:
             try:
                 description = dataset["description"][list(dataset["description"].keys())[0]]
-            except (KeyError, IndexError):
+            except:
                 description = ""
         
         description = md(description)
