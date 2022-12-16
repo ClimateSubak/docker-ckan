@@ -26,8 +26,8 @@
         "uk-solar-pv-dataset",
         "ids",
         "global-power-plant-database",
-        "statistics-of-coal-power-plants",
-        "coal-power-plants-co2-emission"
+        "global-gas-plant-tracker",
+        "global-wind-power-tracker"
     ],
     "highlighted_vis": {
         "media": "<div class='flourish-embed' data-src='story/1176231'><script src='https://public.flourish.studio/resources/embed.js'></script></div>",
