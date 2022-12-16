@@ -69,6 +69,7 @@ setup(
     entry_points="""
         [ckan.plugins]
         asdi_harvester=ckanext.harvesters:ASDIHarvester
+        europa_harvester=ckanext.harvesters:EuropaHarvester
         freshness=ckanext.freshness.plugin:FreshnessPlugin
         figshare_harvester=ckanext.harvesters:FigshareHarvester
         opendatasoft_harvester=ckanext.harvesters:OpendatasoftHarvester
