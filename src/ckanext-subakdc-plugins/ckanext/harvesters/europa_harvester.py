@@ -205,22 +205,6 @@ class EuropaHarvester(HarvesterBase):
             
         tags = [{"name": tag.strip()} for tag in set(tags)]
         content.update({"tags": tags})
-            
-        # Creation date
-        try:
-            # Ignore milliseconds and timezone adjustments
-            created_at = re.split(r"\.|\+", dataset["catalog_record"]["issued"])[0]
-            content.update({"metadata_created": created_at})
-        except KeyError:
-            pass
-
-        # Last modified
-        try:
-            # Ignore milliseconds and timezone adjustments
-            modified_at = re.split(r"\.|\+", dataset["catalog_record"]["modified"])[0]
-            content.update({"metadata_modified": modified_at})
-        except KeyError:
-            pass
 
         # Country
         try:
@@ -260,8 +244,8 @@ class EuropaHarvester(HarvesterBase):
                         
                     resource.update({"name": name})
 
-                    # Ignore milliseconds and timezone adjustments and drop Z character
-                    modified_at = re.split(r"\.|\+", dataset["catalog_record"]["modified"])[0][0:-1]
+                    # Drop Z character at the end of the timestamp
+                    modified_at = dataset["catalog_record"]["modified"][:-1]
                     resource.update({"last_modified": modified_at})
                 
                     resources.append(resource)
