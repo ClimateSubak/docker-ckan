@@ -1,5 +1,3 @@
-User-agent: AhrefsBot
-User-agent: AhrefsSiteAudit
 User-agent: adbeat_bot
 User-agent: Alexibot
 User-agent: AppEngine
