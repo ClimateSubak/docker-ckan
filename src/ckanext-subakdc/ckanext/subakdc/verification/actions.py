@@ -5,7 +5,7 @@ from ckan import model
 import ckan.plugins.toolkit as tk
 
 from ckanext.subakdc.verification import NAMESPACE
-from ckanext.subakdc.verification.utils import generate_verification_code, send_verification_email
+from ckanext.subakdc.verification.utils import generate_verification_code, send_verification_email, send_sysadmin_notification_email
 
 log = logging.getLogger(__name__)
 
@@ -27,6 +27,7 @@ def user_create(action_func, context, data_dict):
         user_model.Session.commit()
             
     send_verification_email(user_obj, plugin_extras[NAMESPACE]['code'])
+    send_sysadmin_notification_email(user_obj)
     
     return user
 

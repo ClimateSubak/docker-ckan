@@ -1,0 +1,1 @@
+A new user has signed up at {{ site_name }} with username: {{ user_name }} and email: {{ user_email }}.
