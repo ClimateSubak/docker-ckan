@@ -1,0 +1,56 @@
+{% ckan_extends %}
+
+{% block basic_fields %}
+  {%- if not dataset_type -%}
+    <p>
+    dataset_type not passed to template. your version of CKAN
+    might not be compatible with ckanext-scheming
+    </p>
+  {%- endif -%}
+
+  {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+  
+  <div class="flex flex-col gap-4">
+    <section class="flex gap-4">
+      <div class="flex w-1/4 gap-2">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-subak-deep-ocean">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="mt-0 text-subak-burnt-copper">Upload/link dataset</h3>
+          <p>Blah blah blah<p>
+        </div>
+      </div>
+      <div class="w-3/4 p-4 border rounded-sm shadow-md">
+        {%- for field in schema.resource_fields -%}
+            {%- if field.form_snippet is not none -%}
+            {%- if field.field_name not in data %}
+                {# Set the field default value before rendering but only if
+                it doesn't already exist in data which would mean the form
+                has been submitted. #}
+                {% if field.default_jinja2 %}
+                {% do data.__setitem__(
+                    field.field_name,
+                    h.scheming_render_from_string(field.default_jinja2)) %}
+                {% elif field.default %}
+                {% do data.__setitem__(field.field_name, field.default) %}
+                {% endif %}
+            {% endif -%}
+            {%- snippet 'scheming/snippets/form_field.html',
+                field=field,
+                data=data,
+                errors=errors,
+                licenses=c.licenses,
+                entity_type='dataset',
+                object_type=dataset_type
+            -%}
+            {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </section>
+{% endblock %}
+
+{% block metadata_fields %}
+{% endblock %}

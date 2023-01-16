@@ -1,0 +1,151 @@
+{% ckan_extends %}
+
+{% block basic_fields %}
+  {%- if not dataset_type -%}
+    <p>
+    dataset_type not passed to template. your version of CKAN
+    might not be compatible with ckanext-scheming
+    </p>
+  {%- endif -%}
+
+  {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+  
+  <div class="flex flex-col gap-4">
+    <section class="flex gap-4">
+      <div class="flex w-1/4 gap-2">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-subak-deep-ocean">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="mt-0 text-subak-burnt-copper">Overview</h3>
+          <p>The most important information to help your dataset be found when a user searches our catalogue<p>
+        </div>
+      </div>
+      <div class="w-3/4 p-4 border rounded-sm shadow-md">
+      {%- set fields = ["title", "name", "notes", "subak_primary_taxonomy_category", "subak_secondary_taxonomy_category", "tag_string", "license_id", "url"] -%}
+      {% for field_name in fields %}
+        {%- snippet 'scheming/package/snippets/package_form_field.html',
+        field=h.get_schema_field(schema.dataset_fields, field_name),
+        data=data,
+        errors=errors,
+        dataset_type=dataset_type -%}
+      {%- endfor -%}
+      </div>
+    </section>
+
+    <hr />
+
+    <section class="flex gap-4">
+      <div class="flex w-1/4 gap-2">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-subak-deep-ocean">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="mt-0 text-subak-burnt-copper">Temporal information</h3>
+          <p></p>
+        </div>
+      </div>
+      <div class="w-3/4 p-4 border rounded-sm shadow-md">
+      {%- set fields = ["subak_temporal_start", "subak_temporal_end", "subak_temporal_resolution", "subak_update_frequency"] -%}
+      {% for field_name in fields %}
+        {%- snippet 'scheming/package/snippets/package_form_field.html',
+        field=h.get_schema_field(schema.dataset_fields, field_name),
+        data=data,
+        errors=errors,
+        dataset_type=dataset_type -%}
+      {%- endfor -%}
+      </div>
+    </section>
+
+    <hr />
+
+    <section class="flex gap-4">
+      <div class="flex w-1/4 gap-2">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-subak-deep-ocean">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="mt-0 text-subak-burnt-copper">Spatial information</h3>
+          <p></p>
+        </div>
+      </div>
+      <div class="w-3/4 p-4 border rounded-sm shadow-md">
+      {%- set fields = ["subak_geo_region", "subak_countries", "subak_spatial_resolution"] -%}
+      {% for field_name in fields %}
+        {%- snippet 'scheming/package/snippets/package_form_field.html',
+        field=h.get_schema_field(schema.dataset_fields, field_name),
+        data=data,
+        errors=errors,
+        dataset_type=dataset_type -%}
+      {%- endfor -%}
+      </div>
+    </section>
+
+    <hr />
+
+    <section class="flex gap-4">
+      <div class="flex w-1/4 gap-2">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-subak-deep-ocean">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+          </svg>
+        </div>
+        <div> 
+          <h3 class="mt-0 text-subak-burnt-copper">Publisher information</h3>
+          <p></p>
+        </div>
+      </div>
+      <div class="w-3/4 p-4 border rounded-sm shadow-md">
+        {%- set fields = ["owner_org", "author"] -%}
+        {% for field_name in fields %}
+          {%- snippet 'scheming/package/snippets/package_form_field.html',
+          field=h.get_schema_field(schema.dataset_fields, field_name),
+          data=data,
+          errors=errors,
+          dataset_type=dataset_type -%}
+        {%- endfor -%}
+        </div>
+    </section>
+
+    <hr />
+
+    <section class="flex gap-4">
+      <div class="flex w-1/4 gap-2">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-subak-deep-ocean">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="mt-0 text-subak-burnt-copper">Data sources and applications</h3>
+          <p></p>
+        </div>
+      </div>
+      <div class="w-3/4 p-4 border rounded-sm shadow-md">
+        {%- set fields = ["subak_data_sources", "subak_data_applications"] -%}
+        {% for field_name in fields %}
+          {%- snippet 'scheming/package/snippets/package_form_field.html',
+          field=h.get_schema_field(schema.dataset_fields, field_name),
+          data=data,
+          errors=errors,
+          dataset_type=dataset_type -%}
+        {%- endfor -%}
+        </div>
+    </section>
+  </div>
+
+  <hr />
+
+  {%- if 'resource_fields' not in schema -%}
+    <!-- force controller to skip resource-editing step for this type -->
+    <input type="hidden" name="_ckan_phase" value="" />
+  {%- endif -%}
+
+{% endblock %}
