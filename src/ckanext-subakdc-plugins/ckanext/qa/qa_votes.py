@@ -34,7 +34,7 @@ class QaVotesReport(IQaReport):
     
     @classmethod
     def get_num_votes(cls, pkg):
-        if "subak_votes" in pkg:
+        if "subak_votes" in pkg and pkg["subak_votes"] != '':
             return int(pkg['subak_votes'], 10)
         
         return 0
