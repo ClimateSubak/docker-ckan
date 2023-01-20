@@ -1,0 +1,51 @@
+{#
+Inserts a stepped progress indicator for the new package form. Each stage can
+have one of three states, "uncomplete", "complete" and "active".
+
+stages - A list of states for each of the three stages. Missing stages default
+         to "uncomplete".
+
+Example:
+
+    {% snippet 'package/snippets/stages.html', stages=['active'] %}
+    {% snippet 'package/snippets/stages.html', stages=['complete', 'active'] %}
+    {% snippet 'package/snippets/stages.html', stages=['active', 'complete'] %}
+
+#}
+{% set s1 = stages[0] or 'active' %}
+{% set s2 = stages[1] or 'uncomplete' %}
+
+<div class="relative flex justify-between w-full mx-auto mb-8 md:w-2/3">
+  <div class="absolute flex w-full px-4 top-4">
+    <div class="w-1/2 border-b-2 {% if s1 != 'complete' %}border-gray-100{% else %}border-subak-meadow-teal{% endif %}"></div>
+    <div class="w-1/2 border-b-2 border-gray-100"></div>
+  </div>
+  <div class="relative z-10 flex flex-col items-center w-16 gap-2">
+    <div class="flex items-center justify-center w-8 h-8 bg-gray-100 border rounded-full border-subak-meadow-teal">
+        {% if s1 != 'complete' %}
+            <div class="w-6 h-6 rounded-full bg-subak-meadow-teal"></div>
+        {% else %}
+            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-subak-meadow-teal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+            </div>
+        {% endif %}
+    </div>
+    <span class="text-center highlight">{{ _('Define metadata') }}</span>
+  </div>
+
+  <div class="relative z-10 flex flex-col items-center w-16 gap-2">
+    <div class="flex items-center justify-center w-8 h-8 bg-gray-100 border rounded-full {% if s1 != 'active' %}border-subak-meadow-teal{% else %}border-gray-100{% endif %}">
+        {% if s1 != 'active' %}
+            <div class="w-6 h-6 rounded-full bg-subak-meadow-teal"></div>
+        {% endif %}
+    </div>
+    <span class="text-center highlight">{{ _('Upload/link datasets') }}</span>
+  </div>
+
+  <div class="relative z-10 flex flex-col items-center w-16 gap-2">
+      <div class="flex items-center justify-center w-8 h-8 bg-gray-100 border border-gray-100 rounded-full"></div>
+      <span class="text-center highlight">{{ _('Publish') }}</span>
+  </div>
+</div>
