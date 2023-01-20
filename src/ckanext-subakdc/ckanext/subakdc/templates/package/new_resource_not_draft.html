@@ -1,0 +1,10 @@
+{% ckan_extends %}
+
+{% block main_content %}
+    <h1 class="mb-0 heading">{{ h.dataset_display_name(pkg) }}</h1>
+    {{ super() }}
+{% endblock %}
+
+{% block secondary %}
+    {#  Removes sidebar on this page #}
+{% endblock %}
