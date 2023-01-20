@@ -15,7 +15,7 @@ Example:
 {% set s1 = stages[0] or 'active' %}
 {% set s2 = stages[1] or 'uncomplete' %}
 
-<div class="relative flex justify-between w-2/3 mx-auto mb-8">
+<div class="relative flex justify-between w-full mx-auto mb-8 md:w-2/3">
   <div class="absolute flex w-full px-4 top-4">
     <div class="w-1/2 border-b-2 {% if s1 != 'complete' %}border-gray-100{% else %}border-subak-meadow-teal{% endif %}"></div>
     <div class="w-1/2 border-b-2 border-gray-100"></div>
