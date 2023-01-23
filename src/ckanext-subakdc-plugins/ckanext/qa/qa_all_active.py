@@ -50,8 +50,6 @@ class QaAllActiveReport(IQaReport):
 qa_all_active_report_info = {
     "name": "all-active-datasets",
     "description": f"This report lists all the active datasets in the data catalogue",
-    "option_defaults": None,
-    "option_combinations": None,
     "option_defaults": OrderedDict({"org": None}),
     "option_combinations": lambda: {
         "org": org for org in lib.all_organizations(include_none=True)

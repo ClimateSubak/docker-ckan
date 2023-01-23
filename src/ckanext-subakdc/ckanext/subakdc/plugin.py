@@ -78,7 +78,11 @@ def get_subak_coop_orgs():
         return None
     else:
         return orgs
-
+    
+def get_schema_field(schema_fields, field_name):
+    field = list(filter(lambda f: f['field_name'] == field_name, schema_fields))[0]
+    return field
+    
 
 class SubakdcPlugin(p.SingletonPlugin):
     p.implements(p.IActions)
@@ -123,6 +127,7 @@ class SubakdcPlugin(p.SingletonPlugin):
         """
         return {
             "homepage_quick_explore_tags": homepage_tags,
+            "get_schema_field": get_schema_field,
             "get_subak_coop_group_from_dataset": get_subak_coop_group_from_dataset,
             "get_subak_coop_orgs": get_subak_coop_orgs,
             "user_has_upvoted_dataset": user_has_upvoted_dataset,

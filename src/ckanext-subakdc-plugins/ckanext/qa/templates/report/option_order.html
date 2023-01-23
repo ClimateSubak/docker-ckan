@@ -1,0 +1,15 @@
+{#
+Option snippet - issue
+
+value - Value of this option
+default - Default value for this option
+#}
+
+<div>
+    <label for="option-order">Order</label>
+    <select id="option-order" name="order" class="inline border border-gray-300 rounded">
+        <option value="asc" {% if value == "asc" %}selected="selected"{% endif %}>Most downvoted</option>
+        <option value="desc" {% if value == "desc" %}selected="selected"{% endif %}>Most upvoted</option>
+    </select>
+    <button type="submit" class="px-2 py-1 text-sm text-white rounded bg-subak-marine-blue">Filter</button>
+</div>
