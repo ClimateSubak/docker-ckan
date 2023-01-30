@@ -1,9 +1,9 @@
-Mousetrap.bind('/', function() {
+Mousetrap.bind('/', function () {
     document.getElementById("field-main-search").focus();
-    return false;   
+    return false;
 });
 
-Mousetrap.bind('esc', function() {
+Mousetrap.bind('esc', function () {
     document.getElementById("field-main-search").blur();
-    return false;   
+    return false;
 });
