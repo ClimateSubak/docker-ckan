@@ -32,6 +32,8 @@ log = logging.getLogger(__name__)
 
 def homepage_tags():
     tags = tk.g.search_facets["tags"]["items"]
+    list_tags = tk.get_action('tag_list')
+    tags = list_tags({}, {"all_fields": True})    
     filtered_tags = list(filter(lambda tag: tag["name"] in HOMEPAGE_TAGS, tags))
 
     return filtered_tags
