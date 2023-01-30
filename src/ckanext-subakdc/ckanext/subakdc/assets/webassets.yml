@@ -4,6 +4,7 @@ subakdc_js:
     - js/htmx-1.7.0.min.js
     - js/cookie-banner.js
     - js/date-facet.js
+    - js/external-links.js
     - js/mousetrap-1.6.5.min.js
     - js/scripts.js
   filters: rjsmin
