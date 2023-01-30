@@ -17,13 +17,15 @@ from ckanext.subakdc.voting.helpers import (
 )
 
 HOMEPAGE_TAGS = [
+    "agriculture",
+    "biodiversity",
     "co2",
     "energy",
-    "agriculture",
-    "wind",
-    "solar",
-    "electricity",
-    "crude oil",
+    "fisheries",
+    "industry",
+    "methane",
+    "transport"
+    "water"
 ]
 SUBAK_COOP_GROUP_NAME = "data-cooperative"
 
@@ -32,10 +34,9 @@ log = logging.getLogger(__name__)
 
 def homepage_tags():
     tags = tk.g.search_facets["tags"]["items"]
-    list_tags = tk.get_action('tag_list')
-    tags = list_tags({}, {"all_fields": True})    
     filtered_tags = list(filter(lambda tag: tag["name"] in HOMEPAGE_TAGS, tags))
-
+    
+    # return tags
     return filtered_tags
 
 
