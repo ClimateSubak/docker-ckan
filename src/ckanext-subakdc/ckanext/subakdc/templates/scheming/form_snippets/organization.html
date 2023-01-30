@@ -5,7 +5,7 @@
       <label for="field-private" class="control-label">{{ _('Visibility') }}</label>
       <div class="controls">
         <select id="field-private" name="private" class="form-control">
-          {% for option in [('False', _('Public')), ('True', _('False'))] %}
+          {% for option in [('False', _('Public')), ('True', _('Private'))] %}
           <option value="{{ option[0] }}" {% if option[0] == data.private|trim %}selected="selected"{% endif %}>{{ option[1] }}</option>
           {% endfor %}
         </select>
