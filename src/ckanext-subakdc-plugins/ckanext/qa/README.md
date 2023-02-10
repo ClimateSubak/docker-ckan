@@ -2,6 +2,24 @@
 
 The QA CKAN plugin defines several tasks that report on the quality of datasets in the data catalogue. It also defines actions that can be taken on the selected datasets in the reports
 
+By default the results of each QA task are evaluated on a given package when the package if first created and then every time it is updated.
+
+# Runing QA taska via the command line
+To run all of the QA tasks on every package in the catalogue, run:
+
+```
+make qa.run
+```
+
+or to run just one task over all packages:
+
+```
+make ssh.ckan
+ckan qa run {task_name}
+```
+
+The `{task_name}` must match one of the keys in the `tasks` dict in `__init__.py`
+
 # Defining a new QA task
 - Copy an existing qa file (e.g. qa_no_resources.py) to a new python file named `qa_{task_name}.py` in this directory
 - Update `QA_PROPERTY_NAME` and add any actions you need into the `QA_ACTIONS` variable
@@ -22,4 +40,4 @@ Redis will cache job commands so if you change code you need to run:
 `make restart.redis`  
 
 # Cold start
-The first time you run reporting you will need to run `ckan report initdb` to create the database tables.
+The first time you run reporting you will need to run `make qa.init` to create the database tables.
