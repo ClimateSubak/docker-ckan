@@ -21,11 +21,11 @@ def url_is_live(url):
     
     # Catch exception for if any 4XX or 5XX error is thrown or timeout is exceeded
     except requests.exceptions.RequestException as e:
-        log.debug(e)
+        # log.debug(e)
         return False
 
 def extract_links(text):
-    return re.findall(r"(https?://[^\s]+)", text)
+    return re.findall(r"(https?://[-a-zA-Z0-9@:%_\+.~#?&/=]+)", text)
 
 def find_dead_links(text):
     dead_links = [] 
@@ -67,25 +67,27 @@ class QaDeadLinksTask(IQaTask):
                 dead_links["resources"] = res_dead_links
                 
             # Check links in the applications
-            apps = pkg["subak_data_applications"]
-            app_dead_links = []
-            for app in apps:
-                links = find_dead_links(app["url"])
-                if links is not None:
-                    app_dead_links += links
-            if len(app_dead_links) > 0:
-                dead_links["applications"] = app_dead_links
+            apps = pkg.get("subak_data_applications")
+            if apps is not None:
+                app_dead_links = []
+                for app in apps:
+                    links = find_dead_links(app["url"])
+                    if links is not None:
+                        app_dead_links += links
+                if len(app_dead_links) > 0:
+                    dead_links["applications"] = app_dead_links
             
-            upstream_sources = pkg["subak_data_sources"]
-            links = find_dead_links(upstream_sources)
-            if links is not None:
-                dead_links["upstream_sources"] = links
-        
+            upstream_sources = pkg.get("subak_data_sources")
+            if upstream_sources is not None:
+                links = find_dead_links(upstream_sources)
+                if links is not None:
+                    dead_links["upstream_sources"] = links
+
             if len(dead_links.keys()) > 0:
                 return { "has_dead_links": True, "dead_links": dead_links }
             else:
                 return { "has_dead_links": False }
-                
+                    
         except Exception as e:
             log.error(f"Could not evaluate pkg in QaDeadLinksTask: {e}")
             return { "has_dead_links": False }

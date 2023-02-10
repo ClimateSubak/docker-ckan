@@ -23,9 +23,14 @@ Datasets with schema issues: {{ table | length }} / {{ data.total_num_packages }
         <td class="max-w-xl p-2">
           {{ row.title }}
         </td>
-        <td class="p-2">
-          {% for key, value in row.dead_links.items() %}
-            {{ key }}: {{ value }}<br />
+        <td class="flex flex-col gap-2 p-2">
+          {% for source, links in row.dead_links.items() %}
+            <div>
+              <strong>{{ source }}:</strong><br />
+              {% for link in links %}
+                <a href="{{ link }}" title="{{ link }}">{{ link | truncate(50) }}</a><br />
+              {% endfor %}
+            </div>
           {% endfor %}
         </td>
         {% snippet 'report/snippets/view-edit-dataset-links.html', id=row.id %}

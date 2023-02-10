@@ -14,7 +14,7 @@ class QaTaskRunner:
     def __init__(self, tasks):
         self.tasks = tasks
 
-    def run_tasks_as_job(self):
+    def run(self):
         """
         Runs QA tasks over all packages. Starts a new job for each each package and runs run_on_single_package to update QA properties on the package
         """
