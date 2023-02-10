@@ -1094,10 +1094,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: auto !important;
   margin-right: auto !important;
 }
-.my-6 {
-  margin-top: 1.5rem !important;
-  margin-bottom: 1.5rem !important;
-}
 .my-8 {
   margin-top: 2rem !important;
   margin-bottom: 2rem !important;
@@ -1339,8 +1335,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .grow {
   flex-grow: 1 !important;
 }
+.basis-1\/4 {
+  flex-basis: 25% !important;
+}
 .table-auto {
   table-layout: auto !important;
+}
+.border-collapse {
+  border-collapse: collapse !important;
 }
 .translate-y-4 {
   --tw-translate-y: 1rem !important;
@@ -1375,6 +1377,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .cursor-pointer {
   cursor: pointer !important;
+}
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
 }
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -1555,6 +1560,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-stone-200 {
   --tw-border-opacity: 1 !important;
   border-color: rgb(231 229 228 / var(--tw-border-opacity)) !important;
+}
+.border-slate-200 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity)) !important;
 }
 .border-white {
   --tw-border-opacity: 1 !important;
@@ -2287,6 +2296,10 @@ the theme() function
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
   }
 
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
   .sm\:flex-row {
     flex-direction: row !important;
   }
@@ -2491,6 +2504,10 @@ the theme() function
 
   .lg\:max-w-\[20em\] {
     max-width: 20em !important;
+  }
+
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
 
   .lg\:flex-row {

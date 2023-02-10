@@ -120,7 +120,7 @@ class QaDeadLinksReport(IQaReport):
 
 
 qa_dead_links_report_info = {
-    "name": "dead-links-datasets",
+    "name": "datasets-with-dead-links",
     "description": f"This report lists datasets that link to sources that no longer exist",
     "option_defaults": None,
     "option_combinations": None,
