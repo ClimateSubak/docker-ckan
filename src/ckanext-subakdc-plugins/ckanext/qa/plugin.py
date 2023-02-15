@@ -1,24 +1,24 @@
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
+
 from ckanext.report.interfaces import IReport
-
-from ckanext.qa import tasks, reports, helpers
+from ckanext.qa import actions, reports, helpers
 from ckanext.qa.cli import get_commands
-from ckanext.qa.qa import QaTaskRunner
-
-
-def run_qa_tasks_on_package(pkg):
-    runner = QaTaskRunner(list(tasks.values()))
-    func = runner.run_on_single_package
-    tk.enqueue_job(func, [pkg.get("id")])
 
 
 class QAPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
+    p.implements(p.IActions)
     p.implements(p.IClick)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
-    p.implements(p.IPackageController, inherit=True)
     p.implements(IReport)
+    
+    # ------- IActions method implementations ------- #
+    def get_actions(self):
+        return {
+            "package_create": actions.package_create,
+            'package_update': actions.package_update,
+        }
 
     # ------- IClick method implementations ------- #
     def get_commands(self):
@@ -31,13 +31,6 @@ class QAPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
     # ------- ITemplateHelpers method implementations ------- #
     def get_helpers(self):
         return helpers
-
-    # ------- IPackageController method implementations ------- #
-    def after_create(self, context, pkg_dict):
-        run_qa_tasks_on_package(pkg_dict)
-
-    def after_update(self, context, pkg_dict):
-        run_qa_tasks_on_package(pkg_dict)
 
     # ------- IReport method implementations ------- #
     def register_reports(self):

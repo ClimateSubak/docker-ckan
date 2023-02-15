@@ -50,9 +50,7 @@ class QaTaskRunner:
         for task in self.tasks:
             new_qa[task.qa_property_name] = task.evaluate(pkg)
 
-        # Only patch the package if the qa properties have changed
-        if qa != new_qa:
-            patch_package(
-                {"ignore_auth": True, "user": None},
-                {"id": pkg["id"], "subak_qa": json.dumps(new_qa)},
-            )
+        patch_package(
+            {"ignore_auth": True, "user": None},
+            {"id": pkg["id"], "subak_qa": json.dumps(new_qa)},
+        )

@@ -11,12 +11,14 @@ log = logging.getLogger(__name__)
 
 QA_PROPERTY_NAME = "qa_dead_links"
 QA_ACTIONS = [ QaHideDatasetsAction ]
-QA_HTTP_TIMEOUT = 30 # in seconds
 
 def url_is_live(url):
     try:
-        resp = requests.get(url, timeout=QA_HTTP_TIMEOUT)
-        resp.raise_for_status()
+        # Set to stream=True so that we don't wait for response body, only check the response headers.
+        # Timeout reasoning here: https://requests.readthedocs.io/en/latest/user/advanced/#timeouts
+        with requests.get(url, stream=True, timeout=3.05) as r:
+            r.raise_for_status()
+        
         return True
     
     # Catch exception for if any 4XX or 5XX error is thrown or timeout is exceeded
