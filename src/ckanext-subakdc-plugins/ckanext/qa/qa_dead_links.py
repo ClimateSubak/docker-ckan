@@ -47,10 +47,11 @@ class QaDeadLinksTask(IQaTask):
         dead_links = {}
         try:
             # Check the source URL
-            source = pkg["url"]
-            links = find_dead_links(source)
-            if links is not None:
-                dead_links["source"] = links
+            source = pkg.get("url")
+            if source is not None:
+                links = find_dead_links(source)
+                if links is not None:
+                    dead_links["source"] = links
             
             # Check links in the description
             description = pkg["notes"]
