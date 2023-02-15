@@ -10,6 +10,7 @@ from ckanext.qa.qa_schema_issues import (
     qa_schema_issues_report_info,
     schema_qa_field_options_helper,
 )
+from ckanext.qa.qa_dead_links import QaDeadLinksTask, qa_dead_links_report_info
 from ckanext.qa.qa_clean import QaCleanTask, qa_clean_report_info
 from ckanext.qa.qa_votes import qa_votes_report_info
 
@@ -20,6 +21,7 @@ tasks = {
     "stale": QaStaleTask,
     "schema-issues": QaSchemaIssuesTask,
     "clean": QaCleanTask,
+    "dead-links": QaDeadLinksTask,
 }
 
 reports = [
@@ -28,7 +30,8 @@ reports = [
     qa_stale_report_info,
     qa_schema_issues_report_info,
     qa_clean_report_info,
-    qa_votes_report_info
+    qa_votes_report_info,
+    qa_dead_links_report_info,
 ]
 
 helpers = {
