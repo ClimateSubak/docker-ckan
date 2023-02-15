@@ -231,7 +231,7 @@ class EuropaHarvester(HarvesterBase):
                     resource = {}
                     resource.update(
                         {
-                            "url": f["access_url"],
+                            "url": f["access_url"][0],
                             "format": f["format"]["label"]
                         }
                     )

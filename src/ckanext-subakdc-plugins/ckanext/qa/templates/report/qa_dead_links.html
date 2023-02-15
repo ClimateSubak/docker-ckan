@@ -1,0 +1,41 @@
+{% extends "report/qa_base.html" %}
+
+{% block qa_stats %}
+Datasets with schema issues: {{ table | length }} / {{ data.total_num_packages }} ({{ ((table | length) / data.total_num_packages * 100) | round(2) }}%)
+{% endblock %}
+
+{% block qa_report_table %}
+<table class="w-full table-auto" id="report-table"">
+  <thead>
+    <tr class="border-b border-gray-200">
+      <th class="w-2 p-2 pr-1"></th>
+      <th class="max-w-xl p-2">Dataset</th>
+      <th class="p-2">Dead links</th>
+      <th class="w-10 p-2"></th>
+    </tr>
+  </thead>
+  <tbody class="font-body">
+    {% for row in table %}
+      <tr class="{% if loop.index % 2 == 0 %} bg-gray-50 {% endif %}">
+        <td class="p-2 pr-1">
+          {% snippet "report/snippets/qa_checkbox.html", id=row.id %}
+        </td>
+        <td class="max-w-xl p-2">
+          {{ row.title }}
+        </td>
+        <td class="flex flex-col gap-2 p-2">
+          {% for source, links in row.dead_links.items() %}
+            <div>
+              <strong>{{ source }}:</strong><br />
+              {% for link in links %}
+                <a href="{{ link }}" title="{{ link }}">{{ link | truncate(50) }}</a><br />
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </td>
+        {% snippet 'report/snippets/view-edit-dataset-links.html', id=row.id %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -16,22 +16,14 @@ class QaTaskRunner:
 
     def run(self):
         """
-        Runs QA tasks over all entities (triggers a job as this will be a long running process)
-        """
-        func = self.run_tasks_as_job
-        tk.enqueue_job(func, rq_kwargs={"timeout": 3600 * 3})
-
-    def run_tasks_as_job(self):
-        """
-        Runs an empty patch request on the package - this will trigger run_on_single_package to
-        be be run in CKAN's post-create/update hook which does the actual work of adding/updating
-        QA properties on the package
+        Runs QA tasks over all packages. Starts a new job for each each package and runs run_on_single_package to update QA properties on the package
         """
         # Get all packages and associated resources
         pkgs = get_all_pkgs()
 
         for pkg in pkgs:
-            self.run_on_single_package(pkg.get("id"))
+            func = self.run_on_single_package
+            tk.enqueue_job(func, [pkg.get("id")])
 
     def run_on_single_package(self, pkg_id):
         """
@@ -58,9 +50,7 @@ class QaTaskRunner:
         for task in self.tasks:
             new_qa[task.qa_property_name] = task.evaluate(pkg)
 
-        # Only patch the package if the qa properties have changed
-        if qa != new_qa:
-            patch_package(
-                {"ignore_auth": True, "user": None},
-                {"id": pkg["id"], "subak_qa": json.dumps(new_qa)},
-            )
+        patch_package(
+            {"ignore_auth": True, "user": None},
+            {"id": pkg["id"], "subak_qa": json.dumps(new_qa)},
+        )
