@@ -42,16 +42,15 @@
                   </svg> Submit Data</a>
               </li>
               <li>
-                <a class="px-3 no-underline hover:text-slate-300" href="{{ h.url_for('dataset.search') }}">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="relative inline w-4 h-4 -top-px text-subak-burnt-copper" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg> Search Data
-                </a>
+                <a class="px-3 no-underline hover:text-slate-300" href="{{ h.url_for('dataset.search') }}">Datasets</a>
               </li>
               <li>
-                <a class="px-3 no-underline hover:text-slate-300" href="{{ h.url_for('organization.index') }}">Organizations</a>
+                <a class="px-3 no-underline hover:text-slate-300" href="{{ h.url_for('organization.index') }}">Publishers</a>
               </li>
-              <li class="pt-3 mt-2 border-t border-slate-400 md:border-l md:border-t-0 md:mt-0 md:pt-0">
+              <li>
+                <a class="px-3 no-underline hover:text-slate-300" href="{{ h.url_for('custom_pages.climate_data_research') }}">Research</a>
+              </li>
+              <li class="pt-3 mt-2 ml-3 border-t border-slate-400 md:border-t-0 md:mt-0 md:pt-0">
                 {% include 'header_account.html' %}
               </li>
             </ul>

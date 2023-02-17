@@ -6,6 +6,10 @@
         "link": "/dataset?q=power+plant"
     },
     "intro_text": "<p>A huge amount of the energy the world uses is generated in power plants, supplying electricity and heat to cities, factories and power grids worldwide.</p><p>IPCC scenarios to net zero involve electrification of transport and industry. Coal power should be phased out completely by 2030 in OECD countries and worldwide by 2040.</p><p>To understand the landscape of power plants we present some key datasets below.</p>",
+    "report": {
+        "name": "State of Climate Data: Power Plants",
+        "link": "/climate-data-reports/state-of-climate-data-power-plants.pdf"
+    },
     "key_stats": [
         {
             "figure": "38%",
