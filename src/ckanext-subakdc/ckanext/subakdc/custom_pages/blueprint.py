@@ -30,5 +30,11 @@ custom_pages_blueprint.add_url_rule(
     lambda: tk.redirect_to("https://airtable.com/shrakRbosU1b6QjLZ")
 )
 
+custom_pages_blueprint.add_url_rule(
+    "/climate-data-research",
+    "climate_data_research",
+    lambda: tk.render('custom_pages/climate_data_research.html')
+)
+
 def get_blueprints():
     return [custom_pages_blueprint]
