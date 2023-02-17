@@ -7,10 +7,7 @@
             {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)',
             new_activities)
             %}
-            <a href="{{ h.url_for('dashboard.index') }}" class="flex items-center no-underline image dashboard-link group" title="{{ _("Dashboard") }}">
-              <span class="relative px-3 font-mono truncate username top-px group-hover:text-slate-300 max-w-full md:max-w-[7em] lg:max-w-[20em] block">
-                  {{ c.userobj.display_name }}
-              </span>
+            <a href="{{ h.url_for('dashboard.index') }}" class="flex items-center no-underline image dashboard-link group" title="{{ c.userobj.display_name }} Dashboard">
               <div class="relative inline-block align-middle">
                 <div class="object-cover overflow-hidden border rounded-full border-white-500 w-[40px] h-[40px]">
                     {{ h.user_image((c.user if c and c.user else ''), size=40) }}
