@@ -1,6 +1,7 @@
 import logging
 from collections import OrderedDict
 
+from ckan.plugins import toolkit as tk
 from ckanext.report import lib
 
 from ckanext.qa.config import MAX_REPORT_ROWS_TO_DISPLAY
@@ -17,34 +18,22 @@ class QaAllActiveReport(IQaReport):
     qa_actions = QA_ACTIONS
 
     @classmethod
-    def generate(cls, org):
+    def generate(cls, org, page=1):
         action_is_running = cls.run_action()
 
         fields = ["id", "title", "organization"]
-
-        report = cls.build(fields, action_is_running=action_is_running)
-
-        if org is not None and org != "":
-            report["table"] = list(
-                filter(lambda row: cls.filter_by_org(row, org), report["table"])
-            )
-
-        report["table"].sort(key=lambda row: row["title"])
-
-        if len(report["table"]) > MAX_REPORT_ROWS_TO_DISPLAY:
-            report["table"] = report["table"][0:MAX_REPORT_ROWS_TO_DISPLAY]
-            report["data_truncated"] = True
+        report = cls.build(fields, sort_key=lambda row: row["title"], action_is_running=action_is_running)
 
         return report
 
     @classmethod
-    def filter_by_org(cls, row, org):
-        return row["organization"]["name"] == org
-
-    @classmethod
-    def should_show_in_report(cls, value):
-        # This method is not actually evaluated as qa_property_name is None
-        return True
+    def should_show_in_report(cls, pkg):
+        options = tk.request.params
+        should_show = True
+        if "org" in options and options.get("org") is not None and options.get("org") != "" and pkg["organization"]["name"] != options.get("org"):
+            should_show = False
+        
+        return should_show
 
 
 qa_all_active_report_info = {

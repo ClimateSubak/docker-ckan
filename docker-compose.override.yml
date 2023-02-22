@@ -4,6 +4,7 @@ services:
   ckan:
     build:
       dockerfile: ckan/Dockerfile.dev
+    platform: linux/x86_64 # Necessary to force docker to pull the amd64 image for running on Mac Silicon
     volumes:
       - ./src:/srv/app/src_extensions
 
@@ -14,7 +15,7 @@ services:
   db:
     env_file:
       - .env
-      
+
   solr:
     ports:
       - "8983:8983"
@@ -23,7 +24,7 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4:6.9
     restart: always
-    ports: 
+    ports:
       - "5050:80"
     environment:
       - PGADMIN_DEFAULT_EMAIL=email@example.com
