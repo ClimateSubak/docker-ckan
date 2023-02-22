@@ -52,23 +52,21 @@ class QaCleanReport(IQaReport):
     qa_actions = QA_ACTIONS
 
     @classmethod
-    def generate(cls):
+    def generate(cls, page=1):
         action_is_running = cls.run_action()
 
-        fields = ['id', 'title', 'num_resources']
-        report =  cls.build(fields, action_is_running=action_is_running)
+        fields = ['id', 'title']
+        report = cls.build(fields, sort_key=lambda row: row["title"], action_is_running=action_is_running)
         
-        report['table'].sort(key=lambda row: row['title'])
         return report
 
     @classmethod
-    def should_show_in_report(cls, value):
+    def should_show_in_report(cls, pkg):
         # Only show in report if value is set to true
-        if value is False:
+        if pkg['subak_qa'][cls.qa_property_name] is False:
             return False
         else:
             return True
-
 
 qa_clean_report_info = {
     'name': 'datasets-need-cleaning',

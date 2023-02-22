@@ -1,6 +1,7 @@
 import logging
 from collections import OrderedDict
 
+from ckan.plugins import toolkit as tk
 from ckanext.report import lib
 
 from ckanext.qa.config import MAX_REPORT_ROWS_TO_DISPLAY
@@ -92,7 +93,7 @@ class QaSchemaIssuesReport(IQaReport):
     qa_actions = QA_ACTIONS
 
     @classmethod
-    def generate(cls, field, org):
+    def generate(cls, field, org, page=1):
         # Use first field in FIELDS if not provided as argument
         field = list(FIELDS.keys())[0] if not field else field
         action_is_running = cls.run_action()
@@ -101,24 +102,8 @@ class QaSchemaIssuesReport(IQaReport):
         computed_fields = {"issues": lambda pkg: cls.get_issues(pkg, field)}
 
         report = cls.build(
-            table_fields, computed_fields, action_is_running=action_is_running
+            table_fields, computed_fields, sort_key=lambda row: row["title"], action_is_running=action_is_running
         )
-
-        if org is not None and org != "":
-            report["table"] = list(
-                filter(lambda row: cls.filter_by_org(row, org), report["table"])
-            )
-
-        if field is not None:
-            report["table"] = list(
-                filter(lambda row: cls.filter_by_field(row, field), report["table"])
-            )
-
-        report["table"].sort(key=lambda row: row["title"])
-
-        if len(report["table"]) > MAX_REPORT_ROWS_TO_DISPLAY:
-            report["table"] = report["table"][0:MAX_REPORT_ROWS_TO_DISPLAY]
-            report["data_truncated"] = True
 
         return report
 
@@ -142,9 +127,20 @@ class QaSchemaIssuesReport(IQaReport):
         return field in row["issues"]
 
     @classmethod
-    def should_show_in_report(cls, value):
+    def should_show_in_report(cls, pkg):
         # Only show in report if value `has_issues` item is set to true
-        return value.get("has_issues", False)
+        if pkg["subak_qa"][cls.qa_property_name]["has_issues"] == False:
+            return False
+
+        options = tk.request.params
+        should_show = True
+        if "org" in options and options.get("org") is not None and options.get("org") != "" and pkg["organization"]["name"] != options.get("org"):
+            should_show = False
+            
+        if "field" in options and options.get("field") is not None and options.get("field") != "" and options.get("field") not in pkg["subak_qa"][cls.qa_property_name]["issues"].keys():
+            should_show = False
+        
+        return should_show
 
 
 def schema_qa_field_options_helper():

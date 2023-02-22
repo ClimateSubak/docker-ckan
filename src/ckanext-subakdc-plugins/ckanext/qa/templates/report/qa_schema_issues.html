@@ -1,9 +1,5 @@
 {% extends "report/qa_base.html" %}
 
-{% block qa_stats %}
-Datasets with schema issues: {{ table | length }} / {{ data.total_num_packages }} ({{ ((table | length) / data.total_num_packages * 100) | round(2) }}%)
-{% endblock %}
-
 {% block qa_report_table %}
 {% set issues = h.schema_qa_field_options() %}
 <table class="w-full table-auto" id="report-table"">
