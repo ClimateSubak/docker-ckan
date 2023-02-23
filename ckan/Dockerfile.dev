@@ -1,6 +1,6 @@
 FROM openknowledge/ckan-dev:2.9
 
-LABEL maintainer="Laurence Watson <laurence@subak.org>"
+LABEL maintainer="Chris Briggs <chris.briggs@subak.org>"
 
 # Set timezone
 ARG TZ

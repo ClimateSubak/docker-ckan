@@ -1,0 +1,23 @@
+{% set pagination = data.pagination %}
+
+{% if pagination.pages > 1 %}
+<div class="flex justify-center my-4">
+    <div class="flex gap-1">
+    {% if pagination.has_prev %}
+        <a class="px-2 py-1 mr-1 text-gray-700 no-underline bg-gray-100 border rounded" href="{{ h.build_qa_report_page_url(report_name, pagination.prev_num) }}">&laquo;</a>
+    {% endif %}
+    {% for page_num in pagination.iter_pages %}
+        {% if page_num %}
+            {% if page_num != pagination.page %}
+                <a class="px-2 py-1 mr-1 text-gray-700 no-underline bg-gray-100 border rounded" href="{{ h.build_qa_report_page_url(report_name, page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <span class="px-2 py-1 mr-1 text-gray-700 no-underline border rounded">{{ page_num }}</span>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% if pagination.has_next %}
+        <a class="px-2 py-1 mr-1 text-gray-700 no-underline bg-gray-100 border rounded" href="{{ h.build_qa_report_page_url(report_name, pagination.next_num) }}">&raquo;</a>
+    {% endif %}
+    </div>
+</div>
+{% endif %}

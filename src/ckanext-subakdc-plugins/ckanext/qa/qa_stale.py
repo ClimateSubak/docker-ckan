@@ -71,15 +71,13 @@ class QaStaleReport(IQaReport):
     qa_actions = QA_ACTIONS
     
     @classmethod
-    def generate(cls):
+    def generate(cls, page=1):
         action_is_running = cls.run_action()
         
-        fields = ['id', 'title', 'num_resources']
+        fields = ['id', 'title']
         computed_fields = { 'age': cls.get_age}
+        report = cls.build(fields, computed_fields, sort_key=lambda x: x['age'], sort_reverse=True, action_is_running=action_is_running)
        
-        report = cls.build(fields, computed_fields, action_is_running=action_is_running)
-       
-        report['table'].sort(key=lambda x: x['age'], reverse=True)
         return report
    
     @classmethod
@@ -90,9 +88,9 @@ class QaStaleReport(IQaReport):
             return None
     
     @classmethod
-    def should_show_in_report(cls, value):
+    def should_show_in_report(cls, pkg):
         # Only show in report if value `is_stale` item is set to true
-        return value.get('is_stale', False)
+        return pkg['subak_qa'][cls.qa_property_name].get('is_stale', False)
 
 
 qa_stale_report_info = {

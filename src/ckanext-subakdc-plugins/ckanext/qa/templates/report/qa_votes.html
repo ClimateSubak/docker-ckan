@@ -1,9 +1,5 @@
 {% extends "report/qa_base.html" %}
 
-{% block qa_stats %}
-# Datasets: {{ table | length }} / {{ data.total_num_packages }} ({{ ((table | length) / data.total_num_packages * 100) | round(2) }}%)
-{% endblock %}
-
 {% block qa_report_table %}
 <table class="w-full table-auto" id="report-table"">
   <thead>

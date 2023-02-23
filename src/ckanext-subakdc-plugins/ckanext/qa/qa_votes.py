@@ -15,20 +15,13 @@ class QaVotesReport(IQaReport):
     qa_actions = QA_ACTIONS
     
     @classmethod
-    def generate(cls, order):
+    def generate(cls, order, page=1):
         action_is_running = cls.run_action()
         
         fields = ["id", "title", "organization"]
         computed_fields = {"votes": lambda pkg: cls.get_num_votes(pkg)}
-        report = cls.build(fields, computed_fields,
+        report = cls.build(fields, computed_fields, sort_key=lambda row: row["votes"], sort_reverse=(order == 'desc'),
                            action_is_running=action_is_running)
-        
-        report['table'].sort(key=lambda row: row["votes"], 
-                             reverse=(order == 'desc'))
-        
-        if len(report["table"]) > MAX_REPORT_ROWS_TO_DISPLAY:
-            report["table"] = report["table"][0:MAX_REPORT_ROWS_TO_DISPLAY]
-            report["data_truncated"] = True
             
         return report
     
@@ -40,7 +33,7 @@ class QaVotesReport(IQaReport):
         return 0
     
     @classmethod
-    def should_show_in_report(cls, value):
+    def should_show_in_report(cls, pkg):
         # This method is not actually evaluated as qa_property_name is None
         return True
 
