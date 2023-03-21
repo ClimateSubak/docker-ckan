@@ -20,7 +20,7 @@
           {{ row.title }}
         </td>
         <td class="flex flex-col gap-2 p-2">
-          {% for source, links in row.dead_links.items() %}
+          {% for source, links in row.subak_qa.qa_dead_links.dead_links.items() %}
             <div>
               <strong>{{ source }}:</strong><br />
               {% for link in links %}

@@ -97,13 +97,24 @@ class QaSchemaIssuesReport(IQaReport):
         # Use first field in FIELDS if not provided as argument
         field = list(FIELDS.keys())[0] if not field else field
         action_is_running = cls.run_action()
+        
+        options = tk.request.params
 
-        table_fields = ["id", "title", "organization"]
-        computed_fields = {"issues": lambda pkg: cls.get_issues(pkg, field)}
-
-        report = cls.build(
-            table_fields, computed_fields, sort_key=lambda row: row["title"], action_is_running=action_is_running
-        )
+        fq = 'extras_subak_qa:"has_issues\\": true" '
+        if "org" in options and options.get("org") is not None and options.get("org") != "":
+            fq += f'organization:{options.get("org")} '
+            
+        if "field" in options and options.get("field") is not None and options.get("field") != "":
+            fq += f'extras_subak_qa:"{options.get("field")}" '
+            
+        report = cls.build(fq=fq, sort="name asc", action_is_running=action_is_running)
+        
+        table = report["table"]
+        for k, row in enumerate(table):
+            row["issues"] = cls.get_issues(row, field)
+            table[k] = row
+            
+        report['table'] = table
 
         return report
 
@@ -117,30 +128,6 @@ class QaSchemaIssuesReport(IQaReport):
             return fields
         except ValueError:
             return None
-
-    @classmethod
-    def filter_by_org(cls, row, org):
-        return row["organization"]["name"] == org
-
-    @classmethod
-    def filter_by_field(cls, row, field):
-        return field in row["issues"]
-
-    @classmethod
-    def should_show_in_report(cls, pkg):
-        # Only show in report if value `has_issues` item is set to true
-        if pkg["subak_qa"][cls.qa_property_name]["has_issues"] == False:
-            return False
-
-        options = tk.request.params
-        should_show = True
-        if "org" in options and options.get("org") is not None and options.get("org") != "" and pkg["organization"]["name"] != options.get("org"):
-            should_show = False
-            
-        if "field" in options and options.get("field") is not None and options.get("field") != "" and options.get("field") not in pkg["subak_qa"][cls.qa_property_name]["issues"].keys():
-            should_show = False
-        
-        return should_show
 
 
 def schema_qa_field_options_helper():

@@ -1,6 +1,6 @@
 <ul class="font-body">
   {% block qa_stats %}
-  <p>Showing page {{ data.pagination.page }} of {{ data.pagination.pages}} of {{ data.n_rows }} datasets ({{ (data.n_rows / data.n_packages * 100) | round(2) }}% of all datasets){% endblock %}
+  <p>Showing page {{ data.pagination.page }} of {{ data.pagination.pages}} of {{ data.n_rows }} datasets{% endblock %}
 </ul>
 
 {% if data.action_is_running %}

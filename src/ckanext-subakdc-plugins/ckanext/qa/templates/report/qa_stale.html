@@ -20,7 +20,7 @@
           {{ row.title }}
         </td>
         <td class="p-2">
-          &gt; {{ (row.age / 365) | round(0, 'floor') | int }} years
+          &gt; {{ (row.subak_qa.qa_stale.age / 365) | round(0, 'floor') | int }} years
         </td>
         {% snippet 'report/snippets/view-edit-dataset-links.html', id=row.id %}
       </tr>

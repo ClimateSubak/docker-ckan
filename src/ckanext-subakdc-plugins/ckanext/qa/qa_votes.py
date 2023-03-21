@@ -15,27 +15,14 @@ class QaVotesReport(IQaReport):
     qa_actions = QA_ACTIONS
     
     @classmethod
-    def generate(cls, order, page=1):
+    def generate(cls, order='asc', page=1):
         action_is_running = cls.run_action()
         
-        fields = ["id", "title", "organization"]
-        computed_fields = {"votes": lambda pkg: cls.get_num_votes(pkg)}
-        report = cls.build(fields, computed_fields, sort_key=lambda row: row["votes"], sort_reverse=(order == 'desc'),
-                           action_is_running=action_is_running)
+        # computed_fields = {"votes": lambda pkg: cls.get_num_votes(pkg)}
+        report = cls.build(sort=f'subak_votes {order}, name asc', action_is_running=action_is_running)
             
         return report
-    
-    @classmethod
-    def get_num_votes(cls, pkg):
-        if "subak_votes" in pkg and pkg["subak_votes"] != '':
-            return int(pkg['subak_votes'], 10)
-        
-        return 0
-    
-    @classmethod
-    def should_show_in_report(cls, pkg):
-        # This method is not actually evaluated as qa_property_name is None
-        return True
+
 
 qa_votes_report_info = {
     'name': 'datasets-by-votes',

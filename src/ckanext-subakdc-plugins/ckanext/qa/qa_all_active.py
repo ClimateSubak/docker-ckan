@@ -20,20 +20,16 @@ class QaAllActiveReport(IQaReport):
     @classmethod
     def generate(cls, org, page=1):
         action_is_running = cls.run_action()
-
-        fields = ["id", "title", "organization"]
-        report = cls.build(fields, sort_key=lambda row: row["title"], action_is_running=action_is_running)
+        
+        options = tk.request.params
+        
+        fq = ''
+        if "org" in options and options.get("org") is not None and options.get("org") != "":
+            fq = f'organization:{options.get("org")}'
+            
+        report = cls.build(fq=fq, sort="name asc", action_is_running=action_is_running)
 
         return report
-
-    @classmethod
-    def should_show_in_report(cls, pkg):
-        options = tk.request.params
-        should_show = True
-        if "org" in options and options.get("org") is not None and options.get("org") != "" and pkg["organization"]["name"] != options.get("org"):
-            should_show = False
-        
-        return should_show
 
 
 qa_all_active_report_info = {
