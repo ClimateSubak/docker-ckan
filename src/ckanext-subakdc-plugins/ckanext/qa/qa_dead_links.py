@@ -104,24 +104,10 @@ class QaDeadLinksReport(IQaReport):
     def generate(cls, page=1):
         action_is_running = cls.run_action()
         
-        fields = ["id", "title"]
-        computed_fields = {"dead_links": lambda pkg: cls.get_dead_links(pkg)}
-        report = cls.build(fields, computed_fields, action_is_running=action_is_running)
+        fq = f'extras_subak_qa:"has_dead_links\\": true"'
+        report = cls.build(fq=fq, sort="name asc", action_is_running=action_is_running)
        
         return report
-        
-    @classmethod
-    def get_dead_links(cls, pkg):
-        try:
-            return pkg["subak_qa"][cls.qa_property_name]["dead_links"]
-        except ValueError:
-            return None
-    
-    @classmethod
-    def should_show_in_report(cls, pkg):
-        # Only show in report if value `has_dead_links` item is set to true
-        return pkg["subak_qa"][cls.qa_property_name].get("has_dead_links", True)
-
 
 qa_dead_links_report_info = {
     "name": "datasets-with-dead-links",

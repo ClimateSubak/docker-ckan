@@ -5,7 +5,7 @@ import math
 import ckan.plugins.toolkit as tk
 
 from ckanext.qa.config import MAX_REPORT_ROWS_TO_DISPLAY
-from ckanext.qa.utils import get_all_pkgs
+from ckanext.qa.utils import search_pkgs
 
 log = logging.getLogger(__name__)
 
@@ -52,9 +52,7 @@ class IQaReport(ABC):
             return list(range(page-mid_point, page+mid_point))
 
     @classmethod
-    def build(
-        cls, fields=None, computed_fields=None, sort_key=None, sort_reverse=False, action_is_running=False, limit=500
-    ):
+    def build(cls, fq=None, sort=None, action_is_running=False):
         """
         Builds the report table
 
@@ -69,30 +67,16 @@ class IQaReport(ABC):
         page = int(tk.request.args.get("page", 1))
         assert page > 0, "Page number must be great than 0"
         
-        # TODO this is quite inefficient, but is much simpler
-        # than building custom DB queries for each report.
-        pkgs = get_all_pkgs()
+        pkgs, n_rows = search_pkgs(fq=fq, sort=sort, page=page)
         n_pkgs = len(pkgs)
 
         # Build report table detailing packages with no resources
         report_table = []
-        if fields is None:
-            fields = ["id", "title"]
 
         for pkg in pkgs:
-            if (cls.qa_property_name is None or ("subak_qa" in pkg and cls.qa_property_name in pkg["subak_qa"])) and cls.should_show_in_report(pkg):
-                report_fields = {k: pkg[k] for k in fields}
-                if computed_fields is not None:
-                    for title, field in computed_fields.items():
-                        report_fields[title] = field(pkg)
-
-                report_table.append(report_fields)
+            if (cls.qa_property_name is None or ("subak_qa" in pkg and cls.qa_property_name in pkg["subak_qa"])):
+                report_table.append(pkg)
         
-        if sort_key is not None:
-            report_table.sort(key=sort_key, reverse=sort_reverse)
-        
-        n_rows = len(report_table)
-        report_table = report_table[(page-1)*MAX_REPORT_ROWS_TO_DISPLAY:page*MAX_REPORT_ROWS_TO_DISPLAY]
         pages = math.ceil(n_rows / MAX_REPORT_ROWS_TO_DISPLAY)
 
         return {
@@ -140,15 +124,6 @@ class IQaReport(ABC):
         """
         This method gets called from ckanext-report when generting report.
         It should define some fields and call cls.build
-        """
-        pass
-
-    @classmethod
-    @abstractmethod
-    def should_show_in_report(cls, value):
-        """
-        Evaluate value against some condition and return True if item should show
-        in the report, False if not
         """
         pass
 

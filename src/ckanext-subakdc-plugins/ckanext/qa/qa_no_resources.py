@@ -30,15 +30,10 @@ class QaNoResourcesReport(IQaReport):
     def generate(cls, page=1):
         action_is_running = cls.run_action()
         
-        fields = ['id', 'title']
-        report = cls.build(fields, sort_key=lambda row: row['title'], action_is_running=action_is_running)
+        fq = f'extras_subak_qa:"qa_no_resources\\": true"'
+        report = cls.build(fq=fq, sort="name asc", action_is_running=action_is_running)
         
         return report
-    
-    @classmethod
-    def should_show_in_report(cls, pkg):
-        # Only show in report if value is set to true
-        return pkg['subak_qa'][cls.qa_property_name]
 
 qa_no_resources_report_info = {
     'name': 'datasets-with-no-resources',
