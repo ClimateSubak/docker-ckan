@@ -129,26 +129,6 @@ class QaSchemaIssuesReport(IQaReport):
         except ValueError:
             return None
 
-    @classmethod
-    def filter_by_field(cls, row, field):
-        return field in row["issues"]
-
-    @classmethod
-    def should_show_in_report(cls, pkg):
-        # Only show in report if value `has_issues` item is set to true
-        if pkg["subak_qa"][cls.qa_property_name]["has_issues"] == False:
-            return False
-
-        options = tk.request.params
-        should_show = True
-        if "org" in options and options.get("org") is not None and options.get("org") != "" and pkg["organization"]["name"] != options.get("org"):
-            should_show = False
-            
-        if "field" in options and options.get("field") is not None and options.get("field") != "" and options.get("field") not in pkg["subak_qa"][cls.qa_property_name]["issues"].keys():
-            should_show = False
-        
-        return should_show
-
 
 def schema_qa_field_options_helper():
     return FIELDS

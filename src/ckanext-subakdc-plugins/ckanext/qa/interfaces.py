@@ -76,8 +76,6 @@ class IQaReport(ABC):
         for pkg in pkgs:
             if (cls.qa_property_name is None or ("subak_qa" in pkg and cls.qa_property_name in pkg["subak_qa"])):
                 report_table.append(pkg)
-                
-        log.debug(pkgs)
         
         pages = math.ceil(n_rows / MAX_REPORT_ROWS_TO_DISPLAY)
 
