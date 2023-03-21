@@ -74,24 +74,10 @@ class QaStaleReport(IQaReport):
     def generate(cls, page=1):
         action_is_running = cls.run_action()
         
-        fields = ['id', 'title']
-        computed_fields = { 'age': cls.get_age}
-        report = cls.build(fields, computed_fields, sort_key=lambda x: x['age'], sort_reverse=True, action_is_running=action_is_running)
+        fq = f'extras_subak_qa:"is_stale\\": true"'
+        report = cls.build(fq=fq, sort='age desc', action_is_running=action_is_running)
        
         return report
-   
-    @classmethod
-    def get_age(cls, pkg):
-        try:
-            return pkg['subak_qa'][QA_PROPERTY_NAME]['age']
-        except ValueError:
-            return None
-    
-    @classmethod
-    def should_show_in_report(cls, pkg):
-        # Only show in report if value `is_stale` item is set to true
-        return pkg['subak_qa'][cls.qa_property_name].get('is_stale', False)
-
 
 qa_stale_report_info = {
     'name': 'stale-datasets',
