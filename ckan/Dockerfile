@@ -33,6 +33,9 @@ COPY src/ckanext-subakdc ${SRC_DIR}/ckanext-subakdc
 RUN pip install -e ${SRC_DIR}/ckanext-subakdc
 RUN pip install -r ${SRC_DIR}/ckanext-subakdc/requirements.txt
 
+# Force pinned version of urllib3 to avoid runtime issue
+RUN pip install urllib3==1.26.16
+
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
 # See https://github.com/okfn/docker-ckan#applying-patches
