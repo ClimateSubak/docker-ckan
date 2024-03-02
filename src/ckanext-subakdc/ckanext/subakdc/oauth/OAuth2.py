@@ -101,14 +101,17 @@ class OAuth2:
         user_create = tk.get_action("user_create")
         schema = custom_user_schema()
         
-        try:
-            user = user_create({"ignore_auth": True, "user": None, "schema": schema}, 
-                               {"email": email, "name": username})
-        except Exception as e:
-            # log.debug(e)
-            return None
+        # Disallow user creation        
+        return None
         
-        return user
+        # try:
+        #     user = user_create({"ignore_auth": True, "user": None, "schema": schema}, 
+        #                        {"email": email, "name": username})
+        # except Exception as e:
+        #     # log.debug(e)
+        #     return None
+        
+        # return user
 
     def remember_user(self, user_name):
         """
